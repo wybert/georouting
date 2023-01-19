@@ -104,3 +104,7 @@ ENV/
 
 # IDE settings
 .vscode/
+notebooks/.ipynb_checkpoints/
+nosetests/dev-testings.ipynb
+notebooks/dev-testing.ipynb
+notebooks/dev-testing.ipynb
