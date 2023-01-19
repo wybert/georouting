@@ -11,6 +11,18 @@
 -   Free software: MIT license
 -   Documentation: https://wybert.github.io/georouting
     
+## Installation
+
+```bash
+pip install georouting
+``` 
+
+## Usage
+
+```python
+import georouting
+```
+
 
 ## Features
 

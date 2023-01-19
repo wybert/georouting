@@ -24,6 +24,18 @@
 ## Features
 
 -   TODO
+- [ ] return more results
+- [x] drive time
+- [ ] drive distance
+- [ ] if the route is considering congestion
+- [ ] return thr router
+- [ ] visualize the route
+- [ ] visualize the route with elevation
+- [ ] connect to movingpandas
+- [ ] connect to geopandas
+- [ ] loacal data routing
+
+
 
 ## Credits
 
