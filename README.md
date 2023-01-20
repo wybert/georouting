@@ -7,6 +7,8 @@
 
 **Geo routing for Python users**
 
+Warning!!! This project is under active developing, the API may change in the future. Wait for the release of version 1.0.0. This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
+
 
 -   Free software: MIT license
 -   Documentation: https://wybert.github.io/georouting
