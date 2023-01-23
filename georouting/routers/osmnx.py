@@ -3,19 +3,30 @@ import networkx as nx
 import geopandas as gpd
 import pandas as pd
 import igraph as ig
+import os
 # from georouting.routers.base import BaseRouter
 
 class OSMNXRouter(object):
 
-    def __init__(self, mode='drive', area = 'Boston, USA',network_type='drive', engine="networkx"):
+    def __init__(self, mode='drive', area = 'Boston, USA',network_type='drive', engine="networkx", use_cache=True, log_console=False):
         self.mode = mode
         self.area = area
         self.network_type = network_type
         self.engine  = engine
+        self.use_cache = use_cache
+        self.log_console = log_console
         self.G = self._download_road_network()
+        if self.engine == "igraph":
+            self.node_dict = self._get_node_dict()
+            self.G_ig = self._nx_to_ig(weight="travel_time")
 
     def _download_road_network(self):
         # Download road network
+        # it seems this dosen't work
+        ox.settings.log_console=self.log_console
+        ox.settings.use_cache=self.use_cache
+        ox.settings.cache_folder = os.path.join(os.path.dirname(__file__), 'cache')
+        # ox.config(use_cache=self.use_cache, log_console=self.log_console)
         G = ox.graph_from_place(self.area, network_type=self.network_type)
         G = ox.speed.add_edge_speeds(G)
         G = ox.speed.add_edge_travel_times(G)
@@ -38,15 +49,17 @@ class OSMNXRouter(object):
         G_ig.es[weight] = w
         return G_ig
 
-    def _get_short_ig(self,G_ig,source,target,weight):
-        sr =G_ig.shortest_paths(source=source, 
+    def _get_short_ig(self,source,target,weight):
+        sr =self.G_ig.shortest_paths(source=source, 
                                 target=target, weights=weight)[0][0]
         return sr
 
 
 
     def get_route_time_distance(self, origin, destination):
-
+        # switch longitude and latitude
+        origin = (origin[1],origin[0])
+        destination = (destination[1],destination[0])
         # Find the nearest node to origin and destination
         origin_node = ox.distance.nearest_nodes(self.G, *origin)
         destination_node = ox.distance.nearest_nodes(self.G, *destination)
@@ -59,11 +72,7 @@ class OSMNXRouter(object):
 
         elif self.engine == "igraph":
             # find the shortest path use igraph
-            
-            node_dict = self._get_node_dict()
-            G_ig = self._nx_to_ig(node_dict,weight="travel_time")
-
-            travel_time = self._get_short_ig(G_ig, node_dict[origin_node],node_dict[destination_node],"travel_time")
+            travel_time = self._get_short_ig(self.node_dict[origin_node],self.node_dict[destination_node],"travel_time")
         else:
             raise ValueError("engine should be networkx or igraph")
         return travel_time
