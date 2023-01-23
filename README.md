@@ -16,7 +16,7 @@ Warning!!! This project is under active developing, the API may change in the fu
 ## Installation
 
 ```bash
-pip install georouting
+pip install git+https://github.com/wybert/georouting.git
 ``` 
 
 ## Usage
@@ -29,7 +29,14 @@ import georouting
 ## Features
 
 - [x] Google Maps
-- [ ] return the raw json response
+- [ ] Return the raw json response
+- [ ] Fix the update in pypi
+- [ ] Add more routing services
+- [ ] Add more tests
+- [ ] Add more examples
+- [ ] Add more documentation
+- [ ] Add how to contribute
+- [ ] Add how to cite
 
 
 
