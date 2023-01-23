@@ -37,10 +37,10 @@ class OSMNXRouter(object):
         [node_dict.update({k:i}) for i,k in enumerate(node_dict)]
         return node_dict
 
-    def _nx_to_ig(self,node_dict,weight='length'):
+    def _nx_to_ig(self,weight='length'):
     # print(node_dict)
-        nodes = [node_dict[item] for item in self.G.nodes]
-        edges = [(node_dict[u],node_dict[v]) for u,v in self.G.edges()]
+        nodes = [self.node_dict[item] for item in self.G.nodes]
+        edges = [(self.node_dict[u],self.node_dict[v]) for u,v in self.G.edges()]
         w = [attr[weight] for u,v,attr in self.G.edges(data=True)]
         G_ig = ig.Graph(directed=True)
         G_ig.add_vertices(nodes)
