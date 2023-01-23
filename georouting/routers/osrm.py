@@ -6,6 +6,7 @@ class OSRMRouter(object):
 
     def __init__(self,mode="driving"):
         self.mode = mode
+        self.raw = dict()
 
     def _get_url(self, origin, destination):
         return "http://router.project-osrm.org/route/v1/%s/%f,%f;%f,%f?overview=false" % (
@@ -15,6 +16,7 @@ class OSRMRouter(object):
         url = self._get_url(origin, destination)
         resp = requests.get(url)
         res = json.loads(resp.content)
+        self.raw = res
 
         if res['code'] == "Ok":
 
