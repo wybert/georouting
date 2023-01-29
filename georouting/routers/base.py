@@ -6,13 +6,6 @@ import polyline
 import pandas as pd
 from shapely.geometry import LineString
 import requests
-# make a class for the route object and the route matrix object
-# the route object can have several methods to get the information, like time, distance, route, etc.
-# what's the difference between the route object and the route matrix object?
-# the route object is the route between two points, and the route matrix object is the route between a list of points
-# the route object can be used to get the time, distance, route, etc. of the route between two points
-# the route matrix object can be used to get the time, distance, route, etc. of the route between a list of points
-# This may need duck typing
 
 class GoogleRoute:
     def __init__(self, route):
@@ -51,15 +44,35 @@ class BingRoute:
         self.route = route
 
     def get_duration(self):
-        return self.route['resourceSets'][0]['resources'][0]['results'][0]['travelDuration']
+        " get the duration in seconds"
+        durationUnit = self.route['resourceSets'][0]["resources"][0]["durationUnit"]
+        travelDuration = self.route['resourceSets'][0]["resources"][0]["travelDuration"]
+        
+        
+        if durationUnit == "Second":
+            return travelDuration
+        elif durationUnit == "Minute":
+            return travelDuration * 60
+        elif durationUnit == "Hour":
+            return travelDuration * 3600
+        else:
+            raise ValueError("durationUnit is not recognized")
 
     def get_distance(self):
-        return self.route['resourceSets'][0]['resources'][0]['results'][0]['travelDistance']
+        " get the distance in meters"
+        distanceUnit = self.route['resourceSets'][0]["resources"][0]["distanceUnit"]
+        travelDistance = self.route['resourceSets'][0]["resources"][0]["travelDistance"]
+        if distanceUnit in ["mi","Mile"]:
+            travelDistance = travelDistance * 1609.344
+        elif distanceUnit in ["km","Kilometer"]:
+            travelDistance = travelDistance * 1000
+        return travelDistance
 
     def get_route(self):
         return self.route
 
     def get_route_geopandas(self):
+        # TODO: implement this
         raise NotImplementedError
 
 class MapboxRoute:
@@ -187,6 +200,8 @@ class WebRouter(BaseRouter):
             response.raise_for_status()
         except requests.exceptions.HTTPError as errh:
             print ("Http Error:",errh)
+
+        return response.json()
 
 # make a class for local router 
 class LocalRouter(BaseRouter):

@@ -12,7 +12,8 @@ class BingRouter(WebRouter):
         self.base_url = "https://dev.virtualearth.net/REST/v1/Routes/"
 
     def _get_directions_url(self, origin, destination):
-        return "https://dev.virtualearth.net/REST/v1/Routes/Driving?wp.0=%f,%f&wp.1=%f,%f&key=%s" % (
+
+        return "https://dev.virtualearth.net/REST/v1/Routes/%s?wp.0=%f,%f&wp.1=%f,%f&key=%s" % (self.mode,
             origin[0], origin[1], destination[0], destination[1], self.api_key)
 
     def _get_matrix_distance_url(self, origin, destination):
