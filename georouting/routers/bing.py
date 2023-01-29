@@ -13,12 +13,16 @@ class BingRouter(WebRouter):
 
     def _get_directions_url(self, origin, destination):
 
-        return "https://dev.virtualearth.net/REST/v1/Routes/%s?wp.0=%f,%f&wp.1=%f,%f&key=%s" % (self.mode,
+        return "%s%s?wp.0=%f,%f&wp.1=%f,%f&key=%s" % (self.base_url,self.mode,
             origin[0], origin[1], destination[0], destination[1], self.api_key)
 
-    def _get_matrix_distance_url(self, origin, destination):
-        return "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=%f,%f&destinations=%f,%f&travelMode=%s&key=%s" % (
-            origin[0], origin[1], destination[0], destination[1], self.mode, self.api_key)
+    def _get_matrix_distance_url(self, origins, destinations):
+        origins = [str(item[0]) + "," + str(item[1])  for item in origins]
+        destinations = [str(item[0]) + "," + str(item[1])  for item in destinations]
+        origins = ";".join(origins)
+        destinations = ";".join(destinations)
+        return "%sDistanceMatrix?origins=%s&destinations=%s&travelMode=%s&timeUnit=second&key=%s" % (self.base_url,
+            origins,destinations, self.mode, self.api_key)
 
     def _parse_distance_matrix(self, json_data):
         results = []
