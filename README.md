@@ -29,7 +29,8 @@ import georouting
 ## Features
 
 - [x] Google Maps
-- [ ] Return the raw json response
+- [ ] add more documetation
+- [ ] Bing Maps
 - [ ] Fix the update in pypi
 - [ ] Add more routing services
 - [ ] Add more tests
