@@ -22,16 +22,24 @@ pip install git+https://github.com/wybert/georouting.git
 ## Usage
 
 ```python
-import georouting
+
+# how to get routing distance matrix from OSRMRouter
+from georouting.routers.osrm import OSRMRouter
+orings = 
+destinations =
+router = OSRMRouter()
+distance_matrix = router.get_distance_matrix(orings, dstrings,append_od=True)
+distance_matrix.head()
 ```
 
 
 ## Features
 
 - [x] Google Maps
-- [ ] add more documentation
 - [x] Bing Maps
-- [ ] OSRM Routing
+- [x] OSRM Routing
+- [ ] add more documentation
+- [ ] built and host documentation
 - [ ] Fix the update in Pypi
 - [ ] Add more routing services
 - [ ] Add more tests
