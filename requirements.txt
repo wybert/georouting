@@ -1,2 +1,5 @@
 igraph
 osmnx
+polyline
+googlemaps
+geopandas

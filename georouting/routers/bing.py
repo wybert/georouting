@@ -25,14 +25,10 @@ class BingRouter(WebRouter):
             origins,destinations, self.mode, self.api_key)
 
     def _parse_distance_matrix(self, json_data):
-        results = []
-        for element in json_data['resourceSets'][0]['resources'][0]['results']:
-            temp = {}
-            temp['distance (m)'] = element['travelDistance']
-            temp['duration (s)'] = element['travelDuration']
-            results.append(temp)
-        df = pd.DataFrame(results)
 
+        df = pd.DataFrame(json_data['resourceSets'][0]['resources'][0]['results'])
+        df = df[['travelDistance','travelDuration']]
+        df.columns = ['distance (m)','duration (s)']
         return df
 
     def get_route(self, origin, destination):
