@@ -201,10 +201,11 @@ class MapQuestRouteMatrix:
 class Route(object):
     def __init__(self, route):
         self.route = route
-
+# FIXME: may need rename it as get_duration
     def get_time(self):
         return self.route.get_time()
 
+# FIXME: may need rename it as get_distance
     def get_distance(self):
         return self.route.get_distance()
 
