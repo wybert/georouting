@@ -31,6 +31,7 @@ import georouting
 - [x] Google Maps
 - [ ] add more documentation
 - [x] Bing Maps
+- [ ] OSRM Routing
 - [ ] Fix the update in Pypi
 - [ ] Add more routing services
 - [ ] Add more tests
