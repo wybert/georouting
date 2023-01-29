@@ -11,6 +11,9 @@ import requests
 import json
 
 class GoogleRoute:
+    """ Google route class. 
+    """
+
     def __init__(self, route):
         self.route = route
 
@@ -24,6 +27,10 @@ class GoogleRoute:
         return self.route
 
     def get_route_geopandas(self):
+
+        """
+        
+        """
 
         steps_google = self.route[0]['legs'][0]['steps']
 
