@@ -5,7 +5,7 @@ from georouting.routers.base import WebRouter, Route, OSRMRoute
 
 
 class OSRMRouter(WebRouter):
-    """OSRM router"""
+    """OSRM router. Local base_url can be http://127.0.0.1:5000"""
 
     def __init__(self,mode="driving", timeout=10, language="en",base_url="http://router.project-osrm.org"):
         super().__init__(api_key=None, mode=mode, timeout=timeout, language=language,base_url=None)
@@ -17,18 +17,37 @@ class OSRMRouter(WebRouter):
     def _get_directions_url(self, origin, destination):
         return "%s/route/v1/%s/%f,%f;%f,%f?steps=true&annotations=true&geometries=geojson" % (
             self.base_url, self.mode, origin[1], origin[0], destination[1], destination[0])
-    
+
+
     def _get_matrix_distance_url(self, origins, destinations):
+
+# get the need cal location
+        s = str(list(range(len(origins)))).replace(",",";").replace("[","").replace("]","").replace(" ","")
+        d = str(list(range(
+            len(origins),len(origins)+len(destinations)
+        ))).replace(",",";").replace("[","").replace("]","").replace(" ","")
+
+        
         origins = [str(item[1]) + "," + str(item[0])  for item in origins]
         destinations = [str(item[1]) + "," + str(item[0])  for item in destinations]
         origins = ";".join(origins)
         destinations = ";".join(destinations)
-        return "%s/table/v1/%s/%s;%s?overview=false" % (self.base_url,self.mode,origins,destinations)
+     
+        url = '%s/table/v1/%s/%s;%s?sources=%s&destinations=%s&annotations=duration,distance'%(self.base_url,self.mode,origins,destinations,s,d)
+        return url
 
     def _parse_distance_matrix(self, json_data):
-        df = pd.DataFrame(json_data['durations'])
-        df.columns = json_data['destinations']
-        df.index = json_data['sources']
+        durations = json_data['durations']
+        distances = json_data['distances']
+
+        # flatten the list
+        durations = [item for sublist in durations for item in sublist]
+        distances = [item for sublist in distances for item in sublist]
+
+        # combine the dutation and destinations list to a dataframe
+        print(len(durations),len(distances))
+        df = pd.DataFrame({'distance (m)': durations, 'duration (s)': distances})
+
         return df
 
     def get_route(self, origin, destination):
