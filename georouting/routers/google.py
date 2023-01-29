@@ -1,13 +1,12 @@
 import googlemaps
 import pandas as pd
 
-from georouting.routers.base import WebRouter, RouteMatrix, Route, GoogleRoute
+from georouting.routers.base import WebRouter, Route, GoogleRoute
 
 class GoogleRouter(WebRouter):
     """Google router"""
     def __init__(self, api_key, mode="driving", timeout=10, language="en"):
         super().__init__(api_key, mode=mode)
-        self.base_url = "https://maps.googleapis.com/maps/api/directions/json"
         self.client = googlemaps.Client(key=self.api_key)
 
     # def _get_url(self, origin, destination):
@@ -50,19 +49,20 @@ class GoogleRouter(WebRouter):
 
         return df
 
-    def _get_OD_matrix(self, origins, destinations):
+# could move to the base class
+    # def _get_OD_matrix(self, origins, destinations):
 
-        items = []
-        for i in origins:
-            for j in destinations:
-                item = i + j
-                items.append(item)
-        od_matrix = pd.DataFrame(items, columns=["orgin_lat",
-        "orgin_lon","destination_lat","destination_lon"])
+    #     items = []
+    #     for i in origins:
+    #         for j in destinations:
+    #             item = i + j
+    #             items.append(item)
+    #     od_matrix = pd.DataFrame(items, columns=["orgin_lat",
+    #     "orgin_lon","destination_lat","destination_lon"])
 
-        return od_matrix
+    #     return od_matrix
 
-    def get_route_matrix(self, origins, destinations, append_od=False):
+    def get_distance_matrix(self, origins, destinations, append_od=False):
 
         res = self._get_directions_matrix_request(origins, destinations)
         df = self._parse_json_data(res)
