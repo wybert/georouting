@@ -1,4 +1,5 @@
 import googlemaps
+import pandas as pd
 
 from georouting.routers.base import WebRouter, RouteMatrix, Route, GoogleRoute
 
@@ -14,29 +15,60 @@ class GoogleRouter(WebRouter):
     #         origin[0], origin[1], destination[0], destination[1], self.mode, self.api_key)
     #     return url
     
-    def _get_request(self, origin, destination):
+    def _get_directions_request(self, origin, destination):
         return self.client.directions(origin, destination, self.mode)
 
-# What's the difference between directions and distance_matrix?
+    def _get_directions_matrix_request(self, origins, destinations):
+        return self.client.distance_matrix(origins, destinations, self.mode)
+
+# google direction api returns the route, which also contains the distance and time
+# same as bing api
     def get_route(self, origin, destination):
         
-        route = self._get_request(origin, destination)
+        route = self._get_directions_request(origin, destination)
         route = Route(GoogleRoute(route))
         
         return route
 
-# distance_matrix is a matrix of distance and time between origins and destinations
-# it not contains the route, right?
-    def get_route_matrix(self, origins, destinations):
-        res = self.client.distance_matrix(origins, destinations, self.mode)
-        return res
+# google distance matirx api returns the distance and time matrix not the route
+# so the route matrix can be returned as a pandas dataframe
+# which contains the distance and time matrix
+# same as bing api as well as the ESRI api
+# you can put all the results into a  dataframe
+    def _parse_json_data(self,json_data):
+        
+        results = []
+        for element in json_data['rows']:
+            # print(element)
+            # print(element['elements'])
+            for i in element['elements']:
+                temp = {}
+                temp['distance (m)'] = i['distance']['value']
+                temp['duration (s)'] = i['duration']['value']
+                results.append(temp)
+        df = pd.DataFrame(results)
+
+        return df
+
+    def _get_OD_matrix(self, origins, destinations):
+
+        items = []
+        for i in origins:
+            for j in destinations:
+                item = i + j
+                items.append(item)
+        od_matrix = pd.DataFrame(items, columns=["orgin_lat",
+        "orgin_lon","destination_lat","destination_lon"])
+
+        return od_matrix
+
+    def get_route_matrix(self, origins, destinations, append_od=False):
+
+        res = self._get_directions_matrix_request(origins, destinations)
+        df = self._parse_json_data(res)
+        if append_od:
+            od_matrix = self._get_OD_matrix(origins, destinations)
+            df = pd.concat([od_matrix, df], axis=1)
+        return df
     
-    # This is maybe not needed
-    # add some error handling
-    # def get_route_time_distance(self, origin, destination,timeout=10,language="en"):
-    #     res = self.client.distance_matrix(origin, destination, self.mode)
-    #     if res["rows"][0]["elements"][0]["status"] == "OK":
-    #         return res['rows'][0]["elements"][0]['duration']['value']
-    #     else:
-    #         return None
 
