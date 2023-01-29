@@ -17,24 +17,15 @@ class GoogleRouter(WebRouter):
     def _get_directions_request(self, origin, destination):
         return self.client.directions(origin, destination, self.mode)
 
-    def _get_directions_matrix_request(self, origins, destinations):
+    def _get_distance_matrix_request(self, origins, destinations):
         return self.client.distance_matrix(origins, destinations, self.mode)
-
-# google direction api returns the route, which also contains the distance and time
-# same as bing api
-    def get_route(self, origin, destination):
-        
-        route = self._get_directions_request(origin, destination)
-        route = Route(GoogleRoute(route))
-        
-        return route
 
 # google distance matirx api returns the distance and time matrix not the route
 # so the route matrix can be returned as a pandas dataframe
 # which contains the distance and time matrix
 # same as bing api as well as the ESRI api
 # you can put all the results into a  dataframe
-    def _parse_json_data(self,json_data):
+    def _parse_distance_matrix(self,json_data):
         
         results = []
         for element in json_data['rows']:
@@ -48,6 +39,15 @@ class GoogleRouter(WebRouter):
         df = pd.DataFrame(results)
 
         return df
+
+# google direction api returns the route, which also contains the distance and time
+# same as bing api
+    def get_route(self, origin, destination):
+        
+        route = self._get_directions_request(origin, destination)
+        route = Route(GoogleRoute(route))
+        
+        return route
 
 # could move to the base class
     # def _get_OD_matrix(self, origins, destinations):
@@ -64,10 +64,10 @@ class GoogleRouter(WebRouter):
 
     def get_distance_matrix(self, origins, destinations, append_od=False):
 
-        res = self._get_directions_matrix_request(origins, destinations)
-        df = self._parse_json_data(res)
+        res = self._get_distance_matrix_request(origins, destinations)
+        df = self._parse_distance_matrix(res)
         if append_od:
-            od_matrix = self._get_OD_matrix(origins, destinations)
+            od_matrix = super()._get_OD_matrix(origins, destinations)
             df = pd.concat([od_matrix, df], axis=1)
         return df
     

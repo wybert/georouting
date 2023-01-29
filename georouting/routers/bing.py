@@ -11,20 +11,39 @@ class BingRouter(WebRouter):
         super().__init__(api_key, mode=mode, timeout=timeout, language=language)
         self.base_url = "https://dev.virtualearth.net/REST/v1/Routes/"
 
-    def _get_url(self, origin, destination):
+    def _get_directions_url(self, origin, destination):
+        return "https://dev.virtualearth.net/REST/v1/Routes/Driving?wp.0=%f,%f&wp.1=%f,%f&key=%s" % (
+            origin[0], origin[1], destination[0], destination[1], self.api_key)
+
+    def _get_matrix_distance_url(self, origin, destination):
         return "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=%f,%f&destinations=%f,%f&travelMode=%s&key=%s" % (
             origin[0], origin[1], destination[0], destination[1], self.mode, self.api_key)
 
-    def _get_request(self, origin, destination):
-        url = self._get_url(origin, destination)
-        return super()._get_request(url)
+    def _parse_distance_matrix(self, json_data):
+        results = []
+        for element in json_data['resourceSets'][0]['resources'][0]['results']:
+            temp = {}
+            temp['distance (m)'] = element['travelDistance']
+            temp['duration (s)'] = element['travelDuration']
+            results.append(temp)
+        df = pd.DataFrame(results)
+
+        return df
 
     def get_route(self, origin, destination):
-        route = self._get_request(origin, destination)
+
+        url = self._get_directions_url(origin, destination)
+        route = super()._get_request(url)
         route = Route(BingRoute(route))
         return route
+    
+    def get_distance_matrix(self, origins, destinations,append_od=False):
+        url = self._get_matrix_distance_url(origins, destinations)
+        res = super()._get_request(url)
+        distance_matrix = self._parse_distance_matrix(res)
+        if append_od:
+            od_matrix = super()._get_OD_matrix(origins, destinations)
+            distance_matrix = pd.concat([od_matrix, distance_matrix], axis=1)
 
-    def get_distance_matrix(self, origins, destinations):
-        url = self._get_url(origins, destinations)
-        return super()._get_request(url)
+        return distance_matrix
 

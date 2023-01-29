@@ -5,6 +5,7 @@ import geopandas as gpd
 import polyline
 import pandas as pd
 from shapely.geometry import LineString
+import requests
 # make a class for the route object and the route matrix object
 # the route object can have several methods to get the information, like time, distance, route, etc.
 # what's the difference between the route object and the route matrix object?
@@ -137,12 +138,6 @@ class BaseRouter(object):
     def __init__(self, mode="driving"):
         self.mode = mode
     
-    def _get_url(self, origin, destination):
-        pass
-
-    def _get_request(self):
-        raise NotImplementedError
-    
     def _get_OD_matrix(self, origins, destinations):
 
         items = []
@@ -183,10 +178,15 @@ class WebRouter(BaseRouter):
         self.api_key = api_key
         self.timeout = timeout
         self.language = language
-        self.base_url = base_url
         super().__init__(mode=mode)
 
-
+    def _get_request(self,url):
+        
+        try:
+            response = requests.get(url, timeout=self.timeout)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as errh:
+            print ("Http Error:",errh)
 
 # make a class for local router 
 class LocalRouter(BaseRouter):
