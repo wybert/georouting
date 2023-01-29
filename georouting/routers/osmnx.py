@@ -56,23 +56,25 @@ class OSMNXRouter(object):
 
 
 
-    def get_route_time_distance(self, origin, destination):
+    def get_route_time_distance(self, origins, destinations):
         # switch longitude and latitude
-        origin = (origin[1],origin[0])
-        destination = (destination[1],destination[0])
+        origin = (origins[1],origins[0])
+        destination = (destinations[1],destinations[0])
+
         # Find the nearest node to origin and destination
-        origin_node = ox.distance.nearest_nodes(self.G, *origin)
-        destination_node = ox.distance.nearest_nodes(self.G, *destination)
+        origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
+        destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
 
         if self.engine == "networkx":
         # Find the shortest path use networkx
-        # route = nx.shortest_path(self.G, origin_node, destination_node, weight='travel_time')
+            routes = ox.shortest_path(self.G, origin_nodes, destination_nodes, weight='travel_time',cpus=None)
         # Get the travel time
-            travel_time = nx.shortest_path_length(self.G, origin_node, destination_node, weight='travel_time')
+            travel_times = [self.G[u][v][0]['travel_time'] for u, v in zip(routes[:-1], routes[1:])]
 
         elif self.engine == "igraph":
             # find the shortest path use igraph
-            travel_time = self._get_short_ig(self.node_dict[origin_node],self.node_dict[destination_node],"travel_time")
+            pass
+            # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
         else:
             raise ValueError("engine should be networkx or igraph")
         return travel_time
