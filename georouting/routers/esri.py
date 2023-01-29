@@ -1,8 +1,8 @@
 import requests
 import json
-# from georouting.routers.base import BaseRouter
+from georouting.routers.base import WebRouter, Route, EsriRoute
 
-class EsriRouter(object):
+class EsriRouter(WebRouter(api_key, mode="driving", timeout=10, language="en",base_url=None))):
     """Esri router"""
 
     def __init__(self,key,mode="driving"):

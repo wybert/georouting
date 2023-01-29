@@ -129,7 +129,22 @@ class OSRMRoute:
         steps["speed (m/s)"] = steps["distance (m)"] / steps["duration (s)"]
         return steps
 
+class EsriRoute:
 
+    def __init__(self, route):
+        self.route = route
+
+    def get_duration(self):
+        return self.route['routes']['features'][0]['attributes']['Total_TravelTime']
+
+    def get_distance(self):
+        return self.route['routes']['features'][0]['attributes']['Total_Miles'] * 1609.344
+
+    def get_route(self):
+        return self.route
+
+    def get_route_geopandas(self):
+        raise NotImplementedError
 
 
 class MapboxRoute:
