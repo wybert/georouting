@@ -39,6 +39,10 @@ class BingRouter(WebRouter):
         return route
     
     def get_distance_matrix(self, origins, destinations,append_od=False):
+
+        # FIXME: the url seems to be different from google and bing 
+        # and it enable to get part of the matrix, that's awesome, acutally 
+        # but can I do the simillar thing for google and bing? 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)
         distance_matrix = self._parse_distance_matrix(res)

@@ -8,6 +8,7 @@ import shapely.geometry as sg
 import numpy as np
 from shapely.geometry import LineString
 import requests
+import json
 
 class GoogleRoute:
     def __init__(self, route):
@@ -98,6 +99,38 @@ class BingRoute:
         gdf['speed (m/s)'] = gdf['distance (m)'] / gdf['duration (s)']
 
         return gdf
+
+class OSRMRoute:
+
+    def __init__(self, route):
+        self.route = route
+
+    def get_duration(self):
+        return self.route['routes'][0]['duration']
+
+    def get_distance(self):
+        return self.route['routes'][0]['distance']
+
+    def get_route(self):
+        return self.route
+
+    def get_route_geopandas(self):
+        
+        steps = []
+        for step in self.route["routes"][0]["legs"][0]["steps"]:
+            temp = {}
+            temp["geometry"] = gpd.read_file(json.dumps(step["geometry"]))["geometry"].values[0]
+            temp["duration (s)"]= step["duration"]
+            temp["distance (m)"] = step["distance"]
+            steps.append(temp)
+        steps = pd.DataFrame(steps)
+        # steps["geometry"] = steps["geometry"].map(gpd.read_file)
+        steps = gpd.GeoDataFrame(steps,geometry = "geometry",crs="4326")
+        steps["speed (m/s)"] = steps["distance (m)"] / steps["duration (s)"]
+        return steps
+
+
+
 
 class MapboxRoute:
 
