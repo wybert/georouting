@@ -4,6 +4,8 @@
 import geopandas as gpd
 import polyline
 import pandas as pd
+import shapely.geometry as sg
+import numpy as np
 from shapely.geometry import LineString
 import requests
 
@@ -72,8 +74,30 @@ class BingRoute:
         return self.route
 
     def get_route_geopandas(self):
-        # TODO: implement this
-        raise NotImplementedError
+        
+        durations = [item['travelDuration'] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
+        distances = [item['travelDistance'] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
+        endPathIndices = [item['details'][0]['endPathIndices'][0] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
+        startPathIndices = [item['details'][0]['startPathIndices'][0] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
+        points = self.route['resourceSets'][0]['resources'][0]['routePath']['line']['coordinates']
+
+        lines = []
+        for start,end in zip(startPathIndices,endPathIndices):
+            points_ = points[start:end]
+            # change the lon lat to lat lon
+            points_ = np.array(points_)
+            # print(points_.shape)
+            if points_.shape[0] > 1:
+                points_ = points_[:,::-1]
+            else:
+                points_ = []
+            lines.append(sg.LineString(points_))
+
+        df = pd.DataFrame({'distance (m)':distances,'duration (s)':durations,'geometry':lines})
+        gdf = gpd.GeoDataFrame(df,geometry='geometry',crs="EPSG:4326")
+        gdf['speed (m/s)'] = gdf['distance (m)'] / gdf['duration (s)']
+
+        return gdf
 
 class MapboxRoute:
 

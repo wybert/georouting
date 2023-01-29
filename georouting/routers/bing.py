@@ -13,7 +13,7 @@ class BingRouter(WebRouter):
 
     def _get_directions_url(self, origin, destination):
 
-        return "%s%s?wp.0=%f,%f&wp.1=%f,%f&key=%s" % (self.base_url,self.mode,
+        return "%s%s?wp.0=%f,%f&wp.1=%f,%f&routeAttributes=routePath&key=%s" % (self.base_url,self.mode,
             origin[0], origin[1], destination[0], destination[1], self.api_key)
 
     def _get_matrix_distance_url(self, origins, destinations):
