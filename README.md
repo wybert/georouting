@@ -30,7 +30,7 @@ import georouting
 
 - [x] Google Maps
 - [ ] add more documentation
-- [ ] Bing Maps
+- [x] Bing Maps
 - [ ] Fix the update in Pypi
 - [ ] Add more routing services
 - [ ] Add more tests
