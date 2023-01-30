@@ -4,8 +4,14 @@ import pandas as pd
 from georouting.routers.base import WebRouter, Route, OSRMRoute
 
 
+# add document for this class
 class OSRMRouter(WebRouter):
-    """OSRM router. Local base_url can be http://127.0.0.1:5000"""
+    """
+    OSRM router. 
+    The base_url is the url of the osrm server,
+    the default is the public server of osrm,
+    you can also use your own server.
+    """
 
     def __init__(self,mode="driving", timeout=10, language="en",base_url="http://router.project-osrm.org"):
         super().__init__(api_key=None, mode=mode, timeout=timeout, language=language,base_url=None)
@@ -13,8 +19,10 @@ class OSRMRouter(WebRouter):
         self.base_url = base_url
 
 
-
     def _get_directions_url(self, origin, destination):
+        """
+        Helper 
+        """
         return "%s/route/v1/%s/%f,%f;%f,%f?steps=true&annotations=true&geometries=geojson" % (
             self.base_url, self.mode, origin[1], origin[0], destination[1], destination[0])
 
@@ -67,20 +75,4 @@ class OSRMRouter(WebRouter):
 
         return distance_matrix
 
-    # def _get_url(self, origin, destination):
-    #     return "http://router.project-osrm.org/route/v1/%s/%f,%f;%f,%f?overview=false" % (
-    #         self.mode, origin[1], origin[0], destination[1], destination[0])
-
-    # def get_route_time_distance(self, origin, destination):
-    #     url = self._get_url(origin, destination)
-    #     resp = requests.get(url)
-    #     res = json.loads(resp.content)
-    #     self.raw = res
-
-    #     if res['code'] == "Ok":
-
-    #         return res["routes"][0]['duration']
-    #     else:
-    #         print(res)
-    #         return None
-
+  

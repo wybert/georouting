@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 import geopandas as gpd
@@ -10,55 +9,95 @@ from shapely.geometry import LineString
 import requests
 import json
 
+
 class GoogleRoute:
-    """ Google route class. 
+    """
+    The class "GoogleRoute" which allows to retrieve information from a route provided as an argument.
+
+    The class has the following methods:
+
+    get_duration: Returns the duration of the route in seconds.
+
+    get_distance: Returns the distance of the route in meters.
+
+    get_route: Returns the complete route information.
+
+    get_route_geopandas: Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route.
+
+    It is assumed that the polyline module is used for decoding the polyline into a LineString geometry. The GeoDataFrame is created with a specified coordinate reference system (CRS) of "4326".
     """
 
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        return self.route[0]['legs'][0]['duration']['value']
+
+        """
+        Returns the duration of the route in seconds.
+
+        """
+        return self.route[0]["legs"][0]["duration"]["value"]
 
     def get_distance(self):
-        return self.route[0]['legs'][0]['distance']['value']
+        """
+        Returns the distance of the route in meters.
+        """
+        return self.route[0]["legs"][0]["distance"]["value"]
 
     def get_route(self):
+        """
+        Returns the complete route information.
+        """
         return self.route
 
     def get_route_geopandas(self):
 
         """
-        
+        Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route. It is assumed that the polyline module is used for decoding the polyline into a LineString geometry. The GeoDataFrame is created with a specified coordinate reference system (CRS) of "4326".
+
         """
 
-        steps_google = self.route[0]['legs'][0]['steps']
+        steps_google = self.route[0]["legs"][0]["steps"]
 
         google_route1 = []
         for step in steps_google:
             step_g = {}
             step_g["distance (m)"] = step["distance"]["value"]
             step_g["duration (s)"] = step["duration"]["value"]
-            step_g["geometry"] = polyline.decode(step['polyline']["points"], 5,
-                        geojson=True
-                        )
+            step_g["geometry"] = polyline.decode(
+                step["polyline"]["points"], 5, geojson=True
+            )
             step_g["geometry"] = LineString(step_g["geometry"])
             google_route1.append(step_g)
-        google_route1 = gpd.GeoDataFrame(google_route1,geometry="geometry",crs = "4326")
-        google_route1["speed (m/s)"] = google_route1["distance (m)"] /  google_route1["duration (s)"]  
+        google_route1 = gpd.GeoDataFrame(google_route1, geometry="geometry", crs="4326")
+        google_route1["speed (m/s)"] = (
+            google_route1["distance (m)"] / google_route1["duration (s)"]
+        )
         return google_route1
 
 
 class BingRoute:
+    """
+    BingRoute class that allows you to extract various information from a route stored in a dictionary. It has the following functions:
+
+    get_duration: Returns the travel duration in seconds.
+    get_distance: Returns the travel distance in meters.
+    get_route: Returns the entire route in a dictionary.
+    get_route_geopandas: Returns the route information in a GeoPandas dataframe.
+
+    This function extracts the duration and distance information for each leg of the route, creates a list of shapely LineStrings representing the route, and then creates a GeoDataFrame with columns for the duration, distance, and geometry. Additionally, it calculates the speed in meters per second for each leg.
+
+    The class is designed to work with data returned by the Bing Maps REST Services API, as the data is stored in a dictionary with a specific structure.
+    """
+
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        " get the duration in seconds"
-        durationUnit = self.route['resourceSets'][0]["resources"][0]["durationUnit"]
-        travelDuration = self.route['resourceSets'][0]["resources"][0]["travelDuration"]
-        
-        
+        "get the travel duration in seconds"
+        durationUnit = self.route["resourceSets"][0]["resources"][0]["durationUnit"]
+        travelDuration = self.route["resourceSets"][0]["resources"][0]["travelDuration"]
+
         if durationUnit == "Second":
             return travelDuration
         elif durationUnit == "Minute":
@@ -69,83 +108,159 @@ class BingRoute:
             raise ValueError("durationUnit is not recognized")
 
     def get_distance(self):
-        " get the distance in meters"
-        distanceUnit = self.route['resourceSets'][0]["resources"][0]["distanceUnit"]
-        travelDistance = self.route['resourceSets'][0]["resources"][0]["travelDistance"]
-        if distanceUnit in ["mi","Mile"]:
+        "get the travel distance in meters"
+        distanceUnit = self.route["resourceSets"][0]["resources"][0]["distanceUnit"]
+        travelDistance = self.route["resourceSets"][0]["resources"][0]["travelDistance"]
+        if distanceUnit in ["mi", "Mile"]:
             travelDistance = travelDistance * 1609.344
-        elif distanceUnit in ["km","Kilometer"]:
+        elif distanceUnit in ["km", "Kilometer"]:
             travelDistance = travelDistance * 1000
         return travelDistance
 
     def get_route(self):
+        "get the entire route in a dictionary"
         return self.route
 
     def get_route_geopandas(self):
-        
-        durations = [item['travelDuration'] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
-        distances = [item['travelDistance'] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
-        endPathIndices = [item['details'][0]['endPathIndices'][0] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
-        startPathIndices = [item['details'][0]['startPathIndices'][0] for item in self.route['resourceSets'][0]['resources'][0]['routeLegs'][0]['itineraryItems']]
-        points = self.route['resourceSets'][0]['resources'][0]['routePath']['line']['coordinates']
+        """
+        This function extracts the duration and distance information for each leg of the route, creates a list of shapely LineStrings representing the route, and then creates a GeoDataFrame with columns for the duration, distance, and geometry. Additionally, it calculates the speed in meters per second for each leg.
+
+        Returns the route information in a GeoPandas dataframe.
+
+        """
+        durations = [
+            item["travelDuration"]
+            for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
+                "itineraryItems"
+            ]
+        ]
+        distances = [
+            item["travelDistance"]
+            for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
+                "itineraryItems"
+            ]
+        ]
+        endPathIndices = [
+            item["details"][0]["endPathIndices"][0]
+            for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
+                "itineraryItems"
+            ]
+        ]
+        startPathIndices = [
+            item["details"][0]["startPathIndices"][0]
+            for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
+                "itineraryItems"
+            ]
+        ]
+        points = self.route["resourceSets"][0]["resources"][0]["routePath"]["line"][
+            "coordinates"
+        ]
 
         lines = []
-        for start,end in zip(startPathIndices,endPathIndices):
+        for start, end in zip(startPathIndices, endPathIndices):
             points_ = points[start:end]
             # change the lon lat to lat lon
             points_ = np.array(points_)
             # print(points_.shape)
             if points_.shape[0] > 1:
-                points_ = points_[:,::-1]
+                points_ = points_[:, ::-1]
             else:
                 points_ = []
             lines.append(sg.LineString(points_))
 
-        df = pd.DataFrame({'distance (m)':distances,'duration (s)':durations,'geometry':lines})
-        gdf = gpd.GeoDataFrame(df,geometry='geometry',crs="EPSG:4326")
-        gdf['speed (m/s)'] = gdf['distance (m)'] / gdf['duration (s)']
+        df = pd.DataFrame(
+            {"distance (m)": distances, "duration (s)": durations, "geometry": lines}
+        )
+        gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+        gdf["speed (m/s)"] = gdf["distance (m)"] / gdf["duration (s)"]
 
         return gdf
 
+
 class OSRMRoute:
+
+    """
+    This class represents a route returned by the OpenStreetMap Routing Machine API.
+
+    Attributes:
+    route (dict): A dictionary containing the JSON response from the OSRM API.
+
+    Methods:
+    get_duration() -> float: Returns the duration of the route in seconds.
+    get_distance() -> float: Returns the distance of the route in meters.
+    get_route() -> dict: Returns the full route as a dictionary.
+    get_route_geopandas() -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame. The GeoDataFrame contains columns for 'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+    """
 
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        return self.route['routes'][0]['duration']
+        """
+        Get the duration of the route in seconds.
+        """
+        return self.route["routes"][0]["duration"]
 
     def get_distance(self):
-        return self.route['routes'][0]['distance']
+        """
+        Get the distance of the route in meters.
+        """
+        return self.route["routes"][0]["distance"]
 
     def get_route(self):
+        """
+        Get the full route information as a dictionary.
+        """
         return self.route
 
     def get_route_geopandas(self):
-        
+        """
+        Get the route as a GeoDataFrame. The GeoDataFrame contains columns for 'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+        """
+
         steps = []
         for step in self.route["routes"][0]["legs"][0]["steps"]:
             temp = {}
-            temp["geometry"] = gpd.read_file(json.dumps(step["geometry"]))["geometry"].values[0]
-            temp["duration (s)"]= step["duration"]
+            temp["geometry"] = gpd.read_file(json.dumps(step["geometry"]))[
+                "geometry"
+            ].values[0]
+            temp["duration (s)"] = step["duration"]
             temp["distance (m)"] = step["distance"]
             steps.append(temp)
         steps = pd.DataFrame(steps)
         # steps["geometry"] = steps["geometry"].map(gpd.read_file)
-        steps = gpd.GeoDataFrame(steps,geometry = "geometry",crs="4326")
+        steps = gpd.GeoDataFrame(steps, geometry="geometry", crs="4326")
         steps["speed (m/s)"] = steps["distance (m)"] / steps["duration (s)"]
         return steps
 
+
 class EsriRoute:
+    """
+    The EsriRoute class is a class for handling a route obtained from the Esri ArcGIS routing service.
+
+    The class has the following methods:
+
+    get_duration: returns the total travel time of the route.
+
+    get_distance: returns the total distance of the route in meters.
+
+    get_route: returns the entire route as a dictionary.
+
+    get_route_geopandas: raises a NotImplementedError. This method is not yet implemented and will be added in the future.
+
+
+    """
 
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        return self.route['routes']['features'][0]['attributes']['Total_TravelTime']
+        return self.route["routes"]["features"][0]["attributes"]["Total_TravelTime"]
 
     def get_distance(self):
-        return self.route['routes']['features'][0]['attributes']['Total_Miles'] * 1609.344
+        return (
+            self.route["routes"]["features"][0]["attributes"]["Total_Miles"] * 1609.344
+        )
 
     def get_route(self):
         return self.route
@@ -155,15 +270,14 @@ class EsriRoute:
 
 
 class MapboxRoute:
-
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        return self.route['routes'][0]['duration']
+        return self.route["routes"][0]["duration"]
 
     def get_distance(self):
-        return self.route['routes'][0]['distance']
+        return self.route["routes"][0]["distance"]
 
     def get_route(self):
         return self.route
@@ -173,15 +287,14 @@ class MapboxRoute:
 
 
 class HereRoute:
-
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        return self.route['response']['route'][0]['summary']['travelTime']
+        return self.route["response"]["route"][0]["summary"]["travelTime"]
 
     def get_distance(self):
-        return self.route['response']['route'][0]['summary']['distance']
+        return self.route["response"]["route"][0]["summary"]["distance"]
 
     def get_route(self):
         return self.route
@@ -191,15 +304,14 @@ class HereRoute:
 
 
 class MapQuestRoute:
-
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
-        return self.route['route']['time']
+        return self.route["route"]["time"]
 
     def get_distance(self):
-        return self.route['route']['distance']
+        return self.route["route"]["distance"]
 
     def get_route(self):
         return self.route
@@ -207,29 +319,60 @@ class MapQuestRoute:
     def get_route_geopandas(self):
         raise NotImplementedError
 
+
 class Route(object):
+    """
+    A wrapper class that wraps different routing engines' route objects.
+    """
+
     def __init__(self, route):
+        """
+        Initialize a Route object by passing the routing engine's route object.
+
+        :param route: An instance of a routing engine's route object
+        """
         self.route = route
-# FIXME: may need rename it as get_duration
+
     def get_duration(self):
+
+        """
+        Get the duration of the route.
+        """
         return self.route.get_duration()
 
-# FIXME: may need rename it as get_distance
+    # FIXME: may need rename it as get_distance
     def get_distance(self):
+
+        """
+        Get the distance of the route.
+        """
         return self.route.get_distance()
 
     def get_route(self):
+        """
+        Get the raw route information.
+        """
         return self.route.get_route()
 
     def get_route_geopandas(self):
+        """
+        Get the route information as a GeoDataFrame.
+        """
         return self.route.get_route_geopandas()
 
 
 # base class for routers
 class BaseRouter(object):
+
+    """
+    The class BaseRouter serves as a base class for routers, which are used to compute the optimal route between two points. The class has an instance variable mode, which is a string that defines the mode of transportation (e.g. "driving").
+
+    The BaseRouter class has a single method _get_OD_matrix, which takes two arguments origins and destinations and returns an origin-destination matrix. The method creates an empty list items and loops through each origin and destination pair, appending the concatenated origin and destination to the list. The origin-destination matrix is then created from the list items and returned.
+    """
+
     def __init__(self, mode="driving"):
         self.mode = mode
-    
+
     def _get_OD_matrix(self, origins, destinations):
 
         items = []
@@ -237,52 +380,48 @@ class BaseRouter(object):
             for j in destinations:
                 item = i + j
                 items.append(item)
-        od_matrix = pd.DataFrame(items, columns=["orgin_lat",
-        "orgin_lon","destination_lat","destination_lon"])
+        od_matrix = pd.DataFrame(
+            items,
+            columns=["orgin_lat", "orgin_lon", "destination_lat", "destination_lon"],
+        )
 
         return od_matrix
-        
 
-#   FIXME: if it can return the object which enable to do the further analysis, and this object 
-#   can have several methods to get the information, like time, distance, route, etc.
     def get_route(self, origin, destination):
-        
+
         return Route(self._get_request(origin, destination))
 
-    # def get_route_matrix(self, origins, destinations):
-        
-    #     return RouteMatrix(self._get_request(origins, destinations))
 
-    # def get_route_time_distance(self, origin, destination):
-    #     raise NotImplementedError
-
-    # def get_route_time_distance_matrix(self, origins, destinations):
-    #     raise NotImplementedError
-
-    # def get_route_geopandas(self, origin, destination):
-    #     raise NotImplementedError
-
-    # def get_route_geopandas_matrix(self, origins, destinations):
-    #     raise NotImplementedError
-
+# add documenation for the class
 class WebRouter(BaseRouter):
-    def __init__(self, api_key, mode="driving", timeout=10, language="en",base_url=None):
+    """
+    The WebRouter class is a class for handling a route obtained from a web-based routing service.
+
+    """
+
+    def __init__(
+        self, api_key, mode="driving", timeout=10, language="en", base_url=None
+    ):
         self.api_key = api_key
         self.timeout = timeout
         self.language = language
         super().__init__(mode=mode)
 
-    def _get_request(self,url):
-        
+    def _get_request(self, url):
+        """
+        Helper function to make a request to the web-based routing service.
+        """
+
         try:
             response = requests.get(url, timeout=self.timeout)
             response.raise_for_status()
         except requests.exceptions.HTTPError as errh:
-            print ("Http Error:",errh)
+            print("Http Error:", errh)
 
         return response.json()
 
-# make a class for local router 
+
+# make a class for local router
 class LocalRouter(BaseRouter):
     def __init__(self, mode="driving"):
         self.mode = mode
