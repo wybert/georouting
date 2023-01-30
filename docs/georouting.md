@@ -1,13 +1,19 @@
  
-# georouting module
+# Georouting 
 
-::: georouting.georouting
+<!-- ::: georouting.georouting -->
+## Routers
 
-::: georouting.routers.google.GoogleRouter
-    show_source: false
-    
-::: georouting.routers.osrm.OSRMRouter
+### GoogleRouter
+#### ::: georouting.routers.google.GoogleRouter
     show_source: false
 
-::: georouting.routers.bing.BingRouter
+### OSRMRouter
+#### ::: georouting.routers.osrm.OSRMRouter
     show_source: false
+
+### BingRouter
+#### ::: georouting.routers.bing.BingRouter
+    show_source: false
+
+<!-- FIXME: add more class here -->
