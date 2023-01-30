@@ -10,7 +10,7 @@
 [![image](https://github.com/giswqs/geemap/workflows/docs/badge.svg)](https://wybert.github.io/georouting/)
 <!-- [![image](https://github.com/giswqs/geemap/workflows/build/badge.svg)](https://github.com/giswqs/geemap/actions?query=workflow%3Abuild) -->
 <!-- [![image](https://img.shields.io/badge/YouTube-Channel-red)](https://youtube.com/@giswqs) -->
-[![image](https://img.shields.io/twitter/follow/giswqs?style=social)](https://twitter.com/fxk123)
+[![image](https://img.shields.io/twitter/follow/fxk123?style=social)](https://twitter.com/fxk123)
 [![image](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- [![image](https://joss.theoj.org/papers/10.21105/joss.02305/status.svg)](https://joss.theoj.org/papers/10.21105/joss.02305) -->
 
