@@ -11,6 +11,11 @@ class OSRMRouter(WebRouter):
     The base_url is the url of the osrm server,
     the default is the public server of osrm,
     you can also use your own server.
+
+    mode: The mode of transportation to use for routing, default is "driving".
+    timeout: The number of seconds to wait for a response from the API, default is 10.
+    language: The language to use for the API response, default is "en".
+    base_url: The base URL for the OSRM API, default is "http://router.project-osrm.org".
     """
 
     def __init__(
@@ -28,7 +33,7 @@ class OSRMRouter(WebRouter):
 
     def _get_directions_url(self, origin, destination):
         """
-        Helper
+        Helper function for getting the URL for a directions request (To request a route between the given origin and destination coordinates).
         """
         return (
             "%s/route/v1/%s/%f,%f;%f,%f?steps=true&annotations=true&geometries=geojson"
@@ -43,6 +48,9 @@ class OSRMRouter(WebRouter):
         )
 
     def _get_matrix_distance_url(self, origins, destinations):
+        """
+        Helper function for getting the URL for a distance matrix request. Generates the URL to request a distance matrix between the given lists of origins and destinations coordinates.
+        """
 
         # get the need cal location
         s = (
@@ -72,6 +80,9 @@ class OSRMRouter(WebRouter):
         return url
 
     def _parse_distance_matrix(self, json_data):
+        """
+        Helper function for parsing the distance matrix response. Parses the response from the distance matrix API and returns a dataframe of durations and distances.
+        """
         durations = json_data["durations"]
         distances = json_data["distances"]
 
@@ -86,12 +97,18 @@ class OSRMRouter(WebRouter):
         return df
 
     def get_route(self, origin, destination):
+        """
+        Get the route between the given origin and destination coordinates.  Requests a route from the API using the _get_directions_url method and returns the result as a Route object.
+        """
         url = self._get_directions_url(origin, destination)
         route = super()._get_request(url)
         route = Route(OSRMRoute(route))
         return route
 
     def get_distance_matrix(self, origins, destinations, append_od=False):
+        """
+        Get the distance matrix between the given lists of origins and destinations coordinates. Requests a distance matrix from the API using the _get_matrix_distance_url method and returns the result as a dataframe. If append_od is set to True, the origins and destinations are also included in the dataframe.
+        """
 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)
