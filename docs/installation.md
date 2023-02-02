@@ -5,7 +5,7 @@
 To install georouting, run this command in your terminal:
 
 ```
-pip install georouting
+pip install git+https://github.com/wybert/georouting.git
 ```
 
 This is the preferred method to install georouting, as it will always install the most recent stable release.
