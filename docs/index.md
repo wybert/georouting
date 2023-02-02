@@ -1,5 +1,5 @@
 
-![georouting](img/georouting%20icon2.png)
+![georouting](img/georouting.png)
 
 
 [![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
