@@ -6,15 +6,19 @@ repo_url: https://github.com/wybert/georouting
 
 theme:
     palette:
-        scheme: preference
+        # scheme: preference
+        scheme: default
+
     name: material
-    icon: https://raw.githubusercontent.com/wybert/georouting/main/docs/images/georouting%20icon.svg
+    logo: img/georouting_icon.png
+    favicon: img/favicon.ico
+    # icon: https://raw.githubusercontent.com/wybert/georouting/main/docs/images/georouting%20icon.svg
         # repo: fontawesome/brands/github
     features:
         - navigation.instant
         - search.highlight
-        # - navigation.expand
-        # - navigation.tabs
+        - navigation.expand
+        - navigation.tabs
     custom_dir: "docs/overrides"
 
 plugins:
@@ -39,7 +43,8 @@ markdown_extensions:
 #     analytics:
 #         provider: google
 #         property: UA-XXXXXXXXX-X
-
+extra_css:
+    - stylesheets/extra.css
 nav:
     - Home: index.md
     - Installation: installation.md
