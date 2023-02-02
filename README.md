@@ -1,5 +1,5 @@
 
-![georouting](https://raw.githubusercontent.com/wybert/georouting/main/docs/images/georouting%20icon2.png)
+![georouting](docs/img/georouting%20icon2.png)
 
 [![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
 [![image](https://img.shields.io/conda/vn/conda-forge/georouting.svg)](https://anaconda.org/conda-forge/georouting)
