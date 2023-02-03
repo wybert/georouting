@@ -55,7 +55,17 @@ class GoogleRouter(WebRouter):
 
     def get_distance_matrix(self, origins, destinations, append_od=False):
         """
-        This method returns a Pandas dataframe representing a distance matrix between the origins and destinations points. It calls the _get_distance_matrix_request method to send a distance matrix request to the Google Maps API, and then parses the returned data using the _parse_distance_matrix method. The optional append_od parameter, when set to True, causes the method to also return a matrix of origin-destination pairs.
+        This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
+        all possible combinations between each origin and each destination. If you want just
+        return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+        
+        The origins and destinations parameters are lists of origins and destinations.
+
+        If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
+        Here is an example of how to use this method:
+        # TODO: add example
+
         """
         res = self._get_distance_matrix_request(origins, destinations)
         df = self._parse_distance_matrix(res)
@@ -63,3 +73,16 @@ class GoogleRouter(WebRouter):
             od_matrix = super()._get_OD_matrix(origins, destinations)
             df = pd.concat([od_matrix, df], axis=1)
         return df
+    
+    def get_distances_batch(self, origins, destinations, append_od=False):
+        """
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
+        
+        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+        """
+
+        # raise the not implemnt error
+        raise NotImplementedError
+
