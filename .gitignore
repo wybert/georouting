@@ -109,3 +109,6 @@ nosetests/dev-testings.ipynb
 notebooks/dev-testing.ipynb
 notebooks/dev-testing.ipynb
 notebooks/cache/
+georouting/.DS_Store
+.DS_Store
+.DS_Store
