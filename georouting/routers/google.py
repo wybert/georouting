@@ -45,9 +45,20 @@ class GoogleRouter(WebRouter):
         return df
 
     def get_route(self, origin, destination):
+        
         """
-        This method returns a Route object representing the route between the origin and destination points. It calls the _get_directions_request method to send a directions request to the Google Maps API, and then creates a Route object using the returned data.
+        This method returns a Route object representing the route between the origin and destination points. 
+        The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+        The orgin and destination parameters should be in the form of iterable objects with two elements, such as  
+        (latitude, longitude) or [latitude, longitude].
+
+        The returned Route object has the following functions:
+        - `get_distance()` returns the distance of the route in meters.
+        - `get_duration()` returns the duration of the route in seconds.
+        - `get_route()` returns the raw route data returned as a dictionary.
+        - `get_route_geodataframe()` returns the route as a GeoDataFrame.
         """
+
         route = self._get_directions_request(origin, destination)
         route = Route(GoogleRoute(route))
 
