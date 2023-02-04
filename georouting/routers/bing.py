@@ -8,7 +8,7 @@ import json
 # smilarly to google.py, we need to improve the documentation
 class BingRouter(WebRouter):
     """
-    Bing Maps API router.
+    Bing Maps router.
     The BingRouter class is a subclass of the WebRouter class and is used for routing using the Bing Maps API.
     This class is designed to provide a convenient and easy-to-use interface for interacting with the Bing Maps API.
 
@@ -27,6 +27,8 @@ class BingRouter(WebRouter):
     language : str
         The language to be used in API requests.
 
+    It will return a router object that can be used to get routes and distance matrices.
+
     Attributes
     ----------
     api_key : str
@@ -40,10 +42,6 @@ class BingRouter(WebRouter):
 
     language : str
         The language to be used in API requests.
-
-    base_url : str
-        The base URL for the Bing Maps API.
-
     """
 
     def __init__(self, api_key, mode="driving", timeout=10, language="en"):
@@ -91,17 +89,31 @@ class BingRouter(WebRouter):
 
     def get_route(self, origin, destination):
         """
-        Get a route between two points.
+        This method returns a Route object representing the route between the origin and destination points. 
+        The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+        The orgin and destination parameters should be in the form of iterable objects with two elements, such as  
+        (latitude, longitude) or [latitude, longitude].
+
         Parameters
         ----------
-        origin : tuple
-            The origin point.
-        destination : tuple
-            The destination point.
+        origin : iterable objects
+            The origin point. Iterable objects with two elements, such as  
+        (latitude, longitude) or [latitude, longitude]
+        destination : iterable objects
+            The destination point. Iterable objects with two elements, such as  
+        (latitude, longitude) or [latitude, longitude]
+
         Returns
         -------
-        route : Route
+        route : Route object
             The route between the origin and destination.
+
+        The returned Route object has the following functions:
+        - `get_distance()` returns the distance of the route in meters.
+        - `get_duration()` returns the duration of the route in seconds.
+        - `get_route()` returns the raw route data returned as a dictionary.
+        - `get_route_geodataframe()` returns the route as a GeoDataFrame.
+        
         """
 
         url = self._get_directions_url(origin, destination)

@@ -5,30 +5,64 @@ from georouting.routers.base import WebRouter, Route, GoogleRoute
 
 
 class GoogleRouter(WebRouter):
-    """Google router. The GoogleRouter class is a subclass of the WebRouter class and is used for routing using the Google Maps API. This class is designed to provide a convenient and easy-to-use interface for interacting with the Google Maps API."""
+    """Google Map router. 
+    The GoogleRouter class is a subclass of the WebRouter class and is used for routing using the Google Maps API. 
+    This class is designed to provide a convenient and easy-to-use interface for interacting with the Google Maps API.
+    
+    It will return a router object that can be used to get routes and distance matrices.
+
+    Parameters
+    ----------
+
+    api_key : str
+        The API key for the Google Maps API.
+    
+    mode : str
+        The routing mode. Can be either "driving" or "walking".
+    
+    timeout : int
+        The timeout in seconds for API requests.
+    
+    language : str
+        The language to be used in API requests.
+
+    
+    """
 
     def __init__(self, api_key, mode="driving", timeout=10, language="en"):
         """
-        This is the constructor method for the GoogleRouter class. It initializes the class by calling the super() method and setting up the Client object of the Google Maps API using the provided api_key. The mode parameter sets the routing mode, which can be either "driving" or "walking". The timeout parameter sets the timeout in seconds for API requests, and the language parameter sets the language to be used in API requests.
+        This is the constructor method for the GoogleRouter class. 
+        It initializes the class by calling the super() method and setting up 
+        the Client object of the Google Maps API using the provided api_key. 
+        The mode parameter sets the routing mode, which can be either "driving" or "walking". 
+        The timeout parameter sets the timeout in seconds for API requests, and the language 
+        parameter sets the language to be used in API requests.
         """
         super().__init__(api_key, mode=mode)
         self.client = googlemaps.Client(key=self.api_key)
 
     def _get_directions_request(self, origin, destination):
         """
-        This method is a helper method for sending a directions request to the Google Maps API. It takes two parameters, origin and destination, which represent the starting and ending points for the route.
+        This method is a helper method for sending a directions request to the Google Maps API. 
+        It takes two parameters, origin and destination, which represent the starting and ending 
+        points for the route.
         """
         return self.client.directions(origin, destination, self.mode)
 
     def _get_distance_matrix_request(self, origins, destinations):
         """
-        This method is a helper method for sending a distance matrix request to the Google Maps API. It takes two parameters, origins and destinations, which represent the starting and ending points for each pair of routes in the matrix.
+        This method is a helper method for sending a distance matrix request to the Google Maps API. 
+        It takes two parameters, origins and destinations, which represent the starting and ending 
+        points for each pair of routes in the matrix.
         """
         return self.client.distance_matrix(origins, destinations, self.mode)
 
     def _parse_distance_matrix(self, json_data):
         """
-        This method is a helper method for parsing the JSON data returned from the Google Maps API in response to a distance matrix request. It takes one parameter, json_data, which is the raw JSON data. The method returns a Pandas dataframe containing the distances and durations for each pair of routes.
+        This method is a helper method for parsing the JSON data returned from the Google Maps API 
+        in response to a distance matrix request. It takes one parameter, json_data, which is the 
+        raw JSON data. The method returns a Pandas dataframe containing the distances and durations 
+        for each pair of routes.
         """
 
         results = []
@@ -45,12 +79,26 @@ class GoogleRouter(WebRouter):
         return df
 
     def get_route(self, origin, destination):
-        
+
         """
         This method returns a Route object representing the route between the origin and destination points. 
         The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
         The orgin and destination parameters should be in the form of iterable objects with two elements, such as  
         (latitude, longitude) or [latitude, longitude].
+
+        Parameters
+        ----------
+        origin : iterable objects
+            The origin point. Iterable objects with two elements, such as  
+        (latitude, longitude) or [latitude, longitude]
+        destination : iterable objects
+            The destination point. Iterable objects with two elements, such as  
+        (latitude, longitude) or [latitude, longitude]
+
+        Returns
+        -------
+        route : Route object
+            The route between the origin and destination.
 
         The returned Route object has the following functions:
         - `get_distance()` returns the distance of the route in meters.
