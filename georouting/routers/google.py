@@ -26,6 +26,10 @@ class GoogleRouter(WebRouter):
     language : str
         The language to be used in API requests.
 
+    Returns
+    -------
+    GoogleRouter
+        A router object that can be used to get routes and distance matrices.
     
     """
 

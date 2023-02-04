@@ -12,6 +12,8 @@ class BingRouter(WebRouter):
     The BingRouter class is a subclass of the WebRouter class and is used for routing using the Bing Maps API.
     This class is designed to provide a convenient and easy-to-use interface for interacting with the Bing Maps API.
 
+    It will return a router object that can be used to get routes and distance matrices.
+
     Parameters
     ----------
 
@@ -27,21 +29,12 @@ class BingRouter(WebRouter):
     language : str
         The language to be used in API requests.
 
-    It will return a router object that can be used to get routes and distance matrices.
 
-    Attributes
-    ----------
-    api_key : str
-        The API key for the Bing Maps API.
+    Returns
+    -------
+    BingRouter
+        A router object that can be used to get routes and distance matrices.
 
-    mode : str
-        The routing mode. Can be either "driving" or "walking".
-
-    timeout : int
-        The timeout in seconds for API requests.
-
-    language : str
-        The language to be used in API requests.
     """
 
     def __init__(self, api_key, mode="driving", timeout=10, language="en"):
