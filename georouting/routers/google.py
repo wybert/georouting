@@ -122,6 +122,24 @@ class GoogleRouter(WebRouter):
 
         If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
 
+        Parameters
+        ----------
+        origins : iterable objects
+            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+        destinations : iterable objects
+            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+        append_od : bool
+            If True, the method also returns a matrix of origin-destination pairs.
+
+        Returns
+        -------
+        distance_matrix : pandas.DataFrame
+            A pandas DataFrame containing the distance matrix.
+
         Here is an example of how to use this method:
         # TODO: add example
 

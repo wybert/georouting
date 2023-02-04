@@ -124,13 +124,27 @@ class BingRouter(WebRouter):
     def get_distance_matrix(self, origins, destinations, append_od=False):
 
         """
-        Get a distance matrix between a list of origins and destinations.
+        This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
+        all possible combinations between each origin and each destination. If you want just
+        return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+        
+        The origins and destinations parameters are lists of origins and destinations.
+
+        If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
         Parameters
         ----------
-        origins : list
-            A list of origin points.
-        destinations : list
-            A list of destination points.
+        origins : iterable objects
+            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+        destinations : iterable objects
+            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+        append_od : bool
+            If True, the method also returns a matrix of origin-destination pairs.
+
         Returns
         -------
         distance_matrix : pandas.DataFrame
