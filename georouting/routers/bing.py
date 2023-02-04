@@ -159,3 +159,16 @@ class BingRouter(WebRouter):
             distance_matrix = pd.concat([od_matrix, distance_matrix], axis=1)
 
         return distance_matrix
+
+    def get_distances_batch(self, origins, destinations, append_od=False):
+        
+        """
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
+        
+        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+        """
+
+        # raise the not implemnt error
+        raise NotImplementedError
