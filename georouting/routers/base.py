@@ -31,7 +31,6 @@ class GoogleRoute:
         self.route = route
 
     def get_duration(self):
-
         """
         Returns the duration of the route in seconds.
 
@@ -51,7 +50,6 @@ class GoogleRoute:
         return self.route
 
     def get_route_geopandas(self):
-
         """
         Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route. It is assumed that the polyline module is used for decoding the polyline into a LineString geometry. The GeoDataFrame is created with a specified coordinate reference system (CRS) of "4326".
 
@@ -93,29 +91,48 @@ class BingRoute:
     def __init__(self, route):
         self.route = route
 
-    def get_duration(self):
-        "get the travel duration in seconds"
+    # change the duration to seconds
+    def _duration_to_seconds(self, duration):
+        """
+        change the duration to seconds
+        """
+
         durationUnit = self.route["resourceSets"][0]["resources"][0]["durationUnit"]
-        travelDuration = self.route["resourceSets"][0]["resources"][0]["travelDuration"]
 
         if durationUnit == "Second":
-            return travelDuration
+            return duration
         elif durationUnit == "Minute":
-            return travelDuration * 60
+            return duration * 60
         elif durationUnit == "Hour":
-            return travelDuration * 3600
+            return duration * 3600
         else:
             raise ValueError("durationUnit is not recognized")
 
+    # change the distance to meters
+    def _distance_to_meters(self, distance):
+        """
+        change the distance to meters
+        """
+        distanceUnit = self.route["resourceSets"][0]["resources"][0]["distanceUnit"]
+        if distanceUnit in ["mi", "Mile"]:
+            distance = distance * 1609.344
+        elif distanceUnit in ["km", "Kilometer"]:
+            distance = distance * 1000
+        return distance
+
+    def get_duration(self):
+        "get the travel duration in seconds"
+        # durationUnit = self.route["resourceSets"][0]["resources"][0]["durationUnit"]
+        travelDuration = self.route["resourceSets"][0]["resources"][0]["travelDuration"]
+
+        return self._duration_to_seconds(travelDuration)
+
     def get_distance(self):
         "get the travel distance in meters"
-        distanceUnit = self.route["resourceSets"][0]["resources"][0]["distanceUnit"]
+        # distanceUnit = self.route["resourceSets"][0]["resources"][0]["distanceUnit"]
         travelDistance = self.route["resourceSets"][0]["resources"][0]["travelDistance"]
-        if distanceUnit in ["mi", "Mile"]:
-            travelDistance = travelDistance * 1609.344
-        elif distanceUnit in ["km", "Kilometer"]:
-            travelDistance = travelDistance * 1000
-        return travelDistance
+
+        return self._distance_to_meters(travelDistance)
 
     def get_route(self):
         "get the entire route in a dictionary"
@@ -134,39 +151,53 @@ class BingRoute:
                 "itineraryItems"
             ]
         ]
+        # change the duration to seconds
+        durations = [self._duration_to_seconds(duration) for duration in durations]
+
         distances = [
             item["travelDistance"]
             for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
                 "itineraryItems"
             ]
         ]
-        endPathIndices = [
-            item["details"][0]["endPathIndices"][0]
-            for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
-                "itineraryItems"
-            ]
-        ]
-        startPathIndices = [
-            item["details"][0]["startPathIndices"][0]
-            for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
-                "itineraryItems"
-            ]
-        ]
+        # change the distance to meters
+        distances = [self._distance_to_meters(distance) for distance in distances]
+
+        startPathIndices = []
+        endPathIndices = []
+        for item in self.route["resourceSets"][0]["resources"][0]["routeLegs"][0][
+            "itineraryItems"
+        ]:
+            temp = []
+            for detail in item["details"]:
+                temp.append(detail["startPathIndices"][0])
+                temp.append(detail["endPathIndices"][0])
+            startPathIndices.append(min(temp))
+            endPathIndices.append(max(temp))
+
         points = self.route["resourceSets"][0]["resources"][0]["routePath"]["line"][
             "coordinates"
         ]
 
         lines = []
         for start, end in zip(startPathIndices, endPathIndices):
-            points_ = points[start:end]
+            line_string = points[start : end + 1]
             # change the lon lat to lat lon
-            points_ = np.array(points_)
-            # print(points_.shape)
-            if points_.shape[0] > 1:
-                points_ = points_[:, ::-1]
+            line_string = [(point[1], point[0]) for point in line_string]
+
+            # if the line string is just one point, return linestring with two same points
+            if len(line_string) == 1:
+                line_string = sg.LineString([line_string[0], line_string[0]])
             else:
-                points_ = []
-            lines.append(sg.LineString(points_))
+                line_string = sg.LineString(line_string)
+            lines.append(line_string)
+            # # print(line_string)
+            # # print(len(line_string))
+            # try:
+            #     lines.append(sg.LineString(line_string))
+            # except:
+            #     print(line_string)
+            #     print(len(line_string))
 
         df = pd.DataFrame(
             {"distance (m)": distances, "duration (s)": durations, "geometry": lines}
@@ -334,7 +365,6 @@ class Route(object):
         self.route = route
 
     def get_duration(self):
-
         """
         Get the duration of the route.
         """
@@ -342,7 +372,6 @@ class Route(object):
 
     # FIXME: may need rename it as get_distance
     def get_distance(self):
-
         """
         Get the distance of the route.
         """
@@ -374,7 +403,6 @@ class BaseRouter(object):
         self.mode = mode
 
     def _get_OD_matrix(self, origins, destinations):
-
         items = []
         for i in origins:
             for j in destinations:
@@ -388,7 +416,6 @@ class BaseRouter(object):
         return od_matrix
 
     def get_route(self, origin, destination):
-
         return Route(self._get_request(origin, destination))
 
 
