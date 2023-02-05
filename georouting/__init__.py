@@ -2,7 +2,7 @@
 
 __author__ = """Xiaokang Fu"""
 __email__ = 'fxk123@gmail.com'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 from georouting.routers import *
 
