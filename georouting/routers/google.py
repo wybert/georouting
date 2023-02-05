@@ -14,21 +14,21 @@ class GoogleRouter(WebRouter):
     Parameters
     ----------
 
-    api_key : str
+    `api_key` : str
         The API key for the Google Maps API.
     
-    mode : str
+    `mode` : str
         The routing mode. Can be either "driving" or "walking".
     
-    timeout : int
+    `timeout` : int
         The timeout in seconds for API requests.
     
-    language : str
+    `language` : str
         The language to be used in API requests.
 
     Returns
     -------
-    GoogleRouter
+    `GoogleRouter`:
         A router object that can be used to get routes and distance matrices.
     
     """
@@ -92,16 +92,16 @@ class GoogleRouter(WebRouter):
 
         Parameters
         ----------
-        origin : iterable objects
+        `origin` : iterable objects
             The origin point. Iterable objects with two elements, such as  
         (latitude, longitude) or [latitude, longitude]
-        destination : iterable objects
+        `destination` : iterable objects
             The destination point. Iterable objects with two elements, such as  
         (latitude, longitude) or [latitude, longitude]
 
         Returns
         -------
-        route : Route object
+        `route` : Route object
             The route between the origin and destination.
 
         The returned Route object has the following functions:
@@ -128,20 +128,20 @@ class GoogleRouter(WebRouter):
 
         Parameters
         ----------
-        origins : iterable objects
+        `origins` : iterable objects
             An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
-        destinations : iterable objects
+        `destinations` : iterable objects
             An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
-        append_od : bool
+        `append_od` : bool
             If True, the method also returns a matrix of origin-destination pairs.
 
         Returns
         -------
-        distance_matrix : pandas.DataFrame
+        `distance_matrix` : pandas.DataFrame
             A pandas DataFrame containing the distance matrix.
 
         Here is an example of how to use this method:
