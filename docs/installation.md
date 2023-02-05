@@ -3,13 +3,20 @@
 ## Stable release
 
 ### Using pip
+
+
 To install georouting, run this command in your terminal:
+
+```bash
+pip install georouting
+```
+
+or install from GitHub source
 
 ```
 pip install git+https://github.com/wybert/georouting.git
 ```
 
-This is the preferred method to install georouting, as it will always install the most recent stable release.
 
 If you don't have [pip](https://pip.pypa.io) installed, this [Python installation guide](http://docs.python-guide.org/en/latest/starting/installation/) can guide you through the process.
 

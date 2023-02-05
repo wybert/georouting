@@ -1,5 +1,5 @@
 
-![georouting](docs/img/georouting.png)
+![georouting](https://raw.githubusercontent.com/wybert/georouting/main/docs/img/georouting.png)
 
 [![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
 [![image](https://img.shields.io/conda/vn/conda-forge/georouting.svg)](https://anaconda.org/conda-forge/georouting)
@@ -15,10 +15,57 @@ Warning!!! This project is under active development, the API may change in the f
     
 ## Installation
 
+### Using pip
+
+
+To install georouting, run this command in your terminal:
+
 ```bash
+pip install georouting
+```
+
+or install from GitHub source
+
+```
 pip install git+https://github.com/wybert/georouting.git
-``` 
-It will be on pypi soon.
+```
+
+
+If you don't have [pip](https://pip.pypa.io) installed, this [Python installation guide](http://docs.python-guide.org/en/latest/starting/installation/) can guide you through the process.
+
+### Using conda
+
+This is not yet available on conda-forge,
+
+```
+conda install -c conda-forge georouting
+```
+
+or use mamba
+
+```
+mamba install -c conda-forge georouting
+```
+
+
+## Install from sources
+
+The sources for georouting can be downloaded from the Github repo.
+
+You can clone the public repository:
+
+```
+git clone git://github.com/wybert/georouting
+```
+
+Then install it with:
+
+```
+python setup.py install
+```
+
+
+
 ## Usage
 
 ```python
