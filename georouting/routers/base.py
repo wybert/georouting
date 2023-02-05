@@ -15,13 +15,13 @@ class GoogleRoute:
 
     The class has the following methods:
 
-    get_duration: Returns the duration of the route in seconds.
+    - `get_duration()`: Returns the duration of the route in seconds.
 
-    get_distance: Returns the distance of the route in meters.
+    - `get_distance()`: Returns the distance of the route in meters.
 
-    get_route: Returns the complete route information.
+    - `get_route()`: Returns the complete route information.
 
-    get_route_geopandas: Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route.
+    - `get_route_geopandas()`: Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route.
 
     It is assumed that the polyline module is used for decoding the polyline into a LineString geometry. The GeoDataFrame is created with a specified coordinate reference system (CRS) of "4326".
     """
@@ -77,10 +77,10 @@ class BingRoute:
     """
     BingRoute class that allows you to extract various information from a route stored in a dictionary. It has the following functions:
 
-    get_duration: Returns the travel duration in seconds.
-    get_distance: Returns the travel distance in meters.
-    get_route: Returns the entire route in a dictionary.
-    get_route_geopandas: Returns the route information in a GeoPandas dataframe.
+    - `get_duration()`: Returns the travel duration in seconds.
+    - `get_distance()`: Returns the travel distance in meters.
+    - `get_route()`: Returns the entire route in a dictionary.
+    - `get_route_geopandas()`: Returns the route information in a GeoPandas dataframe.
 
     This function extracts the duration and distance information for each leg of the route, creates a list of shapely LineStrings representing the route, and then creates a GeoDataFrame with columns for the duration, distance, and geometry. Additionally, it calculates the speed in meters per second for each leg.
 
@@ -212,14 +212,11 @@ class OSRMRoute:
     """
     This class represents a route returned by the OpenStreetMap Routing Machine API.
 
-    Attributes:
-    route (dict): A dictionary containing the JSON response from the OSRM API.
-
     Methods:
-    get_duration() -> float: Returns the duration of the route in seconds.
-    get_distance() -> float: Returns the distance of the route in meters.
-    get_route() -> dict: Returns the full route as a dictionary.
-    get_route_geopandas() -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame. The GeoDataFrame contains columns for 'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+    - `get_duration()` -> float: Returns the duration of the route in seconds.
+    - `get_distance()` -> float: Returns the distance of the route in meters.
+    - `get_route()` -> dict: Returns the full route as a dictionary.
+    - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame. The GeoDataFrame contains columns for 'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
     """
 
     def __init__(self, route):
@@ -353,6 +350,17 @@ class MapQuestRoute:
 class Route(object):
     """
     A wrapper class that wraps different routing engines' route objects.
+
+    The class has the following methods:
+
+    - `get_duration()`: Returns the duration of the route in seconds.
+
+    - `get_distance()`: Returns the distance of the route in meters.
+
+    - `get_route()`: Returns the complete route information.
+
+    - `get_route_geopandas()`: Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route.
+
     """
 
     def __init__(self, route):
@@ -369,7 +377,6 @@ class Route(object):
         """
         return self.route.get_duration()
 
-    # FIXME: may need rename it as get_distance
     def get_distance(self):
         """
         Get the distance of the route.
