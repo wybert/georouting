@@ -24,7 +24,7 @@ It will be on pypi soon.
 ```python
 
 # how to get routing distance matrix from OSRMRouter
-from georouting.routers.osrm import OSRMRouter
+from georouting.routers import OSRMRouter
 orings = 
 destinations =
 router = OSRMRouter()
@@ -38,7 +38,9 @@ distance_matrix.head()
 - [x] Google Maps
 - [x] Bing Maps
 - [x] OSRM Routing
-- [ ] add more documentation
+- [x] add more documentation for google router
+- [x] add more documentation for bing router
+- [x] add more documentation for osrm router
 - [ ] built and host documentation
 - [ ] Fix the update in Pypi
 - [ ] Add more routing services
