@@ -1,8 +1,7 @@
 import googlemaps
 import pandas as pd
-import numpy as np
 from georouting.routers.base import WebRouter, Route, GoogleRoute
-
+import georouting.utils as gtl
 
 class GoogleRouter(WebRouter):
     """Google Map router. 
@@ -154,10 +153,9 @@ class GoogleRouter(WebRouter):
 
         # Check if the origins and destinations parameters are lists
         # if ther are numpy arrays, convert them to lists
-        if isinstance(origins, np.ndarray):
-            origins = origins.tolist()
-        if isinstance(destinations, np.ndarray):
-            destinations = destinations.tolist()
+        # FIXME: can change this part to the utils module
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
 
         res = self._get_distance_matrix_request(origins, destinations)
         df = self._parse_distance_matrix(res)

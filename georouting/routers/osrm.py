@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-import numpy as np
+import georouting.utils as gtl
 from georouting.routers.base import WebRouter, Route, OSRMRoute
 
 
@@ -186,10 +186,9 @@ class OSRMRouter(WebRouter):
         """
         # check if the origins and destinations are numpy arrays
         # if so, convert them to lists
-        if isinstance(origins, np.ndarray):
-            origins = origins.tolist()
-        if isinstance(destinations, np.ndarray):
-            destinations = destinations.tolist()
+        
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)

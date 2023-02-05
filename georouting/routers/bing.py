@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import numpy as np
+import georouting.utils as gtl
 from georouting.routers.base import WebRouter, Route, BingRoute
 import json
 
@@ -149,10 +149,8 @@ class BingRouter(WebRouter):
 
         # check if the origins and destinations is numpy array
         # if so, convert it to list
-        if isinstance(origins, np.ndarray):
-            origins = origins.tolist()
-        if isinstance(destinations, np.ndarray):
-            destinations = destinations.tolist()
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)
