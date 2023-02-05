@@ -1,6 +1,7 @@
 import requests
 import json
 import pandas as pd
+import numpy as np
 from georouting.routers.base import WebRouter, Route, OSRMRoute
 
 
@@ -183,6 +184,12 @@ class OSRMRouter(WebRouter):
         Here is an example of how to use this method:
         # TODO: add example
         """
+        # check if the origins and destinations are numpy arrays
+        # if so, convert them to lists
+        if isinstance(origins, np.ndarray):
+            origins = origins.tolist()
+        if isinstance(destinations, np.ndarray):
+            destinations = destinations.tolist()
 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)
