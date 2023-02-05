@@ -87,8 +87,7 @@ class GoogleRouter(WebRouter):
         """
         This method returns a Route object representing the route between the origin and destination points. 
         The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
-        The orgin and destination parameters should be in the form of iterable objects with two elements, such as  
-        (latitude, longitude) or [latitude, longitude].
+        The orgin and destination parameters should be in the form of iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude].
 
         Parameters
         ----------

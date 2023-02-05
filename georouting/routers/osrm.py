@@ -17,10 +17,13 @@ class OSRMRouter(WebRouter):
     ----------
     `mode` : str
         The routing mode. Can be either "driving" or "walking". Default is "driving".
+
     `timeout` : int
         The timeout in seconds for API requests. Default is 10.
+
     `language` : str
         The language to be used in API requests. Default is "en".
+
     `base_url` : str
         The base URL for the OSRM API. Default is "http://router.project-osrm.org".
 
@@ -124,11 +127,10 @@ class OSRMRouter(WebRouter):
         Parameters
         ----------
         `origin` : iterable objects
-            The origin point. Iterable objects with two elements, such as  
-        (latitude, longitude) or [latitude, longitude]
+            The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
         `destination` : iterable objects
-            The destination point. Iterable objects with two elements, such as  
-        (latitude, longitude) or [latitude, longitude]
+            The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
 
         Returns
         -------
@@ -136,7 +138,7 @@ class OSRMRouter(WebRouter):
             The route between the origin and destination.
 
         The returned Route object has the following functions:
-        
+
         - `get_distance()` returns the distance of the route in meters.
         - `get_duration()` returns the duration of the route in seconds.
         - `get_route()` returns the raw route data returned as a dictionary.
@@ -164,10 +166,12 @@ class OSRMRouter(WebRouter):
             An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
+
         `destinations` : iterable objects
             An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
+            
         `append_od` : bool
             If True, the method also returns a matrix of origin-destination pairs.
 

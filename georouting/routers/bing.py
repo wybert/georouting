@@ -90,11 +90,10 @@ class BingRouter(WebRouter):
         Parameters
         ----------
         `origin` : iterable objects
-            The origin point. Iterable objects with two elements, such as  
-        (latitude, longitude) or [latitude, longitude]
+            The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
         `destination` : iterable objects
-            The destination point. Iterable objects with two elements, such as  
-        (latitude, longitude) or [latitude, longitude]
+            The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
 
         Returns
         -------
@@ -102,7 +101,7 @@ class BingRouter(WebRouter):
             The route between the origin and destination.
 
         The returned Route object has the following functions:
-        
+
         - `get_distance()` returns the distance of the route in meters.
         - `get_duration()` returns the duration of the route in seconds.
         - `get_route()` returns the raw route data returned as a dictionary.

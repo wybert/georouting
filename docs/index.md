@@ -24,19 +24,12 @@
 
 ## Features
 
--   TODO
-- [ ] return more results
-- [x] drive time
-- [ ] drive distance
-- [ ] if the route is considering congestion
-- [ ] return thr router
-- [ ] visualize the route
-- [ ] visualize the route with elevation
-- [ ] connect to movingpandas
-- [ ] connect to geopandas
-- [ ] loacal data routing
-
-
+- Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
+- Provide a unified API for routing services
+- Support calculating the travel distance matrix between multiple origins and destinations
+- Return the travel distance matrix in a Pandas `Dataframe` you like
+- Return the routing results in a Geopandas `GeoDataFrame`
+- Easy to extend to support more routing services
 
 ## Credits
 
