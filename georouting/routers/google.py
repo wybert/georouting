@@ -95,6 +95,7 @@ class GoogleRouter(WebRouter):
         `origin` : iterable objects
             The origin point. Iterable objects with two elements, such as  
         (latitude, longitude) or [latitude, longitude]
+
         `destination` : iterable objects
             The destination point. Iterable objects with two elements, such as  
         (latitude, longitude) or [latitude, longitude]
@@ -133,10 +134,12 @@ class GoogleRouter(WebRouter):
             An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
+
         `destinations` : iterable objects
             An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
+            
         `append_od` : bool
             If True, the method also returns a matrix of origin-destination pairs.
 
