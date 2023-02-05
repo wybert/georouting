@@ -105,6 +105,7 @@ class GoogleRouter(WebRouter):
             The route between the origin and destination.
 
         The returned Route object has the following functions:
+        
         - `get_distance()` returns the distance of the route in meters.
         - `get_duration()` returns the duration of the route in seconds.
         - `get_route()` returns the raw route data returned as a dictionary.
