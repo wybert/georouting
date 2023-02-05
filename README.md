@@ -24,12 +24,27 @@ It will be on pypi soon.
 ```python
 
 # how to get routing distance matrix from OSRMRouter
-from georouting.routers import OSRMRouter
-orings = 
-destinations =
-router = OSRMRouter()
-distance_matrix = router.get_distance_matrix(orings, dstrings,append_od=True)
-distance_matrix.head()
+import pandas as pd
+data = pd.read_csv("https://raw.githubusercontent.com/wybert/georouting/main/docs/data/sample_3.csv",index_col=0)
+one_od_pair = data.iloc[2]
+data.head()
+
+from georouting.routers import GoogleRouter
+# create a router object with the google_key
+router = GoogleRouter(google_key,mode="driving")
+# get the route between the origin and destination, this will return a Route object
+# this will call the Google Maps API
+route = router.get_route([one_od_pair["ZIP_lat"],one_od_pair["ZIP_lon"]],
+                           [one_od_pair["AHA_ID_lat"],one_od_pair["AHA_ID_lon"]])
+# Now you can get the distance and duration of the route in meters and seconds
+print("Distance: {} meters".format(route.get_distance()))
+print("Duration: {} seconds".format(route.get_duration()))
+
+df= route.get_route_geopandas()
+df.head()
+
+df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
+
 ```
 
 
