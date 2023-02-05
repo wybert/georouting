@@ -351,6 +351,8 @@ class Route(object):
     """
     A wrapper class that wraps different routing engines' route objects.
 
+    It will return a Route object that can be used to get the duration, distance, and route information.
+
     The class has the following methods:
 
     - `get_duration()`: Returns the duration of the route in seconds.
