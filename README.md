@@ -65,12 +65,13 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] add more documentation for google router
 - [x] add more documentation for bing router
 - [x] add more documentation for osrm router
-- [ ] built and host documentation
+- [x] built and host documentation
 - [ ] Fix the update in Pypi
+- [ ] add get_route_distance_batch API
+- [ ] add visualization for the route, better with o and d markers
 - [ ] Add more routing services
-- [ ] Add more tests
+- [x] Add test 
 - [ ] Add more examples
-- [ ] Add more documentation
 - [ ] Add how to contribute
 - [ ] Add how to cite
 
