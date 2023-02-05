@@ -112,8 +112,8 @@ class OSRMRouter(WebRouter):
         distances = [item for sublist in distances for item in sublist]
 
         # combine the dutation and destinations list to a dataframe
-        print(len(durations), len(distances))
-        df = pd.DataFrame({"distance (m)": durations, "duration (s)": distances})
+        # print(len(durations), len(distances))
+        df = pd.DataFrame({"distance (m)": distances, "duration (s)": durations})
 
         return df
 

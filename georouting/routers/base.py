@@ -4,7 +4,6 @@ import geopandas as gpd
 import polyline
 import pandas as pd
 import shapely.geometry as sg
-import numpy as np
 from shapely.geometry import LineString
 import requests
 import json

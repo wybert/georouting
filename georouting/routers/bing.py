@@ -66,7 +66,7 @@ class BingRouter(WebRouter):
         origins = ";".join(origins)
         destinations = ";".join(destinations)
         return (
-            "%sDistanceMatrix?origins=%s&destinations=%s&travelMode=%s&timeUnit=second&key=%s"
+            "%sDistanceMatrix?origins=%s&destinations=%s&travelMode=%s&timeUnit=second&distanceUnit=kilometer&key=%s"
             % (self.base_url, origins, destinations, self.mode, self.api_key)
         )
 
@@ -77,6 +77,8 @@ class BingRouter(WebRouter):
 
         df = pd.DataFrame(json_data["resourceSets"][0]["resources"][0]["results"])
         df = df[["travelDistance", "travelDuration"]]
+        # convert from kilometers to meters
+        df["travelDistance"] = df["travelDistance"] * 1000
         df.columns = ["distance (m)", "duration (s)"]
         return df
 
