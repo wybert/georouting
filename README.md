@@ -66,7 +66,7 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] add more documentation for bing router
 - [x] add more documentation for osrm router
 - [x] built and host documentation
-- [ ] Fix the update in Pypi
+- [x] Fix the update in Pypi
 - [ ] add get_route_distance_batch API
 - [ ] add visualization for the route, better with o and d markers
 - [ ] Add more routing services
