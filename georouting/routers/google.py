@@ -2,6 +2,7 @@ import googlemaps
 import pandas as pd
 from georouting.routers.base import WebRouter, Route, GoogleRoute
 import georouting.utils as gtl
+import numpy as np
 
 class GoogleRouter(WebRouter):
     """Google Map router. 
@@ -172,6 +173,42 @@ class GoogleRouter(WebRouter):
         If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
         """
 
-        # raise the not implemnt error
-        raise NotImplementedError
+# FIXME: move this function to the utils module
+        # convert the origins and destinations to lists
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
+        
+        # check if the origins and destinations are the same length
+        if len(origins) != len(destinations):
+            raise ValueError("The origins and destinations should have the same length.")
+        
+        # divide the origins and destinations into batches
+
+        batches = gtl.get_batch_od_pairs(origins, destinations)
+
+        # get the distance matrix for each batch 
+        results = []
+        for batch in batches:
+            res = self.get_distance_matrix(batch[0], batch[1])
+            results.append(res)
+        
+        # concatenate the results
+        df = pd.concat(results, axis=0)
+        # revert the order of the rows
+        df = df.iloc[::-1]
+
+        if append_od:
+            # convert the origins and destinations to numpy arrays
+            origins = np.array(origins)
+            destinations = np.array(destinations)
+            df["origin_lat"] = origins[:,0]
+            df["origin_lon"] = origins[:,1]
+            df["destination_lat"] = destinations[:,0]
+            df["destination_lon"] = destinations[:,1]  
+
+            df = df[["origin_lat", "origin_lon", "destination_lat", "destination_lon", 
+            "distance (m)", "duration (s)"]] 
+        
+        return df
+
 
