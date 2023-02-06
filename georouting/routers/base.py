@@ -5,9 +5,11 @@ import polyline
 import pandas as pd
 import shapely.geometry as sg
 from shapely.geometry import LineString
+import numpy as np
 import requests
 import json
-
+import georouting.utils as gtl
+import folium
 
 class GoogleRoute:
     """
@@ -365,13 +367,15 @@ class Route(object):
 
     """
 
-    def __init__(self, route):
+    def __init__(self, route,origin, destination):
         """
         Initialize a Route object by passing the routing engine's route object.
 
         :param route: An instance of a routing engine's route object
         """
         self.route = route
+        self.origin = origin
+        self.destination = destination
 
     def get_duration(self):
         """
@@ -396,6 +400,21 @@ class Route(object):
         Get the route information as a GeoDataFrame.
         """
         return self.route.get_route_geopandas()
+    def plot_route(self):
+        """
+        Plot the route on a map.
+        """
+        gdf = self.get_route_geopandas()
+        m = gdf.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
+        # add a red destination marker, don't show i in the map
+        folium.Marker([self.destination[0],self.destination[1]],
+        icon=folium.Icon(color="red",icon_color="white",icon="circle", prefix="fa")
+            ).add_to(m)
+
+        # folium.Marker([one_od_pair["AHA_ID_lat"],one_od_pair["AHA_ID_lon"]],
+        # icon=folium.Icon(color="red",icon_color="white",icon="circle", prefix="fa")).add_to(m)
+
+        return m
 
 
 # base class for routers
@@ -425,6 +444,52 @@ class BaseRouter(object):
 
     def get_route(self, origin, destination):
         return Route(self._get_request(origin, destination))
+
+    def get_distances_batch(self, origins, destinations, append_od=False):
+        """
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
+        
+        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+        """
+
+        # convert the origins and destinations to lists
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
+        
+        # check if the origins and destinations are the same length
+        if len(origins) != len(destinations):
+            raise ValueError("The origins and destinations should have the same length.")
+        
+        # divide the origins and destinations into batches
+
+        batches = gtl.get_batch_od_pairs(origins, destinations)
+
+        # get the distance matrix for each batch 
+        results = []
+        for batch in batches:
+            res = self.get_distance_matrix(batch[0], batch[1])
+            results.append(res)
+        
+        # concatenate the results
+        df = pd.concat(results, axis=0)
+        # revert the order of the rows
+        df = df.iloc[::-1]
+
+        if append_od:
+            # convert the origins and destinations to numpy arrays
+            origins = np.array(origins)
+            destinations = np.array(destinations)
+            df["origin_lat"] = origins[:,0]
+            df["origin_lon"] = origins[:,1]
+            df["destination_lat"] = destinations[:,0]
+            df["destination_lon"] = destinations[:,1]  
+
+            df = df[["origin_lat", "origin_lon", "destination_lat", "destination_lon", 
+            "distance (m)", "duration (s)"]] 
+        
+        return df
 
 
 # add documenation for the class

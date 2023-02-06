@@ -114,7 +114,7 @@ class BingRouter(WebRouter):
 
         url = self._get_directions_url(origin, destination)
         route = super()._get_request(url)
-        route = Route(BingRoute(route))
+        route = Route(BingRoute(route),origin, destination)
         return route
 
     def get_distance_matrix(self, origins, destinations, append_od=False):
@@ -162,14 +162,32 @@ class BingRouter(WebRouter):
         return distance_matrix
 
     def get_distances_batch(self, origins, destinations, append_od=False):
-        
         """
         This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
         
         The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
 
         If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
-        """
 
-        # raise the not implemnt error
-        raise NotImplementedError
+        Parameters
+        ----------
+        - `origins` : iterable objects
+            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+
+        - `destinations` : iterable objects
+            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+
+        - `append_od` : bool
+            If True, the method also returns the input origin-destination pairs.
+
+        Returns
+        -------
+        - `distance_matrix` : pandas.DataFrame
+            A pandas DataFrame containing the distance matrix.
+
+        """
+        return super().get_distances_batch(origins, destinations, append_od=append_od)

@@ -52,4 +52,3 @@ def get_batch_od_pairs(orgins,destinations,max_batch_size=100):
         orgins_destinations_list.append((orgins,destinations))
 
     return orgins_destinations_list
-

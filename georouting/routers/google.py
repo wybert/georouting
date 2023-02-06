@@ -113,7 +113,7 @@ class GoogleRouter(WebRouter):
         """
 
         route = self._get_directions_request(origin, destination)
-        route = Route(GoogleRoute(route))
+        route = Route(GoogleRoute(route),origin, destination)
 
         return route
 
@@ -171,44 +171,30 @@ class GoogleRouter(WebRouter):
         The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
 
         If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+        Parameters
+        ----------
+        - `origins` : iterable objects
+            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+
+        - `destinations` : iterable objects
+            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+
+        - `append_od` : bool
+            If True, the method also returns the input origin-destination pairs.
+
+        Returns
+        -------
+        - `distance_matrix` : pandas.DataFrame
+            A pandas DataFrame containing the distance matrix.
+
         """
+        return super().get_distances_batch(origins, destinations, append_od=append_od)
 
-# FIXME: move this function to the utils module
-        # convert the origins and destinations to lists
-        origins = gtl.convert_to_list(origins)
-        destinations = gtl.convert_to_list(destinations)
-        
-        # check if the origins and destinations are the same length
-        if len(origins) != len(destinations):
-            raise ValueError("The origins and destinations should have the same length.")
-        
-        # divide the origins and destinations into batches
 
-        batches = gtl.get_batch_od_pairs(origins, destinations)
-
-        # get the distance matrix for each batch 
-        results = []
-        for batch in batches:
-            res = self.get_distance_matrix(batch[0], batch[1])
-            results.append(res)
-        
-        # concatenate the results
-        df = pd.concat(results, axis=0)
-        # revert the order of the rows
-        df = df.iloc[::-1]
-
-        if append_od:
-            # convert the origins and destinations to numpy arrays
-            origins = np.array(origins)
-            destinations = np.array(destinations)
-            df["origin_lat"] = origins[:,0]
-            df["origin_lon"] = origins[:,1]
-            df["destination_lat"] = destinations[:,0]
-            df["destination_lon"] = destinations[:,1]  
-
-            df = df[["origin_lat", "origin_lon", "destination_lat", "destination_lon", 
-            "distance (m)", "duration (s)"]] 
-        
-        return df
 
 
