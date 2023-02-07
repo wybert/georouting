@@ -7,6 +7,7 @@
 [![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
 [![image](https://img.shields.io/conda/vn/conda-forge/georouting.svg)](https://anaconda.org/conda-forge/georouting)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wybert/georouting/blob/main/docs/usage.ipynb)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!-- [![Open in Binder](https://mybinder.org/badge_logo.svg)](https://gishub.org/geemap-binder) -->
 <!-- [![Open In Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/giswqs/geemap/blob/master/examples/notebooks/00_geemap_key_features.ipynb) -->
 <!-- [![image](https://img.shields.io/conda/vn/conda-forge/geemap.svg)](https://anaconda.org/conda-forge/geemap) -->
