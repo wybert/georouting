@@ -1,8 +1,8 @@
 import requests
 import json
 from georouting.routers.base import WebRouter, Route, EsriRoute
-
-
+import georouting.utils as gtl
+import pandas as pd
 class EsriRouter(WebRouter):
     """Esri router.
     The EsriRouter class is a subclass of the WebRouter class and is used for routing using the Esri ArcGIS API.
@@ -71,15 +71,30 @@ class EsriRouter(WebRouter):
         """
         This method is a helper method for sending a distance matrix request to the Esri ArcGIS API.
         """
+        base_url = "https://route-api.arcgis.com/arcgis/rest/services/World/OriginDestinationCostMatrix/NAServer/OriginDestinationCostMatrix_World/solveODCostMatrix"
+        origins = ";".join(["%f,%f" % (o[1], o[0]) for o in origins])
+        destinations = ";".join(["%f,%f" % (d[1], d[0]) for d in destinations])
+        url = (
+            "%s?f=json&token=%s&origins=%s&destinations=%s&travel_mode=%s&directionsLanguage=%s"
+            % (
+                base_url,
+                self.api_key,
+                origins,
+                destinations,
+                self.mode,
+                self.language,
+            )
+        )
 
-        return "Not implemented"
+        return url
 
     def _parse_distance_matrix(self, json_data):
         """
         This method is a helper method for parsing the response from the Esri ArcGIS API.
         It takes one parameter, json_data, which is the response from the API.
         """
-        return "Not implemented"
+        
+        return None
 
     def get_route(self, origin, destination):
         """
@@ -114,3 +129,46 @@ class EsriRouter(WebRouter):
         route = Route(EsriRoute(route), origin=origin, destination=destination)
 
         return route
+
+    def get_distance_matrix(self, origins, destinations,append_od=False):
+        """
+        This method returns a distance matrix between the origins and destinations.
+        The origins and destinations parameters are lists of tuples/lists/arrays representing the starting and ending points for the route.
+        The orgins and destinations parameters should be in the form of iterable objects with two elements, such as
+        (latitude, longitude) or [latitude, longitude].
+
+        Parameters
+        ----------
+        - `origins` : list of iterable objects
+            The origin points. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+        - `destinations` : list of iterable objects
+            The destination points. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+        - `append_od` : bool
+            If True, the origins and destinations will be appended to the distance matrix as the first two columns.
+
+        Returns
+        -------
+        - `distance_matrix` : list of lists
+            The distance matrix between the origins and destinations.
+
+        """
+
+        # check if the origins and destinations is numpy array
+        # if so, convert it to list
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
+
+
+        url = self._get_matrix_distance_url(origins, destinations)
+        res = super()._get_request(url)
+        return res
+
+        distance_matrix = self._parse_distance_matrix(res)
+
+        if append_od:
+            od_matrix = super()._get_OD_matrix(origins, destinations)
+            distance_matrix = pd.concat([od_matrix, distance_matrix], axis=1)
+
+        return distance_matrix

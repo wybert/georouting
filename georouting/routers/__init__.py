@@ -2,7 +2,7 @@ from georouting.routers.google import GoogleRouter
 from georouting.routers.osmnx import OSMNXRouter
 from georouting.routers.bing import BingRouter
 
-# from georouting.routers.esri import EsriRouter
+from georouting.routers.esri import EsriRouter
 from georouting.routers.osrm import OSRMRouter
 
 # when adding a new router, add it to the list of routers below
@@ -15,7 +15,7 @@ SERVICE_TO_GEOROUTOR = {
     "google": GoogleRouter,
     "osmnx": OSMNXRouter,
     "bing": BingRouter,
-    # "esri": EsriRouter,
+    "esri": EsriRouter,
     "osrm": OSRMRouter,
 }
 
