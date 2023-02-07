@@ -127,6 +127,15 @@ class GoogleRouter(WebRouter):
 
         If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
 
+        Google Maps API has following limitations for distance matrix requests:
+        the following usage limits are in place for the Distance Matrix API, for more information, 
+        see in [google maps api documentation](https://developers.google.com/maps/documentation/distance-matrix/usage-limits):
+
+        - Maximum of 25 origins or 25 destinations per request.
+        - Maximum 100 elements per server-side request.
+        - Maximum 100 elements per client-side request.
+        - 1000 elements per second (EPS), calculated as the sum of client-side and server-side queries.
+
         Parameters
         ----------
         - `origins` : iterable objects
@@ -193,7 +202,7 @@ class GoogleRouter(WebRouter):
             A pandas DataFrame containing the distance matrix.
 
         """
-        return super().get_distances_batch(origins, destinations, append_od=append_od)
+        return super().get_distances_batch(origins, destinations,max_batch_size=25, append_od=append_od)
 
 
 

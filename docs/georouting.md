@@ -7,6 +7,9 @@
 ### GoogleRouter
 #### ::: georouting.routers.google.GoogleRouter
     show_source: false
+    selection:
+        inherited_members: true
+      
 
 ### OSRMRouter
 #### ::: georouting.routers.osrm.OSRMRouter

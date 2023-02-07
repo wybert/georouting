@@ -128,6 +128,18 @@ class BingRouter(WebRouter):
 
         If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
 
+        The Bing Maps API has the following limitations for distance matrix requests, 
+        for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):
+        
+        - For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts, 
+        - while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000. 
+        - For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types. 
+        
+        Pairs are calculated by multiplying the number of origins, by the number of destinations. 
+        For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations, 
+        or 100 origins and 100 destinations defined in your request.
+        
+        
         Parameters
         ----------
         - `origins` : iterable objects
@@ -190,4 +202,4 @@ class BingRouter(WebRouter):
             A pandas DataFrame containing the distance matrix.
 
         """
-        return super().get_distances_batch(origins, destinations, append_od=append_od)
+        return super().get_distances_batch(origins, destinations, max_batch_size=650, append_od=append_od)

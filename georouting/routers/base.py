@@ -445,7 +445,7 @@ class BaseRouter(object):
     def get_route(self, origin, destination):
         return Route(self._get_request(origin, destination))
 
-    def get_distances_batch(self, origins, destinations, append_od=False):
+    def get_distances_batch(self, origins, destinations, max_batch_size=25, append_od=False):
         """
         This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
         
@@ -464,7 +464,7 @@ class BaseRouter(object):
         
         # divide the origins and destinations into batches
 
-        batches = gtl.get_batch_od_pairs(origins, destinations)
+        batches = gtl.get_batch_od_pairs(origins, destinations, max_batch_size)
 
         # get the distance matrix for each batch 
         results = []

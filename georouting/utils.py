@@ -9,7 +9,7 @@ def convert_to_list(data):
         data = data.tolist()
     return data
 
-def get_batch_od_pairs(orgins,destinations,max_batch_size=100):
+def get_batch_od_pairs(orgins,destinations,max_batch_size=25):
 
     """
     This function returns a list of dataframes containing the origin-destination pairs to 
@@ -36,19 +36,27 @@ def get_batch_od_pairs(orgins,destinations,max_batch_size=100):
         batch_size = len(group)
         group["batch_size"] = batch_size
 
-        # divide the group into batches according to the max_batch_size
-        # if batch_size > max_batch_size:
-        #     group["batch_size"] = max_batch_size
-        #     n_batches = batch_size // max_batch_size
-        #     if batch_size % max_batch_size != 0:
-        #         n_batches += 1
-        #     group["batch_id"] = np.repeat(np.arange(n_batches),max_batch_size)[:batch_size]
+        # divide the batch into sub batches according to the max_batch_size
+        if batch_size > max_batch_size:
+            ngroups = batch_size // max_batch_size
+            if batch_size % max_batch_size != 0:
+                ngroups += 1
+            for i in range(ngroups-1):
+                sub_group = group.iloc[i*max_batch_size:(i+1)*max_batch_size]
 
+                orgins = sub_group[["lat_origin","lon_origin"]].value_counts().index.to_list()
+                destinations = sub_group[["lat_destination","lon_destination"]].value_counts().index.to_list()
+                orgins_destinations_list.append((orgins,destinations))
+            
+            sub_group = group.iloc[(ngroups-1)*max_batch_size:]
+            orgins = sub_group[["lat_origin","lon_origin"]].value_counts().index.to_list()
+            destinations = sub_group[["lat_destination","lon_destination"]].value_counts().index.to_list()
+            orgins_destinations_list.append((orgins,destinations))
+            
+        else:
 
-
-        orgins = group[["lat_origin","lon_origin"]].value_counts().index.to_list()
-
-        destinations = group[["lat_destination","lon_destination"]].value_counts().index.to_list()
-        orgins_destinations_list.append((orgins,destinations))
+            orgins = group[["lat_origin","lon_origin"]].value_counts().index.to_list()
+            destinations = group[["lat_destination","lon_destination"]].value_counts().index.to_list()
+            orgins_destinations_list.append((orgins,destinations))
 
     return orgins_destinations_list

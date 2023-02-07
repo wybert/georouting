@@ -116,12 +116,12 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] Fix the update in Pypi
 - [x] add get_route_distance_batch API
 - [x] add visualization for the route, better with o and d markers
-- [ ] Limit the number of origins and destinations in the distance matrix
-- [ ] avoid repeat documentation
+- [x] Limit the number of origins and destinations in the distance matrix
+- [x] avoid repeat documentation
 - [ ] Add more routing services
 - [x] Add test 
 - [ ] Add more examples
-- [ ] Add how to contribute
+- [x] Add how to contribute
 - [ ] Add how to cite
 
 

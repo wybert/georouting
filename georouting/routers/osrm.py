@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import georouting.utils as gtl
 from georouting.routers.base import WebRouter, Route, OSRMRoute
-
+import numpy as np
 
 # add document for this class
 class OSRMRouter(WebRouter):
@@ -199,7 +199,7 @@ class OSRMRouter(WebRouter):
 
         return distance_matrix
 
-    def get_distances_batch(self, origins, destinations, append_od=False):
+    def get_distances_batch(self, origins, destinations, append_od=False, use_local_server=False):
         """
         This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
         
@@ -228,4 +228,8 @@ class OSRMRouter(WebRouter):
             A pandas DataFrame containing the distance matrix.
 
         """
-        return super().get_distances_batch(origins, destinations, append_od=append_od)
+        if use_local_server:
+            df = super().get_distances_batch(origins, destinations, max_batch_size=np.infty, append_od=append_od)
+        else:
+            df = super().get_distances_batch(origins, destinations, max_batch_size=100, append_od=append_od)
+        return df
