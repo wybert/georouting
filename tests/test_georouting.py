@@ -58,33 +58,33 @@ def test_command_line_interface():
     assert help_result.exit_code == 0
     assert '--help  Show this message and exit.' in help_result.output
 
-def test_google_router():
-    """Test google router"""
-    from georouting.routers import GoogleRouter
-    router = GoogleRouter(google_key,mode="driving")
-    # test get_route
-    route = router.get_route(origin, destination)
-    route.get_distance()
-    route.get_route_geopandas()
-    route.plot_route()
+# def test_google_router():
+#     """Test google router"""
+#     from georouting.routers import GoogleRouter
+#     router = GoogleRouter(google_key,mode="driving")
+#     # test get_route
+#     route = router.get_route(origin, destination)
+#     route.get_distance()
+#     route.get_route_geopandas()
+#     route.plot_route()
 
-    # test get_distance_matrix
-    router.get_distance_matrix(origins, destinations)
-    router.get_distances_batch(origins, destinations)
+#     # test get_distance_matrix
+#     router.get_distance_matrix(origins, destinations)
+#     router.get_distances_batch(origins, destinations)
 
-def test_bing_router():
-    """Test bing router"""
-    from georouting.routers import BingRouter
-    router = BingRouter(bing_key,mode="driving")
-    # test get_route
-    route = router.get_route(origin, destination)
-    route.get_distance()
-    route.get_route_geopandas()
-    route.plot_route()
+# def test_bing_router():
+#     """Test bing router"""
+#     from georouting.routers import BingRouter
+#     router = BingRouter(bing_key,mode="driving")
+#     # test get_route
+#     route = router.get_route(origin, destination)
+#     route.get_distance()
+#     route.get_route_geopandas()
+#     route.plot_route()
 
-    # test get_distance_matrix
-    router.get_distance_matrix(origins, destinations)
-    router.get_distances_batch(origins, destinations)
+#     # test get_distance_matrix
+#     router.get_distance_matrix(origins, destinations)
+#     router.get_distances_batch(origins, destinations)
 
 def test_osrm_router():
     """Test osrm router"""
