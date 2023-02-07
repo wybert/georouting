@@ -19,8 +19,7 @@
 <!-- [![image](https://joss.theoj.org/papers/10.21105/joss.02305/status.svg)](https://joss.theoj.org/papers/10.21105/joss.02305) -->
 
 
-**Geo routing for Python users**
-
+**Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API. 
 
 Warning!!! This project is under active development, wait for the release of version 1.0.0 if you want to use it in production. This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
 
