@@ -7,12 +7,26 @@
 
 **Geo routing for Python users**
 
-Warning!!! This project is under active development, the API may change in the future. Wait for the release of version 1.0.0. This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
+
+Warning!!! This project is under active development, wait for the release of version 1.0.0 if you want to use it in production. This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
 
 
 -   Free software: MIT license
--   Documentation: https://wybert.github.io/georouting
+-   Documentation: [https://wybert.github.io/georouting](https://wybert.github.io/georouting)
     
+
+## Features
+
+- Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
+- Provide a unified API for routing services
+- Support calculating the travel distance matrix between multiple origins and destinations
+- Support calculating the travel distance according to OD pairs.
+- Easy to visualize the routing results
+- Return the travel distance matrix in a Pandas `Dataframe` you like
+- Return the routing results in a Geopandas `GeoDataFrame`
+- Easy to extend to support more routing services
+
+
 ## Installation
 
 ### Using pip
@@ -95,16 +109,6 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 ```
 
 
-## Features
-
-- Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
-- Provide a unified API for routing services
-- Support calculating the travel distance matrix between multiple origins and destinations
-- Return the travel distance matrix in a Pandas `Dataframe` you like
-- Return the routing results in a Geopandas `GeoDataFrame`
-- Easy to extend to support more routing services
-
-
 ## TODO
 - [x] Google Maps
 - [x] Bing Maps
@@ -120,9 +124,10 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] avoid repeat documentation
 - [ ] Add more routing services
 - [x] Add test 
-- [ ] Add more examples
+- [x] Add more examples
 - [x] Add how to contribute
 - [ ] Add how to cite
+- [x] change the show case use OSRM
 
 
 ## Credits
