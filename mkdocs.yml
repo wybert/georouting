@@ -31,7 +31,7 @@ theme:
         - navigation.instant
         - search.highlight
         - navigation.expand
-        - navigation.tabs
+        # - navigation.tabs
     custom_dir: "docs/overrides"
 
 plugins:

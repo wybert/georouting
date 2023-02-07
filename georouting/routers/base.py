@@ -405,7 +405,7 @@ class Route(object):
         Plot the route on a map.
         """
         gdf = self.get_route_geopandas()
-        m = gdf.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
+        m = gdf.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8},cmap="RdYlGn")
         # add a red destination marker, don't show i in the map
         folium.Marker([self.destination[0],self.destination[1]],
         icon=folium.Icon(color="red",icon_color="white",icon="circle", prefix="fa")
