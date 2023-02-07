@@ -65,8 +65,8 @@ nav:
     # FIXME: can include a jupyter notebook for usage here
     - Usage: usage.ipynb
     - Contributing: contributing.md
-    - FAQ: faq.md
-    - Changelog: changelog.md
-    - Report Issues: https://github.com/wybert/georouting/issues
+    # - FAQ: faq.md
+    # - Report Issues: https://github.com/wybert/georouting/issues
     - API Reference:
           - georouting module: georouting.md
+    - Changelog: changelog.md
