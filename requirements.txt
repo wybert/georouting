@@ -3,3 +3,6 @@ osmnx
 polyline
 googlemaps
 geopandas
+folium
+mapclassify
+matplotlib
