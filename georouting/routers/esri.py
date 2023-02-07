@@ -3,6 +3,8 @@ import json
 from georouting.routers.base import WebRouter, Route, EsriRoute
 import georouting.utils as gtl
 import pandas as pd
+
+
 class EsriRouter(WebRouter):
     """Esri router.
     The EsriRouter class is a subclass of the WebRouter class and is used for routing using the Esri ArcGIS API.
@@ -93,7 +95,7 @@ class EsriRouter(WebRouter):
         This method is a helper method for parsing the response from the Esri ArcGIS API.
         It takes one parameter, json_data, which is the response from the API.
         """
-        
+
         return None
 
     def get_route(self, origin, destination):
@@ -130,7 +132,7 @@ class EsriRouter(WebRouter):
 
         return route
 
-    def get_distance_matrix(self, origins, destinations,append_od=False):
+    def get_distance_matrix(self, origins, destinations, append_od=False):
         """
         This method returns a distance matrix between the origins and destinations.
         The origins and destinations parameters are lists of tuples/lists/arrays representing the starting and ending points for the route.
@@ -159,7 +161,6 @@ class EsriRouter(WebRouter):
         # if so, convert it to list
         origins = gtl.convert_to_list(origins)
         destinations = gtl.convert_to_list(destinations)
-
 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)
