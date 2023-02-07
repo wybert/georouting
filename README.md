@@ -136,12 +136,13 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] add visualization for the route, better with o and d markers
 - [x] Limit the number of origins and destinations in the distance matrix
 - [x] avoid repeat documentation
-- [ ] Add more routing services
+- [x] add ESRI router
 - [x] Add test 
 - [x] Add more examples
 - [x] Add how to contribute
-- [ ] Add how to cite
 - [x] change the show case use OSRM
+- [ ] add OSMnx router
+- [ ] Add how to cite
 
 
 ## Credits
