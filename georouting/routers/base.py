@@ -270,13 +270,13 @@ class EsriRoute:
 
     The class has the following methods:
 
-    get_duration: returns the total travel time of the route.
+    - `get_duration`: returns the total travel time of the route.
 
-    get_distance: returns the total distance of the route in meters.
+    - `get_distance`: returns the total distance of the route in meters.
 
-    get_route: returns the entire route as a dictionary.
+    - `get_route`: returns the entire route as a dictionary.
 
-    get_route_geopandas: raises a NotImplementedError. This method is not yet implemented and will be added in the future.
+    - `get_route_geopandas`: raises a NotImplementedError. This method is not yet implemented and will be added in the future.
 
 
     """
@@ -285,18 +285,27 @@ class EsriRoute:
         self.route = route
 
     def get_duration(self):
-        return self.route["routes"]["features"][0]["attributes"]["Total_TravelTime"]
+        return (
+            self.route["routes"]["features"][0]["attributes"]["Total_TravelTime"] * 60
+        )
 
     def get_distance(self):
         return (
-            self.route["routes"]["features"][0]["attributes"]["Total_Miles"] * 1609.344
+            self.route["routes"]["features"][0]["attributes"]["Total_Kilometers"] * 1000
         )
 
     def get_route(self):
         return self.route
 
     def get_route_geopandas(self):
-        raise NotImplementedError
+        linestring = self.route["routes"]["features"][0]["geometry"]["paths"][0]
+        gdf = gpd.GeoDataFrame(
+            geometry=gpd.GeoSeries(sg.LineString(linestring)), crs="EPSG:4326"
+        )
+
+        gdf["speed (m/s)"] = self.get_distance() / self.get_duration()
+
+        return gdf
 
 
 class MapboxRoute:
@@ -451,8 +460,8 @@ class BaseRouter(object):
 
         return od_matrix
 
-    def get_route(self, origin, destination):
-        return Route(self._get_request(origin, destination))
+    # def get_route(self, origin, destination):
+    #     return Route(self._get_request(origin, destination))
 
     def get_distances_batch(
         self, origins, destinations, max_batch_size=25, append_od=False
