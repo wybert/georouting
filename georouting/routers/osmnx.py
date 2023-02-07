@@ -11,16 +11,14 @@ import os
 class OSMNXRouter(object):
     def __init__(
         self,
-        mode="drive",
         area="Boston, USA",
-        network_type="drive",
+        mode="drive",
         engine="networkx",
         use_cache=True,
         log_console=False,
     ):
         self.mode = mode
         self.area = area
-        self.network_type = network_type
         self.engine = engine
         self.use_cache = use_cache
         self.log_console = log_console
@@ -36,7 +34,7 @@ class OSMNXRouter(object):
         ox.settings.use_cache = self.use_cache
         ox.settings.cache_folder = os.path.join(os.path.dirname(__file__), "cache")
         # ox.config(use_cache=self.use_cache, log_console=self.log_console)
-        G = ox.graph_from_place(self.area, network_type=self.network_type)
+        G = ox.graph_from_place(self.area, network_type=self.mode)
         G = ox.speed.add_edge_speeds(G)
         G = ox.speed.add_edge_travel_times(G)
         return G
@@ -90,3 +88,66 @@ class OSMNXRouter(object):
         else:
             raise ValueError("engine should be networkx or igraph")
         return travel_time
+
+    def get_route(self, origins, destinations):
+#    这里的route是什么呢？🤔，他应该有几个属性
+#    一个是有durations，一个是有sitances。然后还能进行路径的绘图，可以进行路径的可视化
+#   这个其实可以从已有的代码进行抽取，然后进行修改
+# 这里的测试的代码在实验室的电脑上
+        # switch longitude and latitude
+        origin = (origins[1], origins[0])
+        destination = (destinations[1], destinations[0])
+
+        # Find the nearest node to origin and destination
+        origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
+        destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
+
+        if self.engine == "networkx":
+            # Find the shortest path use networkx
+            routes = ox.shortest_path(
+                self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
+            )
+            # Get the travel time
+            travel_times = [
+                self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
+            ]
+
+        elif self.engine == "igraph":
+            # find the shortest path use igraph
+            pass
+            # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
+        else:
+            raise ValueError("engine should be networkx or igraph")
+        return routes
+    
+    def get_distance_matrix(self, origins, destinations,append_od=False):
+        # switch longitude and latitude
+        origin = (origins[1], origins[0])
+        destination = (destinations[1], destinations[0])
+
+        # Find the nearest node to origin and destination
+        origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
+        destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
+
+        if self.engine == "networkx":
+            # Find the shortest path use networkx
+            routes = ox.shortest_path(
+                self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
+            )
+            # Get the travel time
+            travel_times = [
+                self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
+            ]
+
+        elif self.engine == "igraph":
+            # find the shortest path use igraph
+            pass
+            # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
+        else:
+            raise ValueError("engine should be networkx or igraph")
+        return travel_time
+
+    def get_distances_batch(self,origins,destinations,append_od=False):
+
+        return None
+

@@ -10,7 +10,7 @@ import requests
 import json
 import georouting.utils as gtl
 import folium
-
+import networkx as nx
 
 class GoogleRoute:
     """
@@ -307,6 +307,25 @@ class EsriRoute:
 
         return gdf
 
+class OSMNXRoute:
+    def __init__(self, route):
+        self.route = route
+
+    def get_duration(self):
+
+        duration = nx.get_edge_attributes(self.G, "travel_time")
+        return duration
+
+    def get_distance(self):
+
+        distance = nx.get_edge_attributes(self.G, "length")
+        return distance
+
+    def get_route(self):
+        return self.route
+
+    def get_route_geopandas(self):
+        raise NotImplementedError
 
 class MapboxRoute:
     def __init__(self, route):
