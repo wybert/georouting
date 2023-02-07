@@ -62,7 +62,6 @@ nav:
     - Home: index.md
     - Installation: installation.md
     # - Usage: usage.md
-    # FIXME: can include a jupyter notebook for usage here
     - Usage: usage.ipynb
     - Contributing: contributing.md
     # - FAQ: faq.md
