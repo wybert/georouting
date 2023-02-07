@@ -11,6 +11,7 @@ import json
 import georouting.utils as gtl
 import folium
 
+
 class GoogleRoute:
     """
     The class "GoogleRoute" which allows to retrieve information from a route provided as an argument.
@@ -367,7 +368,7 @@ class Route(object):
 
     """
 
-    def __init__(self, route,origin, destination):
+    def __init__(self, route, origin, destination):
         """
         Initialize a Route object by passing the routing engine's route object.
 
@@ -400,16 +401,24 @@ class Route(object):
         Get the route information as a GeoDataFrame.
         """
         return self.route.get_route_geopandas()
+
     def plot_route(self):
         """
         Plot the route on a map.
         """
         gdf = self.get_route_geopandas()
-        m = gdf.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8},cmap="RdYlGn")
+        m = gdf.explore(
+            column="speed (m/s)",
+            style_kwds={"weight": 11, "opacity": 0.8},
+            cmap="RdYlGn",
+        )
         # add a red destination marker, don't show i in the map
-        folium.Marker([self.destination[0],self.destination[1]],
-        icon=folium.Icon(color="red",icon_color="white",icon="circle", prefix="fa")
-            ).add_to(m)
+        folium.Marker(
+            [self.destination[0], self.destination[1]],
+            icon=folium.Icon(
+                color="red", icon_color="white", icon="circle", prefix="fa"
+            ),
+        ).add_to(m)
 
         # folium.Marker([one_od_pair["AHA_ID_lat"],one_od_pair["AHA_ID_lon"]],
         # icon=folium.Icon(color="red",icon_color="white",icon="circle", prefix="fa")).add_to(m)
@@ -445,10 +454,12 @@ class BaseRouter(object):
     def get_route(self, origin, destination):
         return Route(self._get_request(origin, destination))
 
-    def get_distances_batch(self, origins, destinations, max_batch_size=25, append_od=False):
+    def get_distances_batch(
+        self, origins, destinations, max_batch_size=25, append_od=False
+    ):
         """
-        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
-        
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
         The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
 
         If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
@@ -457,21 +468,23 @@ class BaseRouter(object):
         # convert the origins and destinations to lists
         origins = gtl.convert_to_list(origins)
         destinations = gtl.convert_to_list(destinations)
-        
+
         # check if the origins and destinations are the same length
         if len(origins) != len(destinations):
-            raise ValueError("The origins and destinations should have the same length.")
-        
+            raise ValueError(
+                "The origins and destinations should have the same length."
+            )
+
         # divide the origins and destinations into batches
 
         batches = gtl.get_batch_od_pairs(origins, destinations, max_batch_size)
 
-        # get the distance matrix for each batch 
+        # get the distance matrix for each batch
         results = []
         for batch in batches:
             res = self.get_distance_matrix(batch[0], batch[1])
             results.append(res)
-        
+
         # concatenate the results
         df = pd.concat(results, axis=0)
         # revert the order of the rows
@@ -481,14 +494,22 @@ class BaseRouter(object):
             # convert the origins and destinations to numpy arrays
             origins = np.array(origins)
             destinations = np.array(destinations)
-            df["origin_lat"] = origins[:,0]
-            df["origin_lon"] = origins[:,1]
-            df["destination_lat"] = destinations[:,0]
-            df["destination_lon"] = destinations[:,1]  
+            df["origin_lat"] = origins[:, 0]
+            df["origin_lon"] = origins[:, 1]
+            df["destination_lat"] = destinations[:, 0]
+            df["destination_lon"] = destinations[:, 1]
 
-            df = df[["origin_lat", "origin_lon", "destination_lat", "destination_lon", 
-            "distance (m)", "duration (s)"]] 
-        
+            df = df[
+                [
+                    "origin_lat",
+                    "origin_lon",
+                    "destination_lat",
+                    "destination_lon",
+                    "distance (m)",
+                    "duration (s)",
+                ]
+            ]
+
         return df
 
 

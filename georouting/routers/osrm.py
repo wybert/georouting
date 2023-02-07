@@ -5,13 +5,14 @@ import georouting.utils as gtl
 from georouting.routers.base import WebRouter, Route, OSRMRoute
 import numpy as np
 
+
 # add document for this class
 class OSRMRouter(WebRouter):
     """
     OSRM router.
     The OSRMRouter class is a subclass of the WebRouter class and is used for routing using the OSRM API.
     This class is designed to provide a convenient and easy-to-use interface for interacting with the OSRM API.
-    
+
     It will return a router object that can be used to get routes and distance matrices.
 
     Parameters
@@ -50,7 +51,7 @@ class OSRMRouter(WebRouter):
 
     def _get_directions_url(self, origin, destination):
         """
-        Helper function for getting the URL for a directions request (To request a route 
+        Helper function for getting the URL for a directions request (To request a route
         between the given origin and destination coordinates).
         """
         return (
@@ -67,8 +68,8 @@ class OSRMRouter(WebRouter):
 
     def _get_matrix_distance_url(self, origins, destinations):
         """
-        Helper function for getting the URL for a distance matrix request. 
-        Generates the URL to request a distance matrix between the given lists of 
+        Helper function for getting the URL for a distance matrix request.
+        Generates the URL to request a distance matrix between the given lists of
         origins and destinations coordinates.
         """
 
@@ -101,8 +102,8 @@ class OSRMRouter(WebRouter):
 
     def _parse_distance_matrix(self, json_data):
         """
-        Helper function for parsing the distance matrix response. 
-        Parses the response from the distance matrix API and returns a dataframe of 
+        Helper function for parsing the distance matrix response.
+        Parses the response from the distance matrix API and returns a dataframe of
         durations and distances.
         """
         durations = json_data["durations"]
@@ -122,7 +123,7 @@ class OSRMRouter(WebRouter):
         """
         This method returns a Route object contains duration and disatnce for the route between the given origin and destination coordinates.
         The origin and destination parameters are lists of latitude and longitude coordinates.
-        The orgin and destination parameters should be in the form of iterable objects with two elements, such as  
+        The orgin and destination parameters should be in the form of iterable objects with two elements, such as
         (latitude, longitude) or [latitude, longitude].
 
         Parameters
@@ -148,7 +149,7 @@ class OSRMRouter(WebRouter):
         """
         url = self._get_directions_url(origin, destination)
         route = super()._get_request(url)
-        route = Route(OSRMRoute(route),origin, destination)
+        route = Route(OSRMRoute(route), origin, destination)
         return route
 
     def get_distance_matrix(self, origins, destinations, append_od=False):
@@ -156,7 +157,7 @@ class OSRMRouter(WebRouter):
         This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
         all possible combinations between each origin and each destination. If you want just
         return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
-        
+
         The origins and destinations parameters are lists of origins and destinations.
 
         If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
@@ -172,7 +173,7 @@ class OSRMRouter(WebRouter):
             An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
             It should be in the form of iterable objects with two elements, such as
             (latitude, longitude) or [latitude, longitude].
-            
+
         - `append_od` : bool
             If True, the method also returns a matrix of origin-destination pairs.
 
@@ -186,7 +187,7 @@ class OSRMRouter(WebRouter):
         """
         # check if the origins and destinations are numpy arrays
         # if so, convert them to lists
-        
+
         origins = gtl.convert_to_list(origins)
         destinations = gtl.convert_to_list(destinations)
 
@@ -199,10 +200,12 @@ class OSRMRouter(WebRouter):
 
         return distance_matrix
 
-    def get_distances_batch(self, origins, destinations, append_od=False, use_local_server=False):
+    def get_distances_batch(
+        self, origins, destinations, append_od=False, use_local_server=False
+    ):
         """
-        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
-        
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
         The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
 
         If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
@@ -229,7 +232,11 @@ class OSRMRouter(WebRouter):
 
         """
         if use_local_server:
-            df = super().get_distances_batch(origins, destinations, max_batch_size=np.infty, append_od=append_od)
+            df = super().get_distances_batch(
+                origins, destinations, max_batch_size=np.infty, append_od=append_od
+            )
         else:
-            df = super().get_distances_batch(origins, destinations, max_batch_size=100, append_od=append_od)
+            df = super().get_distances_batch(
+                origins, destinations, max_batch_size=100, append_od=append_od
+            )
         return df

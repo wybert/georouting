@@ -6,6 +6,7 @@ import json
 
 # from georouting.routers.base import BaseRouter
 
+
 # smilarly to google.py, we need to improve the documentation
 class BingRouter(WebRouter):
     """
@@ -85,9 +86,9 @@ class BingRouter(WebRouter):
 
     def get_route(self, origin, destination):
         """
-        This method returns a Route object representing the route between the origin and destination points. 
+        This method returns a Route object representing the route between the origin and destination points.
         The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
-        The orgin and destination parameters should be in the form of iterable objects with two elements, such as  
+        The orgin and destination parameters should be in the form of iterable objects with two elements, such as
         (latitude, longitude) or [latitude, longitude].
 
         Parameters
@@ -109,37 +110,36 @@ class BingRouter(WebRouter):
         - `get_duration()` returns the duration of the route in seconds.
         - `get_route()` returns the raw route data returned as a dictionary.
         - `get_route_geodataframe()` returns the route as a GeoDataFrame.
-        
+
         """
 
         url = self._get_directions_url(origin, destination)
         route = super()._get_request(url)
-        route = Route(BingRoute(route),origin, destination)
+        route = Route(BingRoute(route), origin, destination)
         return route
 
     def get_distance_matrix(self, origins, destinations, append_od=False):
-
         """
         This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
         all possible combinations between each origin and each destination. If you want just
         return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
-        
+
         The origins and destinations parameters are lists of origins and destinations.
 
         If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
 
-        The Bing Maps API has the following limitations for distance matrix requests, 
+        The Bing Maps API has the following limitations for distance matrix requests,
         for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):
-        
-        - For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts, 
-        - while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000. 
-        - For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types. 
-        
-        Pairs are calculated by multiplying the number of origins, by the number of destinations. 
-        For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations, 
+
+        - For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,
+        - while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.
+        - For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.
+
+        Pairs are calculated by multiplying the number of origins, by the number of destinations.
+        For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,
         or 100 origins and 100 destinations defined in your request.
-        
-        
+
+
         Parameters
         ----------
         - `origins` : iterable objects
@@ -175,8 +175,8 @@ class BingRouter(WebRouter):
 
     def get_distances_batch(self, origins, destinations, append_od=False):
         """
-        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination. 
-        
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
         The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
 
         If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
@@ -202,4 +202,6 @@ class BingRouter(WebRouter):
             A pandas DataFrame containing the distance matrix.
 
         """
-        return super().get_distances_batch(origins, destinations, max_batch_size=650, append_od=append_od)
+        return super().get_distances_batch(
+            origins, destinations, max_batch_size=650, append_od=append_od
+        )

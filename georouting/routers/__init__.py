@@ -1,6 +1,7 @@
 from georouting.routers.google import GoogleRouter
 from georouting.routers.osmnx import OSMNXRouter
 from georouting.routers.bing import BingRouter
+
 # from georouting.routers.esri import EsriRouter
 from georouting.routers.osrm import OSRMRouter
 
