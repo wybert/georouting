@@ -68,16 +68,19 @@ class OSMNXRouter(object):
 
     def _get_OD_pairs(self, origins, destinations):
         # switch longitude and latitude
-        origin_df  = pd.DataFrame(origins, columns=[ 'origin_lat','origin_lon'])
-        destination_df = pd.DataFrame(destinations, columns=[ 'destination_lat','destination_lon'])
+        origin_df = pd.DataFrame(origins, columns=["origin_lat", "origin_lon"])
+        destination_df = pd.DataFrame(
+            destinations, columns=["destination_lat", "destination_lon"]
+        )
 
-        origin_df['origin_node'] = ox.distance.nearest_nodes(self.G, 
-                                                origin_df['origin_lon'], origin_df['origin_lat'])
-        destination_df['destination_node'] = ox.distance.nearest_nodes(self.G,
-                                                destination_df['destination_lon'], destination_df['destination_lat'])
+        origin_df["origin_node"] = ox.distance.nearest_nodes(
+            self.G, origin_df["origin_lon"], origin_df["origin_lat"]
+        )
+        destination_df["destination_node"] = ox.distance.nearest_nodes(
+            self.G, destination_df["destination_lon"], destination_df["destination_lat"]
+        )
 
-
-        joint_data = origin_df.merge(destination_df,how="cross")
+        joint_data = origin_df.merge(destination_df, how="cross")
 
         return joint_data
 
@@ -96,37 +99,10 @@ class OSMNXRouter(object):
             distance_matrix.append([duration, distance])
 
         distance_matrix = pd.DataFrame(
-            distance_matrix, columns=["distance (m)", "duration (s)"]
+            distance_matrix, columns=["duration (s)", "distance (m)"]
         )
 
         return distance_matrix
-
-    def get_route_time_distance(self, origins, destinations):
-        # switch longitude and latitude
-        origin = (origins[1], origins[0])
-        destination = (destinations[1], destinations[0])
-
-        # Find the nearest node to origin and destination
-        origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
-        destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
-
-        if self.engine == "networkx":
-            # Find the shortest path use networkx
-            routes = ox.shortest_path(
-                self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
-            )
-            # Get the travel time
-            travel_times = [
-                self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
-            ]
-
-        elif self.engine == "igraph":
-            # find the shortest path use igraph
-            pass
-            # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
-        else:
-            raise ValueError("engine should be networkx or igraph")
-        return travel_time
 
     def get_route(self, origin, destination):
         """
@@ -172,29 +148,6 @@ class OSMNXRouter(object):
         route = ox.shortest_path(self.G, orig, dest, weight="travel_time")
 
         return Route(OSMNXRoute([route, self.G]), origin, destination)
-
-    #     def get_route(self, origin, destination):
-    # #    这里的route是什么呢？🤔，他应该有几个属性
-    # #    一个是有durations，一个是有sitances。然后还能进行路径的绘图，可以进行路径的可视化
-    # #   这个其实可以从已有的代码进行抽取，然后进行修改
-    # # 这里的测试的代码在实验室的电脑上
-    #         # switch longitude and latitude
-    #         origin = (origins[1], origins[0])
-    #         destination = (destinations[1], destinations[0])
-
-    #         # Find the nearest node to origin and destination
-    #         origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
-    #         destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
-
-    #         if self.engine == "networkx":
-    #             # Find the shortest path use networkx
-    #             routes = ox.shortest_path(
-    #                 self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
-    #             )
-    #             # Get the travel time
-    #             travel_times = [
-    #                 self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
-    #             ]
 
     #         elif self.engine == "igraph":
     #             # find the shortest path use igraph
@@ -258,7 +211,7 @@ class OSMNXRouter(object):
         dests = od_pairs_df["destination_node"].values.tolist()
         # print(origs)
         # print(dests)
-        
+
         routes = ox.shortest_path(self.G, origs, dests, weight="travel_time", cpus=None)
 
         distance_matrix = self._parse_distance_matrix(routes)
@@ -319,27 +272,24 @@ class OSMNXRouter(object):
         origins_df["origin_id"] = origins_df.index
         destinations_df["destination_id"] = destinations_df.index
         od_pairs_df = pd.concat([origins_df, destinations_df], axis=1)
-        print(od_pairs_df)
+        # print(od_pairs_df)
 
         # get cross product of origins and destinations
         import numpy as np
+
         v = np.vstack([origins_df.values, destinations_df.values])
         all_points = pd.DataFrame(v, columns=["lat", "lon", "id"])
-        print(all_points)
+        # print(all_points)
 
-
-        all_points = pd.concat([origins_df, destinations_df], axis=0, ignore_index=True)
-        all_points.columns = ["lat", "lon", "id"]
-        
-        all_points = pd.concat([origins_df, destinations_df], axis=0, ignore_index=True)
-        all_points.columns = ["lat", "lon", "id"]
         # drop duplicates
         all_points.drop_duplicates(subset=["lat", "lon"], inplace=True)
         # get the nearest nodes for origins and destinations
+        # print(all_points)
         all_points["node"] = ox.distance.nearest_nodes(
-            self.G, all_points["lat"], all_points["lon"]
+            self.G, all_points["lon"], all_points["lat"]
         )
 
+        # print(all_points)
         # get the origin nodes
         od_pairs_df["origin_node"] = pd.merge(
             od_pairs_df,
@@ -357,6 +307,8 @@ class OSMNXRouter(object):
             how="left",
         )["node"]
 
+        # print(od_pairs_df)
+
         # get the shortest path
         routes = ox.shortest_path(
             self.G,
@@ -371,7 +323,13 @@ class OSMNXRouter(object):
         if append_od:
             distance_matrix = pd.concat([od_pairs_df, distance_matrix], axis=1)
             distance_matrix.drop(
-                columns=["origin_node", "destination_node"], inplace=True
+                columns=[
+                    "origin_node",
+                    "destination_node",
+                    "origin_id",
+                    "destination_id",
+                ],
+                inplace=True,
             )
 
         return distance_matrix
