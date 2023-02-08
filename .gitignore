@@ -113,3 +113,8 @@ georouting/.DS_Store
 *.DS_Store
 .DS_Store
 notebooks/test.csv
+notebooks/00-osmnx-features-demo.ipynb
+notebooks/data/mynetwork.gpkg
+notebooks/data/mynetwork.graphml
+georouting/routers/cache/8578cc733ff0bf2e567bcc8e10fcc354a5b3de1a.json
+georouting/routers/cache/c17ad8d303536745d4004e8b587ba39427593e08.json
