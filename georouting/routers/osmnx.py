@@ -68,48 +68,18 @@ class OSMNXRouter(object):
 
     def _get_OD_pairs(self, origins, destinations):
         # switch longitude and latitude
-        origins = [(item[1], item[0]) for item in origins]
-        destinations = [(item[1], item[0]) for item in destinations]
+        origin_df  = pd.DataFrame(origins, columns=[ 'origin_lat','origin_lon'])
+        destination_df = pd.DataFrame(destinations, columns=[ 'destination_lat','destination_lon'])
 
-        # Find the nearest node to origin and destination
-        origin_nodes = ox.distance.nearest_nodes(self.G, *origins)
-        destination_nodes = ox.distance.nearest_nodes(self.G, *destinations)
+        origin_df['origin_node'] = ox.distance.nearest_nodes(self.G, 
+                                                origin_df['origin_lon'], origin_df['origin_lat'])
+        destination_df['destination_node'] = ox.distance.nearest_nodes(self.G,
+                                                destination_df['destination_lon'], destination_df['destination_lat'])
 
-        # Get the OD pairs
-        OD_pairs = []
-        for [origin_lon, origin_lat], origin_node in zip(origins, origin_nodes):
-            for [destination_lon, destination_lat], destination_node in zip(
-                destinations, destination_nodes
-            ):
-                OD_pairs.append(
-                    [
-                        origin_lon,
-                        origin_lat,
-                        destination_lon,
-                        destination_lat,
-                        origin_node,
-                        destination_node,
-                    ]
-                )
 
-        # import itertools
+        joint_data = origin_df.merge(destination_df,how="cross")
 
-        # OD_pairs = list(itertools.product(zip(origins, origin_nodes), zip(destinations, destination_nodes)))
-        # OD_pairs = [(origin, destination, origin_node, destination_node) for (origin, origin_node), (destination, destination_node) in OD_pairs]
-
-        df = pd.DataFrame(
-            OD_pairs,
-            columns=[
-                "origin_lon",
-                "origin_lat",
-                "destination_lon",
-                "destination_lat",
-                "origin_node",
-                "destination_node",
-            ],
-        )
-
-        return df
+        return joint_data
 
     def _parse_distance_matrix(self, routes):
         # Get the distance matrix
@@ -282,9 +252,13 @@ class OSMNXRouter(object):
         # build OD pairs
 
         od_pairs_df = self._get_OD_pairs(origins, destinations)
-        origs = od_pairs_df[["origin_lat", "origin_lon"]].values.tolist()
-        dests = od_pairs_df[["dest_lat", "dest_lon"]].values.tolist()
 
+        # print(od_pairs_df)
+        origs = od_pairs_df["origin_node"].values.tolist()
+        dests = od_pairs_df["destination_node"].values.tolist()
+        # print(origs)
+        # print(dests)
+        
         routes = ox.shortest_path(self.G, origs, dests, weight="travel_time", cpus=None)
 
         distance_matrix = self._parse_distance_matrix(routes)
@@ -345,15 +319,24 @@ class OSMNXRouter(object):
         origins_df["origin_id"] = origins_df.index
         destinations_df["destination_id"] = destinations_df.index
         od_pairs_df = pd.concat([origins_df, destinations_df], axis=1)
+        print(od_pairs_df)
 
         # get cross product of origins and destinations
+        import numpy as np
+        v = np.vstack([origins_df.values, destinations_df.values])
+        all_points = pd.DataFrame(v, columns=["lat", "lon", "id"])
+        print(all_points)
 
+
+        all_points = pd.concat([origins_df, destinations_df], axis=0, ignore_index=True)
+        all_points.columns = ["lat", "lon", "id"]
+        
         all_points = pd.concat([origins_df, destinations_df], axis=0, ignore_index=True)
         all_points.columns = ["lat", "lon", "id"]
         # drop duplicates
         all_points.drop_duplicates(subset=["lat", "lon"], inplace=True)
         # get the nearest nodes for origins and destinations
-        all_points["node"] = ox.get_nearest_nodes(
+        all_points["node"] = ox.distance.nearest_nodes(
             self.G, all_points["lat"], all_points["lon"]
         )
 
