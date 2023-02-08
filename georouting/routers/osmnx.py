@@ -10,6 +10,7 @@ import georouting.utils as gtl
 
 
 class OSMNXRouter(object):
+    # FIXME: mode drive should be the same as mode driving
     def __init__(
         self,
         area="Piedmont, California, USA",
