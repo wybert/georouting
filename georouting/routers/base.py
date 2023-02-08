@@ -13,6 +13,7 @@ import folium
 import networkx as nx
 import osmnx as ox
 
+
 class GoogleRoute:
     """
     The class "GoogleRoute" which allows to retrieve information from a route provided as an argument.
@@ -308,36 +309,38 @@ class EsriRoute:
 
         return gdf
 
+
 class OSMNXRoute:
     def __init__(self, route):
         self.route = route[0]
         self.G = route[1]
 
     def _get_durations(self):
-        durations = ox.utils_graph.get_route_edge_attributes(self.G, self.route, "travel_time")
+        durations = ox.utils_graph.get_route_edge_attributes(
+            self.G, self.route, "travel_time"
+        )
         return durations
+
     def _get_distances(self):
-        distances = ox.utils_graph.get_route_edge_attributes(self.G, self.route, "length")
+        distances = ox.utils_graph.get_route_edge_attributes(
+            self.G, self.route, "length"
+        )
         return distances
 
     def get_duration(self):
-
         durations = self._get_durations()
 
         return round(sum(durations))
-        
 
     def get_distance(self):
-
         edge_lengths = self._get_distances()
-        
+
         return round(sum(edge_lengths))
 
     def get_route(self):
         return self.route
 
     def get_route_geopandas(self):
-        
         subgraph = self.G.subgraph(self.route)
         gdf_nodes, gdf_edges = ox.graph_to_gdfs(subgraph)
 
@@ -345,12 +348,18 @@ class OSMNXRoute:
         # gdf_edges["distance (m)"] = self._get_distances()
         # gdf_edges["speed (m/s)"] = gdf_edges["distance (m)"] / gdf_edges["duration (s)"]
 
-        gdf_edges.rename(columns={'length':'distance (m)','travel_time':'duration (s)'}, inplace=True)
+        gdf_edges.rename(
+            columns={"length": "distance (m)", "travel_time": "duration (s)"},
+            inplace=True,
+        )
         gdf_edges["speed (m/s)"] = gdf_edges["distance (m)"] / gdf_edges["duration (s)"]
 
-        gdf_edges = gdf_edges[["duration (s)", "distance (m)", "geometry", "speed (m/s)"]]
+        gdf_edges = gdf_edges[
+            ["duration (s)", "distance (m)", "geometry", "speed (m/s)"]
+        ]
         gdf_edges = gdf_edges.reset_index(drop=True)
         return gdf_edges
+
 
 class MapboxRoute:
     def __init__(self, route):
@@ -499,7 +508,7 @@ class BaseRouter(object):
                 items.append(item)
         od_matrix = pd.DataFrame(
             items,
-            columns=["orgin_lat", "orgin_lon", "destination_lat", "destination_lon"],
+            columns=["origin_lat", "origin_lon", "destination_lat", "destination_lon"],
         )
 
         return od_matrix

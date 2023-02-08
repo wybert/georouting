@@ -6,6 +6,7 @@ import igraph as ig
 import os
 import warnings
 from georouting.routers.base import BaseRouter, Route, OSMNXRoute
+import georouting.utils as gtl
 
 
 class OSMNXRouter(object):
@@ -42,6 +43,7 @@ class OSMNXRouter(object):
         return G
 
     def _get_node_dict(self):
+        # this is a dict to map the node id to the index of the node
         node_dict = dict().fromkeys(list(self.G.nodes))
         [node_dict.update({k: i}) for i, k in enumerate(node_dict)]
         return node_dict
@@ -63,6 +65,71 @@ class OSMNXRouter(object):
             0
         ]
         return sr
+
+    def _get_OD_pairs(self, origins, destinations):
+        # switch longitude and latitude
+        origins = [(item[1], item[0]) for item in origins]
+        destinations = [(item[1], item[0]) for item in destinations]
+
+        # Find the nearest node to origin and destination
+        origin_nodes = ox.distance.nearest_nodes(self.G, *origins)
+        destination_nodes = ox.distance.nearest_nodes(self.G, *destinations)
+
+        # Get the OD pairs
+        OD_pairs = []
+        for [origin_lon, origin_lat], origin_node in zip(origins, origin_nodes):
+            for [destination_lon, destination_lat], destination_node in zip(
+                destinations, destination_nodes
+            ):
+                OD_pairs.append(
+                    [
+                        origin_lon,
+                        origin_lat,
+                        destination_lon,
+                        destination_lat,
+                        origin_node,
+                        destination_node,
+                    ]
+                )
+
+        # import itertools
+
+        # OD_pairs = list(itertools.product(zip(origins, origin_nodes), zip(destinations, destination_nodes)))
+        # OD_pairs = [(origin, destination, origin_node, destination_node) for (origin, origin_node), (destination, destination_node) in OD_pairs]
+
+        df = pd.DataFrame(
+            OD_pairs,
+            columns=[
+                "origin_lon",
+                "origin_lat",
+                "destination_lon",
+                "destination_lat",
+                "origin_node",
+                "destination_node",
+            ],
+        )
+
+        return df
+
+    def _parse_distance_matrix(self, routes):
+        # Get the distance matrix
+
+        distance_matrix = []
+        for r in routes:
+            if r is not None:
+                route = OSMNXRoute([r, self.G])
+                duration = route.get_duration()
+                distance = route.get_distance()
+            else:
+                duration = None
+                distance = None
+            distance_matrix.append([duration, distance])
+
+        distance_matrix = pd.DataFrame(
+            distance_matrix, columns=["distance (m)", "duration (s)"]
+        )
+
+        return distance_matrix
 
     def get_route_time_distance(self, origins, destinations):
         # switch longitude and latitude
@@ -90,7 +157,6 @@ class OSMNXRouter(object):
         else:
             raise ValueError("engine should be networkx or igraph")
         return travel_time
-
 
     def get_route(self, origin, destination):
         """
@@ -120,8 +186,8 @@ class OSMNXRouter(object):
         - `get_route_geodataframe()` returns the route as a GeoDataFrame.
 
         """
-        
-        #  download the  
+
+        #  download the
         # G = self._download_road_network()
 
         # switch longitude and latitude
@@ -135,72 +201,194 @@ class OSMNXRouter(object):
         # find the shortest path between nodes, minimizing travel time, then plot it
         route = ox.shortest_path(self.G, orig, dest, weight="travel_time")
 
-        
+        return Route(OSMNXRoute([route, self.G]), origin, destination)
 
-        
-        return Route(OSMNXRoute([route,self.G]),origin,destination)
+    #     def get_route(self, origin, destination):
+    # #    这里的route是什么呢？🤔，他应该有几个属性
+    # #    一个是有durations，一个是有sitances。然后还能进行路径的绘图，可以进行路径的可视化
+    # #   这个其实可以从已有的代码进行抽取，然后进行修改
+    # # 这里的测试的代码在实验室的电脑上
+    #         # switch longitude and latitude
+    #         origin = (origins[1], origins[0])
+    #         destination = (destinations[1], destinations[0])
+
+    #         # Find the nearest node to origin and destination
+    #         origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
+    #         destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
+
+    #         if self.engine == "networkx":
+    #             # Find the shortest path use networkx
+    #             routes = ox.shortest_path(
+    #                 self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
+    #             )
+    #             # Get the travel time
+    #             travel_times = [
+    #                 self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
+    #             ]
+
+    #         elif self.engine == "igraph":
+    #             # find the shortest path use igraph
+    #             pass
+    #             # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
+    #         else:
+    #             raise ValueError("engine should be networkx or igraph")
+    #         return routes
+
+    def get_distance_matrix(self, origins, destinations, append_od=False):
+        """
+        This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
+        all possible combinations between each origin and each destination. If you want just
+        return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+
+        The origins and destinations parameters are lists of origins and destinations.
+
+        If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
+        The Bing Maps API has the following limitations for distance matrix requests,
+        for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):
+
+        - For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,
+        - while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.
+        - For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.
+
+        Pairs are calculated by multiplying the number of origins, by the number of destinations.
+        For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,
+        or 100 origins and 100 destinations defined in your request.
 
 
-#     def get_route(self, origin, destination):
-# #    这里的route是什么呢？🤔，他应该有几个属性
-# #    一个是有durations，一个是有sitances。然后还能进行路径的绘图，可以进行路径的可视化
-# #   这个其实可以从已有的代码进行抽取，然后进行修改
-# # 这里的测试的代码在实验室的电脑上
-#         # switch longitude and latitude
-#         origin = (origins[1], origins[0])
-#         destination = (destinations[1], destinations[0])
+        Parameters
+        ----------
+        - `origins` : iterable objects
+            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+        - `destinations` : iterable objects
+            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+        - `append_od` : bool
+            If True, the method also returns a matrix of origin-destination pairs.
 
-#         # Find the nearest node to origin and destination
-#         origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
-#         destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
+        Returns
+        -------
+        - `distance_matrix` : pandas.DataFrame
+            A pandas DataFrame containing the distance matrix.
+        """
 
-#         if self.engine == "networkx":
-#             # Find the shortest path use networkx
-#             routes = ox.shortest_path(
-#                 self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
-#             )
-#             # Get the travel time
-#             travel_times = [
-#                 self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
-#             ]
+        # check if the origins and destinations is numpy array
+        # if so, convert it to list
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
+        # build OD pairs
 
-#         elif self.engine == "igraph":
-#             # find the shortest path use igraph
-#             pass
-#             # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
-#         else:
-#             raise ValueError("engine should be networkx or igraph")
-#         return routes
-    
+        od_pairs_df = self._get_OD_pairs(origins, destinations)
+        origs = od_pairs_df[["origin_lat", "origin_lon"]].values.tolist()
+        dests = od_pairs_df[["dest_lat", "dest_lon"]].values.tolist()
 
-    # def get_distance_matrix(self, origins, destinations,append_od=False):
-    #     # switch longitude and latitude
-    #     origin = (origins[1], origins[0])
-    #     destination = (destinations[1], destinations[0])
+        routes = ox.shortest_path(self.G, origs, dests, weight="travel_time", cpus=None)
 
-    #     # Find the nearest node to origin and destination
-    #     origin_nodes = ox.distance.nearest_nodes(self.G, *origin)
-    #     destination_nodes = ox.distance.nearest_nodes(self.G, *destination)
+        distance_matrix = self._parse_distance_matrix(routes)
 
-    #     if self.engine == "networkx":
-    #         # Find the shortest path use networkx
-    #         routes = ox.shortest_path(
-    #             self.G, origin_nodes, destination_nodes, weight="travel_time", cpus=None
-    #         )
-    #         # Get the travel time
-    #         travel_times = [
-    #             self.G[u][v][0]["travel_time"] for u, v in zip(routes[:-1], routes[1:])
-    #         ]
+        if append_od:
+            distance_matrix = pd.concat([od_pairs_df, distance_matrix], axis=1)
+            distance_matrix.drop(
+                columns=["origin_node", "destination_node"], inplace=True
+            )
 
-    #     elif self.engine == "igraph":
-    #         # find the shortest path use igraph
-    #         pass
-    #         # travel_time = self._get_short_ig(self.node_dict[origin_nodes],self.node_dict[destination_nodes],"travel_time")
-    #     else:
-    #         raise ValueError("engine should be networkx or igraph")
-    #     return travel_time
+        return distance_matrix
 
-    # def get_distances_batch(self,origins,destinations,append_od=False):
+    def get_distances_batch(self, origins, destinations, append_od=False):
+        """
+        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
 
-    #     return None
+        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
 
+        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+        Parameters
+        ----------
+        - `origins` : iterable objects
+            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+
+        - `destinations` : iterable objects
+            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+            It should be in the form of iterable objects with two elements, such as
+            (latitude, longitude) or [latitude, longitude].
+
+        - `append_od` : bool
+            If True, the method also returns the input origin-destination pairs.
+
+        Returns
+        -------
+        - `distance_matrix` : pandas.DataFrame
+            A pandas DataFrame containing the distance matrix.
+
+        """
+
+        # convert the origins and destinations to lists
+        origins = gtl.convert_to_list(origins)
+        destinations = gtl.convert_to_list(destinations)
+
+        # check if the origins and destinations are the same length
+        if len(origins) != len(destinations):
+            raise ValueError(
+                "The origins and destinations should have the same length."
+            )
+
+        # build OD pairs
+
+        origins_df = pd.DataFrame(origins, columns=["origin_lat", "origin_lon"])
+        destinations_df = pd.DataFrame(destinations, columns=["dest_lat", "dest_lon"])
+        # create id column
+        origins_df["origin_id"] = origins_df.index
+        destinations_df["destination_id"] = destinations_df.index
+        od_pairs_df = pd.concat([origins_df, destinations_df], axis=1)
+
+        # get cross product of origins and destinations
+
+        all_points = pd.concat([origins_df, destinations_df], axis=0, ignore_index=True)
+        all_points.columns = ["lat", "lon", "id"]
+        # drop duplicates
+        all_points.drop_duplicates(subset=["lat", "lon"], inplace=True)
+        # get the nearest nodes for origins and destinations
+        all_points["node"] = ox.get_nearest_nodes(
+            self.G, all_points["lat"], all_points["lon"]
+        )
+
+        # get the origin nodes
+        od_pairs_df["origin_node"] = pd.merge(
+            od_pairs_df,
+            all_points,
+            left_on=["origin_lat", "origin_lon"],
+            right_on=["lat", "lon"],
+            how="left",
+        )["node"]
+        # get the destination nodes
+        od_pairs_df["destination_node"] = pd.merge(
+            od_pairs_df,
+            all_points,
+            left_on=["dest_lat", "dest_lon"],
+            right_on=["lat", "lon"],
+            how="left",
+        )["node"]
+
+        # get the shortest path
+        routes = ox.shortest_path(
+            self.G,
+            od_pairs_df["origin_node"].tolist(),
+            od_pairs_df["destination_node"].tolist(),
+            weight="travel_time",
+            cpus=None,
+        )
+
+        distance_matrix = self._parse_distance_matrix(routes)
+
+        if append_od:
+            distance_matrix = pd.concat([od_pairs_df, distance_matrix], axis=1)
+            distance_matrix.drop(
+                columns=["origin_node", "destination_node"], inplace=True
+            )
+
+        return distance_matrix

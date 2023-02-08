@@ -118,3 +118,7 @@ notebooks/data/mynetwork.gpkg
 notebooks/data/mynetwork.graphml
 georouting/routers/cache/8578cc733ff0bf2e567bcc8e10fcc354a5b3de1a.json
 georouting/routers/cache/c17ad8d303536745d4004e8b587ba39427593e08.json
+notebooks/02-routing-speed-time.ipynb
+notebooks/11-plot-routes-folium-web-map.ipynb
+notebooks/data/route.html
+notebooks/data/graph.html
