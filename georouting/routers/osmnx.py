@@ -11,6 +11,11 @@ import georouting.utils as gtl
 
 class OSMNXRouter(object):
     # FIXME: mode drive should be the same as mode driving
+    # FIXME: add igraph support
+    # FIXME: can we use networkit
+    # FIXME: can we use GPU based network package
+    # routing is basically a shortest path problem, it should be any package can solve it
+    # How about A* algorithm in datashader
     def __init__(
         self,
         area="Piedmont, California, USA",
