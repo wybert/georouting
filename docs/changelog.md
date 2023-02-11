@@ -1,11 +1,11 @@
 # Changelog
 
-## v0.0.1 - Date
+## v0.0.8 - 2023-02-11
 
 **Improvement**:
 
--   TBD
+-   improved the documentation
 
 **New Features**:
 
--   TBD
+-   added unified API for all routers
