@@ -142,7 +142,6 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] Add how to contribute
 - [x] change the show case use OSRM
 - [x] add OSMnx router
-- [ ] static plot for the route
 - [x] add one API for all routers
 - [ ] Add how to cite
 
