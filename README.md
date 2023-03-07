@@ -143,6 +143,7 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] change the show case use OSRM
 - [x] add OSMnx router
 - [x] add one API for all routers
+- [ ] add extract graph data from osm data, easy way
 - [ ] Add how to cite
 
 

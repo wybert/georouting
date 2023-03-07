@@ -361,6 +361,46 @@ class OSMNXRoute:
         return gdf_edges
 
 
+class BaiduRoute:
+    def __init__(self, route):
+        self.route = route
+
+    def get_duration(self):
+        return self.route["result"]["routes"][0]["duration"]
+
+    def get_distance(self):
+        return self.route["result"]["routes"][0]["distance"]
+
+    def get_route(self):
+        return self.route
+
+    def get_route_geopandas(self):
+        raise NotImplementedError
+
+class PgroutingRoute:
+    def __init__(self, route):
+        self.route = route
+
+    def get_duration(self):
+        return self.route['cost'].sum()
+
+    def get_distance(self):
+        gdf = self.route.copy()
+        gdf.to_crs(epsg=3857, inplace=True)
+        return gdf['geom'].length.sum()
+
+    def get_route(self):
+        return self.route
+
+    def get_route_geopandas(self):
+        gdf = self.route.copy()
+        gdf.to_crs(epsg=3857, inplace=True)
+        gdf['duration (s)'] = gdf['cost']
+        gdf['distance (m)'] = gdf['geom'].length
+        gdf['speed (m/s)'] = gdf['distance (m)'] / gdf['duration (s)']
+        gdf.to_crs(epsg=4326, inplace=True)
+        return gdf
+    
 class MapboxRoute:
     def __init__(self, route):
         self.route = route

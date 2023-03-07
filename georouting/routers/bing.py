@@ -7,7 +7,6 @@ import json
 # from georouting.routers.base import BaseRouter
 
 
-# smilarly to google.py, we need to improve the documentation
 class BingRouter(WebRouter):
     """
     Bing Maps router.
