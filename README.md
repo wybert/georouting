@@ -63,7 +63,6 @@ If you don't have [pip](https://pip.pypa.io) installed, this [Python installatio
 
 ### Using conda
 
-This is not yet available on conda-forge,
 
 ```
 conda install -c conda-forge georouting
