@@ -146,6 +146,47 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [ ] Add how to cite
 
 
+## Documentation Generation
+
+### Generate API Documentation from Source Code
+
+Use `pydoc-markdown` to generate markdown API docs from Python docstrings:
+
+```bash
+# Install pydoc-markdown
+pip install pydoc-markdown
+
+# Generate API docs for each router module
+pydoc-markdown -I . -m georouting.routers.google --render-toc > docs/api/google.md
+pydoc-markdown -I . -m georouting.routers.osrm --render-toc > docs/api/osrm.md
+pydoc-markdown -I . -m georouting.routers.bing --render-toc > docs/api/bing.md
+pydoc-markdown -I . -m georouting.routers.esri --render-toc > docs/api/esri.md
+pydoc-markdown -I . -m georouting.routers.osmnx --render-toc > docs/api/osmnx.md
+pydoc-markdown -I . -m georouting.routers.base --render-toc > docs/api/base.md
+pydoc-markdown -I . -m georouting.utils --render-toc > docs/api/utils.md
+```
+
+### Convert Jupyter Notebook to Markdown
+
+Convert notebook and remove interactive widget divs while keeping tables:
+
+```bash
+# Convert Jupyter notebook to markdown
+jupyter nbconvert --to markdown docs/usage.ipynb
+
+# Remove interactive widget divs (folium maps) from the converted markdown
+python -c "
+import re
+with open('docs/usage.md', 'r') as f:
+    content = f.read()
+# Remove folium map widget divs
+pattern = r'<div style=\"width:100%;\">\\s*<div style=\"position:relative[^>]*>.*?</iframe>\\s*</div>\\s*</div>'
+content = re.sub(pattern, '*[Interactive map - view in Jupyter notebook]*', content, flags=re.DOTALL)
+with open('docs/usage.md', 'w') as f:
+    f.write(content)
+"
+```
+
 ## Credits
 
 This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [giswqs/pypackage](https://github.com/giswqs/pypackage) project template.

@@ -67,5 +67,12 @@ nav:
     # - FAQ: faq.md
     # - Report Issues: https://github.com/wybert/georouting/issues
     - API Reference:
-          - georouting module: georouting.md
+          - Overview: api/index.md
+          - GoogleRouter: api/google.md
+          - OSRMRouter: api/osrm.md
+          - BingRouter: api/bing.md
+          - EsriRouter: api/esri.md
+          - OSMNXRouter: api/osmnx.md
+          - Base Classes: api/base.md
+          - Utils: api/utils.md
     - Changelog: changelog.md

@@ -104,10 +104,29 @@ ENV/
 
 # IDE settings
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Thumbnails
+Thumbs.db
+ehthumbs.db
+
+# Project specific
 notebooks/.ipynb_checkpoints/
 notebooks/cache/
-georouting/.DS_Store
-*.DS_Store
-.DS_Store
 notebooks/*
 georouting/routers/cache/*
