@@ -63,6 +63,7 @@ nav:
     - Installation: installation.md
     # - Usage: usage.md
     - Usage: usage.ipynb
+    - LLMs.txt: llms-txt.md
     - Contributing: contributing.md
     # - FAQ: faq.md
     # - Report Issues: https://github.com/wybert/georouting/issues

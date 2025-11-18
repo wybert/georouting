@@ -19,16 +19,11 @@
 <!-- [![image](https://joss.theoj.org/papers/10.21105/joss.02305/status.svg)](https://joss.theoj.org/papers/10.21105/joss.02305) -->
 
 
-**Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API. 
+**AI-Friendly Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API.
 
-
--   Free software: MIT license
--   Documentation: <https://wybert.github.io/georouting>
-    
 ![Screenshot2](https://github.com/wybert/georouting/blob/main/docs/img/Screenshot1.png?raw=true)
 
 ## Features
-
 
 - Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
 - Provide a unified API for routing services
@@ -39,6 +34,17 @@
 - Return the routing results in a Geopandas `GeoDataFrame`
 - Easy to extend to support more routing services
 
+## AI-Friendly Documentation
+
+Georouting provides [LLMs.txt](llms-txt.md) files for seamless integration with AI assistants like Claude, ChatGPT, Cursor, and Windsurf. Use these files to get better AI-powered help when working with georouting:
+
+- [llms.txt](llms.txt) - Concise overview for quick questions
+- [llms-full.txt](llms-full.txt) - Complete documentation for comprehensive reference
+
 ## Credits
 
 This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [giswqs/pypackage](https://github.com/giswqs/pypackage) project template.
+
+## Licence
+
+MIT license

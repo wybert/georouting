@@ -20,14 +20,14 @@
 <!-- [![image](https://joss.theoj.org/papers/10.21105/joss.02305/status.svg)](https://joss.theoj.org/papers/10.21105/joss.02305) -->
 
 
-**Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API. 
+**AI-Friendly Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API.
 
 Warning!!! This project is under active development, wait for the release of version 1.0.0 if you want to use it in production. This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
 
 
 -   Free software: MIT license
 -   Documentation: [https://wybert.github.io/georouting](https://wybert.github.io/georouting)
-    
+
 
 ## Features
 
@@ -39,6 +39,7 @@ Warning!!! This project is under active development, wait for the release of ver
 - Return the travel distance matrix in a Pandas `Dataframe` you like
 - Return the routing results in a Geopandas `GeoDataFrame`
 - Easy to extend to support more routing services
+- AI-friendly documentation with [LLMs.txt](https://wybert.github.io/georouting/llms-txt/) support
 
 
 ## Installation
@@ -136,7 +137,7 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 - [x] Limit the number of origins and destinations in the distance matrix
 - [x] avoid repeat documentation
 - [x] add ESRI router
-- [x] Add test 
+- [x] Add test
 - [x] Add more examples
 - [x] Add how to contribute
 - [x] change the show case use OSRM
@@ -148,16 +149,21 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 
 ## Documentation Generation
 
-### Generate LLMs.txt Files
+### LLMs.txt Files
 
-Generate `llms.txt` and `llms-full.txt` files for LLM consumption (following the [llms.txt standard](https://llmstxt.org/)):
+Georouting provides AI-friendly documentation files following the [llms.txt standard](https://llmstxt.org/). These help AI assistants (Claude, ChatGPT, Cursor, Windsurf) better understand and work with georouting.
+
+- **[llms.txt](https://wybert.github.io/georouting/llms.txt)** - Concise overview (~2KB)
+- **[llms-full.txt](https://wybert.github.io/georouting/llms-full.txt)** - Complete documentation (~55KB)
+
+See the [LLMs.txt documentation](https://wybert.github.io/georouting/llms-txt/) for usage instructions with various AI tools.
+
+To regenerate after documentation changes:
 
 ```bash
 # Generate the full documentation file by combining all markdown docs
 python generate_llms_full.py
 ```
-
-This creates `docs/llms-full.txt` containing all documentation. The `docs/llms.txt` file contains a brief overview with links.
 
 ### Generate API Documentation from Source Code
 
