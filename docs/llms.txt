@@ -1,0 +1,92 @@
+# Georouting
+
+> A Python routing library providing a unified API across multiple routing services including Google Maps, Bing Maps, OSRM, ESRI, OSMnx, and pgRouting.
+
+Georouting abstracts away the differences between routing backends and provides a consistent interface for computing routes, calculating distance matrices, and visualizing routing results.
+
+
+## Installation
+
+not work with python 3.14 yet, use python 3.6-3.13
+
+```bash
+pip install georouting
+```
+
+or
+```bash
+pip install git+https://github.com/wybert/georouting.git
+```
+
+or via conda:
+```bash
+conda install -c conda-forge georouting
+```
+## Quick Start
+
+```python
+from georouting.routers import OSRMRouter
+
+# Create a router (OSRM requires no API key)
+router = OSRMRouter(mode="driving")
+
+# Define origin and destination as [latitude, longitude]
+origin = [42.3601, -71.0589]      # Boston
+destination = [40.7128, -74.0060]  # New York
+
+# Get route
+route = router.get_route(origin, destination)
+print(f"Distance: {route.get_distance()} meters")
+print(f"Duration: {route.get_duration()} seconds")
+
+# Get route as GeoDataFrame
+gdf = route.get_route_geopandas()
+
+# Visualize route on interactive map
+route.plot_route()
+
+# Calculate distance matrix for multiple points
+origins = [[42.3601, -71.0589], [41.8781, -87.6298]]
+destinations = [[40.7128, -74.0060], [34.0522, -118.2437]]
+matrix = router.get_distance_matrix(origins, destinations)
+print(matrix)
+```
+
+
+## Features
+
+- Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
+- Provide a unified API for routing services
+- Support calculating the travel distance matrix between multiple origins and destinations
+- Support calculating the travel distance according to OD pairs.
+- Easy to visualize the routing results
+- Return the travel distance matrix in a Pandas `Dataframe` you like
+- Return the routing results in a Geopandas `GeoDataFrame`
+- Easy to extend to support more routing services
+
+## Documentation
+
+- [Home](https://wybert.github.io/georouting/): Main documentation page
+- [Installation](https://wybert.github.io/georouting/installation/): How to install georouting via pip or conda
+- [Usage](https://wybert.github.io/georouting/usage/): Examples and tutorials for using the library
+
+## API Reference
+
+- [GoogleRouter](https://wybert.github.io/georouting/api/google/): Google Maps routing API
+- [OSRMRouter](https://wybert.github.io/georouting/api/osrm/): OSRM public routing service (no API key needed)
+- [BingRouter](https://wybert.github.io/georouting/api/bing/): Bing Maps routing API
+- [EsriRouter](https://wybert.github.io/georouting/api/esri/): ESRI/ArcGIS routing API
+- [OSMNXRouter](https://wybert.github.io/georouting/api/osmnx/): Local OSMnx routing
+- [Base Classes](https://wybert.github.io/georouting/api/base/): BaseRouter, WebRouter, LocalRouter, Route classes
+- [Utils](https://wybert.github.io/georouting/api/utils/): Helper functions
+
+## Resources
+
+- [Contributing](https://wybert.github.io/georouting/contributing/): How to contribute to the project
+- [Changelog](https://wybert.github.io/georouting/changelog/): Version history and updates
+- [GitHub Repository](https://github.com/wybert/georouting): Source code and issue tracker
+- [PyPI](https://pypi.python.org/pypi/georouting): Python package index
+
+## Optional
+
+- [FAQ](https://wybert.github.io/georouting/faq/): Frequently asked questions

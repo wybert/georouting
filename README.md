@@ -148,6 +148,17 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 
 ## Documentation Generation
 
+### Generate LLMs.txt Files
+
+Generate `llms.txt` and `llms-full.txt` files for LLM consumption (following the [llms.txt standard](https://llmstxt.org/)):
+
+```bash
+# Generate the full documentation file by combining all markdown docs
+python generate_llms_full.py
+```
+
+This creates `docs/llms-full.txt` containing all documentation. The `docs/llms.txt` file contains a brief overview with links.
+
 ### Generate API Documentation from Source Code
 
 Use `pydoc-markdown` to generate markdown API docs from Python docstrings:
