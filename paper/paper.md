@@ -35,7 +35,7 @@ The core of `georouting` is a set of router classes that inherit from a common `
 - `get_distances_batch(origins, destinations, append_od=True)` computes distances and durations only for specific OD pairs, using internal batching strategies to respect provider API limits.
 
 
-The underlying route objects (e.g., `GoogleRoute`, `BingRoute`, `OSRMRoute`) are wrappers around the raw JSON responses returned by each provider. They expose a small, consistent set of methods such as `get_distance()`, `get_duration()`, `get_route()`, and `get_route_geopandas()`. For map-based visualization, route objects can be plotted directly, producing interactive maps (e.g., via `folium`) suitable for exploratory analysis in a Jupyter environment (see Figure \autoref{fig:ploting}).
+The underlying route objects (e.g., `GoogleRoute`, `BingRoute`, `OSRMRoute`) are wrappers around the raw JSON responses returned by each provider. They expose a small, consistent set of methods such as `get_distance()`, `get_duration()`, `get_route()`, and `get_route_geopandas()`. For map-based visualization, route objects can be plotted directly, producing interactive maps (e.g., via `folium`) suitable for exploratory analysis in a Jupyter environment (see \autoref{fig:ploting}).
 
 ![Figure.\label{fig:ploting}](Screenshot1.png){ width=60% }
 
