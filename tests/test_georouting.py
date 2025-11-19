@@ -17,6 +17,7 @@ load_dotenv(dotenv_path)
 google_key = os.environ.get("google_key")
 bing_key = os.environ.get("bing_key")
 esri_key = os.environ.get("esri_key")
+baidu_key = os.environ.get("baidu_key")
 
 
 import pandas as pd
@@ -32,6 +33,12 @@ destination = [one_od_pair["AHA_ID_lat"], one_od_pair["AHA_ID_lon"]]
 
 origins = data[["ZIP_lat", "ZIP_lon"]].values.tolist()
 destinations = data[["AHA_ID_lat", "AHA_ID_lon"]].values.tolist()
+
+# Baidu test coordinates (China: Beijing -> Tianjin)
+baidu_origin = [39.9042, 116.4074]  # Beijing
+baidu_destination = [39.3434, 117.3616]  # Tianjin
+baidu_origins = [[39.9042, 116.4074], [31.2304, 121.4737]]  # Beijing, Shanghai
+baidu_destinations = [[39.3434, 117.3616], [30.2741, 120.1551]]  # Tianjin, Hangzhou
 
 
 def test_command_line_interface():
@@ -109,3 +116,21 @@ def test_esri_router():
     # test get_distance_matrix
     router.get_distance_matrix(origins, destinations)
     router.get_distances_batch(origins, destinations)
+
+
+@pytest.mark.skipif(not baidu_key, reason="Baidu API key not set")
+def test_baidu_router():
+    """Test baidu router"""
+    from georouting.routers import BaiduRouter
+
+    router = BaiduRouter(baidu_key, mode="driving")
+    # test get_route
+    route = router.get_route(baidu_origin, baidu_destination)
+    route.get_distance()
+    route.get_duration()
+    route.get_route_geopandas()
+    route.plot_route()
+
+    # test get_distance_matrix
+    router.get_distance_matrix(baidu_origins, baidu_destinations)
+    router.get_distances_batch(baidu_origins, baidu_destinations)

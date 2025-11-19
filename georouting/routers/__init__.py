@@ -1,6 +1,7 @@
 from georouting.routers.google import GoogleRouter
 from georouting.routers.osmnx import OSMNXRouter
 from georouting.routers.bing import BingRouter
+from georouting.routers.baidu import BaiduRouter
 
 from georouting.routers.esri import EsriRouter
 from georouting.routers.osrm import OSRMRouter
@@ -15,6 +16,7 @@ SERVICE_TO_GEOROUTOR = {
     "google": GoogleRouter,
     "osmnx": OSMNXRouter,
     "bing": BingRouter,
+    "baidu": BaiduRouter,
     "esri": EsriRouter,
     "osrm": OSRMRouter,
 }
@@ -58,6 +60,8 @@ class Router:
             self.router = GoogleRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "bing":
             self.router = BingRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
+        elif self.router == "baidu":
+            self.router = BaiduRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "esri":
             self.router = EsriRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "osmnx":

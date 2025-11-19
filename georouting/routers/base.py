@@ -362,20 +362,82 @@ class OSMNXRoute:
 
 
 class BaiduRoute:
+    """
+    This class represents a route returned by the Baidu Maps Direction API.
+
+    Methods:
+    - `get_duration()` -> float: Returns the duration of the route in seconds.
+    - `get_distance()` -> float: Returns the distance of the route in meters.
+    - `get_route()` -> dict: Returns the full route as a dictionary.
+    - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame.
+    """
+
     def __init__(self, route):
         self.route = route
 
     def get_duration(self):
+        """Get the duration of the route in seconds."""
         return self.route["result"]["routes"][0]["duration"]
 
     def get_distance(self):
+        """Get the distance of the route in meters."""
         return self.route["result"]["routes"][0]["distance"]
 
     def get_route(self):
+        """Get the full route information as a dictionary."""
         return self.route
 
     def get_route_geopandas(self):
-        raise NotImplementedError
+        """
+        Get the route as a GeoDataFrame. The GeoDataFrame contains columns for
+        'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+        """
+        from shapely.geometry import LineString
+
+        steps = []
+        route_data = self.route["result"]["routes"][0]
+
+        for step in route_data.get("steps", []):
+            temp = {}
+            # Baidu returns path as "lng,lat;lng,lat;..." string
+            path_str = step.get("path", "")
+            if path_str:
+                coords = []
+                for point in path_str.split(";"):
+                    lng, lat = point.split(",")
+                    coords.append((float(lng), float(lat)))
+                temp["geometry"] = LineString(coords)
+            else:
+                # Fallback: create a simple line from start to end location
+                start = step.get("start_location", {})
+                end = step.get("end_location", {})
+                if start and end:
+                    temp["geometry"] = LineString([
+                        (start.get("lng", 0), start.get("lat", 0)),
+                        (end.get("lng", 0), end.get("lat", 0))
+                    ])
+                else:
+                    continue
+
+            temp["duration (s)"] = step.get("duration", 0)
+            temp["distance (m)"] = step.get("distance", 0)
+            steps.append(temp)
+
+        if not steps:
+            # If no steps, return empty GeoDataFrame
+            return gpd.GeoDataFrame(
+                columns=["geometry", "duration (s)", "distance (m)", "speed (m/s)"],
+                crs="EPSG:4326"
+            )
+
+        df = pd.DataFrame(steps)
+        gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+        gdf["speed (m/s)"] = gdf.apply(
+            lambda row: row["distance (m)"] / row["duration (s)"] if row["duration (s)"] > 0 else 0,
+            axis=1
+        )
+        return gdf
+
 
 class PgroutingRoute:
     def __init__(self, route):
