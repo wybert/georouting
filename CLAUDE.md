@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-georouting is a Python routing library providing a unified API across multiple routing services (Google Maps, Bing Maps, OSRM, ESRI, OSMnx, pgRouting). Pre-alpha (v0.0.8) - API may change before v1.0.0.
+georouting is a Python routing library providing a unified API across multiple routing services (Google Maps, Bing Maps, OSRM, ESRI, OSMnx, Baidu). Pre-alpha (v0.0.8) - API may change before v1.0.0.
 
 ## Development Commands
 
@@ -44,7 +44,6 @@ georouting/routers/
 ├── osrm.py          # OSRMRouter (no API key needed)
 ├── esri.py          # EsriRouter
 ├── osmnx.py         # OSMNXRouter (local routing)
-├── pgrouting.py     # PGRouter (PostgreSQL)
 └── baidu.py         # BaiduRouter
 ```
 
