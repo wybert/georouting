@@ -76,8 +76,9 @@ class OSMNXRouter(object):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             G = ox.graph_from_place(self.area, network_type=self.mode)
-        G = ox.speed.add_edge_speeds(G)
-        G = ox.speed.add_edge_travel_times(G)
+        # OSMnx 2.0+ uses ox.add_edge_speeds instead of ox.speed.add_edge_speeds
+        G = ox.add_edge_speeds(G)
+        G = ox.add_edge_travel_times(G)
         return G
 
     def _get_node_dict(self):

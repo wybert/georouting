@@ -316,15 +316,25 @@ class OSMNXRoute:
         self.G = route[1]
 
     def _get_durations(self):
-        durations = ox.utils_graph.get_route_edge_attributes(
-            self.G, self.route, "travel_time"
-        )
+        # OSMnx 2.0+ compatible: manually extract edge attributes
+        durations = []
+        for u, v in zip(self.route[:-1], self.route[1:]):
+            edge_data = self.G.get_edge_data(u, v)
+            if edge_data:
+                # For MultiDiGraph, edge_data is a dict of dicts
+                first_edge = list(edge_data.values())[0]
+                durations.append(first_edge.get('travel_time', 0))
         return durations
 
     def _get_distances(self):
-        distances = ox.utils_graph.get_route_edge_attributes(
-            self.G, self.route, "length"
-        )
+        # OSMnx 2.0+ compatible: manually extract edge attributes
+        distances = []
+        for u, v in zip(self.route[:-1], self.route[1:]):
+            edge_data = self.G.get_edge_data(u, v)
+            if edge_data:
+                # For MultiDiGraph, edge_data is a dict of dicts
+                first_edge = list(edge_data.values())[0]
+                distances.append(first_edge.get('length', 0))
         return distances
 
     def get_duration(self):
