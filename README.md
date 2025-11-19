@@ -84,7 +84,31 @@ Then install it with:
 python setup.py install
 ```
 
+## Running Tests
 
+```bash
+# Install dev dependencies
+pip install -r requirements_dev.txt
+
+# Run all tests
+python -m pytest tests/
+
+# Run tests with verbose output
+python -m pytest tests/ -v
+
+# Run a specific test
+python -m pytest tests/test_georouting.py::test_osrm_router -v
+```
+
+**Note:** Some tests require API keys. Create a `.env` file with:
+
+```
+google_key=YOUR_GOOGLE_API_KEY
+bing_key=YOUR_BING_API_KEY
+esri_key=YOUR_ESRI_API_KEY
+```
+
+The OSRM router tests work without API keys (uses public OSRM server).
 
 ## Usage
 
@@ -116,25 +140,7 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 
 
 ## TODO
-- [x] Google Maps
-- [x] Bing Maps
-- [x] OSRM Routing
-- [x] add more documentation for google router
-- [x] add more documentation for bing router
-- [x] add more documentation for osrm router
-- [x] built and host documentation
-- [x] Fix the update in Pypi
-- [x] add get_route_distance_batch API
-- [x] add visualization for the route, better with o and d markers
-- [x] Limit the number of origins and destinations in the distance matrix
-- [x] avoid repeat documentation
-- [x] add ESRI router
-- [x] Add test
-- [x] Add more examples
-- [x] Add how to contribute
-- [x] change the show case use OSRM
-- [x] add OSMnx router
-- [x] add one API for all routers
+
 - [ ] add extract graph data from osm data, easy way
 - [ ] Add how to cite
 
