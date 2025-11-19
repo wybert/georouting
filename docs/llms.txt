@@ -6,7 +6,7 @@ Georouting abstracts away the differences between routing backends and provides 
 
 ## Installation
 
-not work with python 3.14 yet, use python 3.6-3.13
+not work with python 3.14 yet, use python 3.9-3.13
 
 ```bash
 pip install georouting

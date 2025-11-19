@@ -55,10 +55,10 @@ python setup.py install
 
 georouting requires:
 
--   Python (>=3.6 and ≤3.13)
--   [pandas](https://pandas.pydata.org/) (>= 0.25.0)
--   [geopandas](https://geopandas.org/) (>= 0.6.0)
--   [requests](https://requests.readthedocs.io/en/master/) (>= 2.22.0)
--   [numpy](https://numpy.org/) (>= 1.17.0)
--   [shapely](https://shapely.readthedocs.io/en/stable/) (>= 1.6.4.post2)
--   [pyproj](https://pyproj4.github.io/pyproj/stable/) (>= 2.4.2.post1)
+-   Python (>=3.9 and ≤3.13)
+-   [pandas](https://pandas.pydata.org/)
+-   [geopandas](https://geopandas.org/)
+-   [requests](https://requests.readthedocs.io/en/master/)
+-   [numpy](https://numpy.org/)
+-   [shapely](https://shapely.readthedocs.io/en/stable/)
+-   [pyproj](https://pyproj4.github.io/pyproj/stable/)

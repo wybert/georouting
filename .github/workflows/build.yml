@@ -25,7 +25,6 @@ jobs:
                     - { os: macOS-latest, py: "3.11" }
                     - { os: macOS-latest, py: "3.12" }
                     - { os: macOS-latest, py: "3.13" }
-                    - { os: ubuntu-latest, py: "3.8" }
                     - { os: ubuntu-latest, py: "3.9" }
                     - { os: ubuntu-latest, py: "3.10" }
                     - { os: ubuntu-latest, py: "3.11" }
