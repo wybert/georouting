@@ -6,4 +6,4 @@ geopandas
 folium
 mapclassify
 matplotlib
-psycopg2
+psycopg2-binary
