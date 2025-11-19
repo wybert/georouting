@@ -14,7 +14,7 @@
 
 **AI-Friendly Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API.
 
-Warning!!! This project is under active development, wait for the release of version 1.0.0 if you want to use it in production. This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
+This package is inspired by [geopy](https://geopy.readthedocs.io/en/stable/). Please help to improve this package by submitting issues and pull requests.
 
 
 -   Free software: MIT license
@@ -142,7 +142,27 @@ df.explore(column="speed (m/s)",style_kwds={"weight":11,"opacity":0.8})
 ## TODO
 
 - [ ] add extract graph data from osm data, easy way
-- [ ] Add how to cite
+
+## How to cite
+
+If you use `georouting` in your research, please consider citing it:
+
+> Fu, X. (2023). georouting: AI-friendly geo routing for Python users. Retrieved from https://github.com/wybert/georouting
+
+BibTeX:
+
+```bibtex
+@misc{fu_georouting_2023,
+  author       = {Xiaokang Fu},
+  title        = {georouting: AI-friendly geo routing for Python users},
+  year         = {2023},
+  version      = {0.0.8},
+  howpublished = {\url{https://github.com/wybert/georouting}},
+  note         = {GitHub repository}
+}
+```
+
+Once the JOSS paper for `georouting` is published and assigned a DOI, please cite the JOSS article instead.
 
 
 ## Documentation Generation
