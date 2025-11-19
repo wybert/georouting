@@ -12,6 +12,23 @@ def convert_to_list(data):
     return data
 
 
+def _format_coords(coords):
+    """
+    Format a list of coordinates as a pipe-separated string for Baidu API.
+
+    Parameters
+    ----------
+    coords : list
+        List of coordinate pairs, e.g., [[lat1, lon1], [lat2, lon2]]
+
+    Returns
+    -------
+    str
+        Pipe-separated string of coordinates, e.g., "lat1,lon1|lat2,lon2"
+    """
+    return "|".join([f"{c[0]},{c[1]}" for c in coords])
+
+
 def get_batch_od_pairs(orgins, destinations, max_batch_size=25):
     """
     This function returns a list of dataframes containing the origin-destination pairs to

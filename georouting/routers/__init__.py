@@ -83,10 +83,10 @@ class Router:
         """
         return self.router.get_distance_matrix(origins, destinations, append_od, **kwargs)
 
-    def get_distances_batch(self, origins, destinations,append_od=False):
+    def get_distances_batch(self, origins, destinations, append_od=False):
         """
         Returns a list of distances.
         """
-        return self.router.get_distances_batch(origins, destinations,append_od=False)
+        return self.router.get_distances_batch(origins, destinations, append_od=append_od)
 
     

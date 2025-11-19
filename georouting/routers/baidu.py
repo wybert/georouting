@@ -95,6 +95,6 @@ class BaiduRouter(WebRouter):
         """
 
         url = self._get_directions_url(origin, destination)
-        route = self._get_response(url)
+        route = super()._get_request(url)
         route = Route(BaiduRoute(route),origin=origin,destination=destination)
         return route

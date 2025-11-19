@@ -90,13 +90,36 @@ class EsriRouter(WebRouter):
 
         return url
 
-    def _parse_distance_matrix(self, json_data):
+    def _parse_distance_matrix(self, json_data, num_origins, num_destinations):
         """
         This method is a helper method for parsing the response from the Esri ArcGIS API.
         It takes one parameter, json_data, which is the response from the API.
         """
+        # Extract OD cost matrix from response
+        od_lines = json_data.get("odLines", {}).get("features", [])
 
-        return None
+        distances = []
+        durations = []
+
+        for line in od_lines:
+            attrs = line.get("attributes", {})
+            # Esri returns distance in miles, convert to meters
+            distance_miles = attrs.get("Total_Miles", 0)
+            distance_meters = distance_miles * 1609.34
+            # Esri returns time in minutes, convert to seconds
+            duration_minutes = attrs.get("Total_Time", 0)
+            duration_seconds = duration_minutes * 60
+
+            distances.append(distance_meters)
+            durations.append(duration_seconds)
+
+        # Create DataFrame
+        df = pd.DataFrame({
+            "distance (m)": distances,
+            "duration (s)": durations
+        })
+
+        return df
 
     def get_route(self, origin, destination):
         """
@@ -164,9 +187,8 @@ class EsriRouter(WebRouter):
 
         url = self._get_matrix_distance_url(origins, destinations)
         res = super()._get_request(url)
-        return res
 
-        distance_matrix = self._parse_distance_matrix(res)
+        distance_matrix = self._parse_distance_matrix(res, len(origins), len(destinations))
 
         if append_od:
             od_matrix = super()._get_OD_matrix(origins, destinations)
