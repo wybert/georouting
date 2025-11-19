@@ -1,20 +1,12 @@
 
 ![georouting](https://raw.githubusercontent.com/wybert/georouting/main/docs/img/georouting.png)
 
-
-
-
 [![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
 [![image](https://img.shields.io/conda/vn/conda-forge/georouting.svg)](https://anaconda.org/conda-forge/georouting)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wybert/georouting/blob/main/docs/usage.ipynb)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-<!-- [![Open in Binder](https://mybinder.org/badge_logo.svg)](https://gishub.org/geemap-binder) -->
-<!-- [![Open In Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/giswqs/geemap/blob/master/examples/notebooks/00_geemap_key_features.ipynb) -->
-<!-- [![image](https://img.shields.io/conda/vn/conda-forge/geemap.svg)](https://anaconda.org/conda-forge/geemap) -->
-<!-- [![image](https://pepy.tech/badge/geemap)](https://pepy.tech/project/geemap) -->
 [![image](https://github.com/wybert/georouting/workflows/docs/badge.svg)](https://wybert.github.io/georouting/)
 [![image](https://github.com/wybert/georouting/workflows/build/badge.svg)](https://github.com/wybert/georouting/actions?query=workflow%3Abuild)
-[![image](https://img.shields.io/badge/YouTube-Channel-red)](https://youtube.com/@xiaokangfu3118)
 [![image](https://img.shields.io/twitter/follow/fxk123?style=social)](https://twitter.com/fxk123)
 [![image](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- [![image](https://joss.theoj.org/papers/10.21105/joss.02305/status.svg)](https://joss.theoj.org/papers/10.21105/joss.02305) -->
@@ -165,44 +157,22 @@ To regenerate after documentation changes:
 python generate_llms_full.py
 ```
 
-### Generate API Documentation from Source Code
+### Generate API Documentation and Convert Notebooks
 
-Use `pydoc-markdown` to generate markdown API docs from Python docstrings:
-
-```bash
-# Install pydoc-markdown
-pip install pydoc-markdown
-
-# Generate API docs for each router module
-pydoc-markdown -I . -m georouting.routers.google --render-toc > docs/api/google.md
-pydoc-markdown -I . -m georouting.routers.osrm --render-toc > docs/api/osrm.md
-pydoc-markdown -I . -m georouting.routers.bing --render-toc > docs/api/bing.md
-pydoc-markdown -I . -m georouting.routers.esri --render-toc > docs/api/esri.md
-pydoc-markdown -I . -m georouting.routers.osmnx --render-toc > docs/api/osmnx.md
-pydoc-markdown -I . -m georouting.routers.base --render-toc > docs/api/base.md
-pydoc-markdown -I . -m georouting.utils --render-toc > docs/api/utils.md
-```
-
-### Convert Jupyter Notebook to Markdown
-
-Convert notebook and remove interactive widget divs while keeping tables:
+Use the `generate_api_docs.py` script to generate API documentation from source code and convert Jupyter notebooks:
 
 ```bash
-# Convert Jupyter notebook to markdown
-jupyter nbconvert --to markdown docs/usage.ipynb
+# Install dependencies
+pip install pydoc-markdown jupyter nbconvert
 
-# Remove interactive widget divs (folium maps) from the converted markdown
-python -c "
-import re
-with open('docs/usage.md', 'r') as f:
-    content = f.read()
-# Remove folium map widget divs
-pattern = r'<div style=\"width:100%;\">\\s*<div style=\"position:relative[^>]*>.*?</iframe>\\s*</div>\\s*</div>'
-content = re.sub(pattern, '*[Interactive map - view in Jupyter notebook]*', content, flags=re.DOTALL)
-with open('docs/usage.md', 'w') as f:
-    f.write(content)
-"
+# Generate all documentation
+python generate_api_docs.py
 ```
+
+This script:
+- Generates markdown API docs from Python docstrings using pydoc-markdown
+- Converts Jupyter notebooks to markdown
+- Removes interactive widget divs (folium maps) while keeping tables
 
 ## Credits
 

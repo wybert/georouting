@@ -11,33 +11,21 @@ This file contains the complete documentation for georouting, compiled from all 
 ![georouting](img/georouting.png)
 
 
-
 [![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
 [![image](https://img.shields.io/conda/vn/conda-forge/georouting.svg)](https://anaconda.org/conda-forge/georouting)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wybert/georouting/blob/main/docs/usage.ipynb)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-<!-- [![Open in Binder](https://mybinder.org/badge_logo.svg)](https://gishub.org/geemap-binder) -->
-<!-- [![Open In Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/giswqs/geemap/blob/master/examples/notebooks/00_geemap_key_features.ipynb) -->
-<!-- [![image](https://img.shields.io/conda/vn/conda-forge/geemap.svg)](https://anaconda.org/conda-forge/geemap) -->
-<!-- [![image](https://pepy.tech/badge/geemap)](https://pepy.tech/project/geemap) -->
 [![image](https://github.com/wybert/georouting/workflows/docs/badge.svg)](https://wybert.github.io/georouting/)
 [![image](https://github.com/wybert/georouting/workflows/build/badge.svg)](https://github.com/wybert/georouting/actions?query=workflow%3Abuild)
-[![image](https://img.shields.io/badge/YouTube-Channel-red)](https://youtube.com/@xiaokangfu3118)
 [![image](https://img.shields.io/twitter/follow/fxk123?style=social)](https://twitter.com/fxk123)
 [![image](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-<!-- [![image](https://joss.theoj.org/papers/10.21105/joss.02305/status.svg)](https://joss.theoj.org/papers/10.21105/joss.02305) -->
 
 
-**Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API. 
+**AI-Friendly Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API.
 
-
--   Free software: MIT license
--   Documentation: <https://wybert.github.io/georouting>
-    
 ![Screenshot2](https://github.com/wybert/georouting/blob/main/docs/img/Screenshot1.png?raw=true)
 
 ## Features
-
 
 - Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
 - Provide a unified API for routing services
@@ -48,9 +36,20 @@ This file contains the complete documentation for georouting, compiled from all 
 - Return the routing results in a Geopandas `GeoDataFrame`
 - Easy to extend to support more routing services
 
+## AI-Friendly Documentation
+
+Georouting provides [LLMs.txt](llms-txt.md) files for seamless integration with AI assistants like Claude, ChatGPT, Cursor, and Windsurf. Use these files to get better AI-powered help when working with georouting:
+
+- [llms.txt](llms.txt) - Concise overview for quick questions
+- [llms-full.txt](llms-full.txt) - Complete documentation for comprehensive reference
+
 ## Credits
 
 This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [giswqs/pypackage](https://github.com/giswqs/pypackage) project template.
+
+## Licence
+
+MIT license
 
 
 ---
@@ -58,6 +57,7 @@ This package was created with [Cookiecutter](https://github.com/cookiecutter/coo
 ## Source: docs/installation.md
 
 # Installation
+
 
 ## Stable release
 
@@ -113,7 +113,7 @@ python setup.py install
 
 georouting requires:
 
--   Python (>= 3.6)
+-   Python (>=3.6 and ≤3.13)
 -   [pandas](https://pandas.pydata.org/) (>= 0.25.0)
 -   [geopandas](https://geopandas.org/) (>= 0.6.0)
 -   [requests](https://requests.readthedocs.io/en/master/) (>= 2.22.0)
@@ -122,10 +122,9 @@ georouting requires:
 -   [pyproj](https://pyproj4.github.io/pyproj/stable/) (>= 2.4.2.post1)
 
 
-
 ---
 
-## Source: docs/usage.md
+## Source: docs/usage_.md
 
 # Usage
 
@@ -154,55 +153,11 @@ data.head()
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ZIP_lat</th>
-      <th>ZIP_lon</th>
-      <th>AHA_ID_lat</th>
-      <th>AHA_ID_lon</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>6010</th>
-      <td>42.376239</td>
-      <td>-72.605400</td>
-      <td>42.819978</td>
-      <td>-73.916518</td>
-    </tr>
-    <tr>
-      <th>5333</th>
-      <td>42.293923</td>
-      <td>-72.967189</td>
-      <td>41.753841</td>
-      <td>-72.682788</td>
-    </tr>
-    <tr>
-      <th>7678</th>
-      <td>42.158520</td>
-      <td>-72.585325</td>
-      <td>40.709320</td>
-      <td>-74.212500</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|  | ZIP_lat | ZIP_lon | AHA_ID_lat | AHA_ID_lon |
+| --- | --- | --- | --- | --- |
+| 6010 | 42.376239 | -72.605400 | 42.819978 | -73.916518 |
+| 5333 | 42.293923 | -72.967189 | 41.753841 | -72.682788 |
+| 7678 | 42.158520 | -72.585325 | 40.709320 | -74.212500 |
 
 
 
@@ -249,69 +204,13 @@ df.head()
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>geometry</th>
-      <th>duration (s)</th>
-      <th>distance (m)</th>
-      <th>speed (m/s)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>LINESTRING (-72.58532 42.15852, -72.58523 42.1...</td>
-      <td>22.6</td>
-      <td>279.5</td>
-      <td>12.367257</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LINESTRING (-72.58194 42.15850, -72.58194 42.1...</td>
-      <td>12.3</td>
-      <td>163.2</td>
-      <td>13.268293</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>LINESTRING (-72.58090 42.15734, -72.58092 42.1...</td>
-      <td>128.2</td>
-      <td>1929.9</td>
-      <td>15.053822</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>LINESTRING (-72.58196 42.14028, -72.58205 42.1...</td>
-      <td>111.8</td>
-      <td>1703.5</td>
-      <td>15.237030</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>LINESTRING (-72.58437 42.12533, -72.58492 42.1...</td>
-      <td>98.1</td>
-      <td>1783.3</td>
-      <td>18.178389</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|  | geometry | duration (s) | distance (m) | speed (m/s) |
+| --- | --- | --- | --- | --- |
+| 0 | LINESTRING (-72.58532 42.15852, -72.58523 42.1... | 22.6 | 279.5 | 12.367257 |
+| 1 | LINESTRING (-72.58194 42.15850, -72.58194 42.1... | 12.3 | 163.2 | 13.268293 |
+| 2 | LINESTRING (-72.58090 42.15734, -72.58092 42.1... | 128.2 | 1929.9 | 15.053822 |
+| 3 | LINESTRING (-72.58196 42.14028, -72.58205 42.1... | 111.8 | 1703.5 | 15.237030 |
+| 4 | LINESTRING (-72.58437 42.12533, -72.58492 42.1... | 98.1 | 1783.3 | 18.178389 |
 
 
 
@@ -340,81 +239,13 @@ distance_matrix.head()
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>orgin_lat</th>
-      <th>orgin_lon</th>
-      <th>destination_lat</th>
-      <th>destination_lon</th>
-      <th>distance (m)</th>
-      <th>duration (s)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>42.376239</td>
-      <td>-72.605400</td>
-      <td>42.819978</td>
-      <td>-73.916518</td>
-      <td>185141.8</td>
-      <td>8639.8</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>42.376239</td>
-      <td>-72.605400</td>
-      <td>41.753841</td>
-      <td>-72.682788</td>
-      <td>82634.6</td>
-      <td>4058.1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>42.376239</td>
-      <td>-72.605400</td>
-      <td>40.709320</td>
-      <td>-74.212500</td>
-      <td>300008.0</td>
-      <td>13819.9</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>42.293923</td>
-      <td>-72.967189</td>
-      <td>42.819978</td>
-      <td>-73.916518</td>
-      <td>126934.5</td>
-      <td>6829.4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>42.293923</td>
-      <td>-72.967189</td>
-      <td>41.753841</td>
-      <td>-72.682788</td>
-      <td>90821.8</td>
-      <td>5550.6</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|  | orgin_lat | orgin_lon | destination_lat | destination_lon | distance (m) | duration (s) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 42.376239 | -72.605400 | 42.819978 | -73.916518 | 185141.8 | 8639.8 |
+| 1 | 42.376239 | -72.605400 | 41.753841 | -72.682788 | 82634.6 | 4058.1 |
+| 2 | 42.376239 | -72.605400 | 40.709320 | -74.212500 | 300008.0 | 13819.9 |
+| 3 | 42.293923 | -72.967189 | 42.819978 | -73.916518 | 126934.5 | 6829.4 |
+| 4 | 42.293923 | -72.967189 | 41.753841 | -72.682788 | 90821.8 | 5550.6 |
 
 
 
@@ -431,63 +262,11 @@ distances
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>origin_lat</th>
-      <th>origin_lon</th>
-      <th>destination_lat</th>
-      <th>destination_lon</th>
-      <th>distance (m)</th>
-      <th>duration (s)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>42.376239</td>
-      <td>-72.605400</td>
-      <td>42.819978</td>
-      <td>-73.916518</td>
-      <td>185141.8</td>
-      <td>8639.8</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>42.293923</td>
-      <td>-72.967189</td>
-      <td>41.753841</td>
-      <td>-72.682788</td>
-      <td>90821.8</td>
-      <td>5550.6</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>42.158520</td>
-      <td>-72.585325</td>
-      <td>40.709320</td>
-      <td>-74.212500</td>
-      <td>268234.5</td>
-      <td>12313.4</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|  | origin_lat | origin_lon | destination_lat | destination_lon | distance (m) | duration (s) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 42.376239 | -72.605400 | 42.819978 | -73.916518 | 185141.8 | 8639.8 |
+| 0 | 42.293923 | -72.967189 | 41.753841 | -72.682788 | 90821.8 | 5550.6 |
+| 0 | 42.158520 | -72.585325 | 40.709320 | -74.212500 | 268234.5 | 12313.4 |
 
 
 

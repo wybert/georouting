@@ -4,7 +4,6 @@
 
 Georouting abstracts away the differences between routing backends and provides a consistent interface for computing routes, calculating distance matrices, and visualizing routing results.
 
-
 ## Installation
 
 not work with python 3.14 yet, use python 3.6-3.13
@@ -14,14 +13,17 @@ pip install georouting
 ```
 
 or
+
 ```bash
 pip install git+https://github.com/wybert/georouting.git
 ```
 
 or via conda:
+
 ```bash
 conda install -c conda-forge georouting
 ```
+
 ## Quick Start
 
 ```python
@@ -52,7 +54,6 @@ matrix = router.get_distance_matrix(origins, destinations)
 print(matrix)
 ```
 
-
 ## Features
 
 - Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
@@ -68,7 +69,7 @@ print(matrix)
 
 - [Home](https://wybert.github.io/georouting/): Main documentation page
 - [Installation](https://wybert.github.io/georouting/installation/): How to install georouting via pip or conda
-- [Usage](https://wybert.github.io/georouting/usage/): Examples and tutorials for using the library
+- [Usage](https://wybert.github.io/georouting/usage_/): Examples and tutorials for using the library
 
 ## API Reference
 
