@@ -65,7 +65,7 @@ class Router:
         elif self.router == "esri":
             self.router = EsriRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "osmnx":
-            self.router = OSMNXRouter(area = self.area, mode = self.mode, timeout = self.timeout,  language =self.language)
+            self.router = OSMNXRouter(area=self.area, mode=self.mode, timeout=self.timeout, language=self.language)
         else:
             raise ValueError("Router not supported.")
 
