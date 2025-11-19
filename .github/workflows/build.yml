@@ -47,5 +47,8 @@ jobs:
                   pip install --user -r requirements.txt
                   pip install --user -r requirements_dev.txt
             - name: PKG-TEST
+              env:
+                  google_key: ${{ secrets.GOOGLE_KEY }}
+                  esri_key: ${{ secrets.ESRI_KEY }}
               run: |
                   python -m pytest tests/
