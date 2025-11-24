@@ -535,7 +535,54 @@ class MapboxRoute:
         return self.route
 
     def get_route_geopandas(self):
-        raise NotImplementedError
+        """
+        Returns a GeoDataFrame with distance, duration, and speed for the route legs.
+        """
+        steps = []
+        route0 = self.route.get("routes", [{}])[0]
+
+        # Prefer step-level geometries; fall back to full route geometry if missing
+        for leg in route0.get("legs", []):
+            for step in leg.get("steps", []):
+                geom_dict = step.get("geometry")
+                if not geom_dict:
+                    continue
+                geometry = sg.shape(geom_dict)
+                duration = step.get("duration", 0)
+                distance = step.get("distance", 0)
+                steps.append(
+                    {
+                        "duration (s)": duration,
+                        "distance (m)": distance,
+                        "geometry": geometry,
+                    }
+                )
+
+        if not steps and route0.get("geometry"):
+            geometry = sg.shape(route0["geometry"])
+            steps.append(
+                {
+                    "duration (s)": route0.get("duration", 0),
+                    "distance (m)": route0.get("distance", 0),
+                    "geometry": geometry,
+                }
+            )
+
+        if not steps:
+            return gpd.GeoDataFrame(
+                columns=["duration (s)", "distance (m)", "geometry", "speed (m/s)"],
+                geometry="geometry",
+                crs="EPSG:4326",
+            )
+
+        gdf = gpd.GeoDataFrame(steps, geometry="geometry", crs="EPSG:4326")
+        gdf["speed (m/s)"] = gdf.apply(
+            lambda row: row["distance (m)"] / row["duration (s)"]
+            if row["duration (s)"]
+            else 0,
+            axis=1,
+        )
+        return gdf
 
 
 class HereRoute:

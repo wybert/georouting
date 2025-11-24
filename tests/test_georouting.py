@@ -19,6 +19,7 @@ bing_key = os.environ.get("bing_key")
 esri_key = os.environ.get("esri_key")
 baidu_key = os.environ.get("baidu_key")
 tomtom_key = os.environ.get("tomtom_key")
+mapbox_key = os.environ.get("mapbox_key")
 
 
 import pandas as pd
@@ -143,6 +144,22 @@ def test_tomtom_router():
     from georouting.routers import TomTomRouter
 
     router = TomTomRouter(tomtom_key, mode="driving")
+    route = router.get_route(origin, destination)
+    route.get_distance()
+    route.get_duration()
+    route.get_route_geopandas()
+    route.plot_route()
+
+    router.get_distance_matrix(origins, destinations)
+    router.get_distances_batch(origins, destinations)
+
+
+@pytest.mark.skipif(not mapbox_key, reason="Mapbox API key not set")
+def test_mapbox_router():
+    """Test mapbox router"""
+    from georouting.routers import MapboxRouter
+
+    router = MapboxRouter(mapbox_key, mode="driving")
     route = router.get_route(origin, destination)
     route.get_distance()
     route.get_duration()
