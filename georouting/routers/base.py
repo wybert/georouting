@@ -670,6 +670,90 @@ class MapQuestRoute:
         raise NotImplementedError
 
 
+class ORSRoute:
+    """
+    OpenRouteService route wrapper.
+    """
+
+    def __init__(self, route):
+        self.route = route
+
+    def _first_route(self):
+        return (self.route.get("routes") or [None])[0] or {}
+
+    def get_duration(self):
+        route0 = self._first_route()
+        summary = route0.get("summary", {})
+        return summary.get("duration", 0)
+
+    def get_distance(self):
+        route0 = self._first_route()
+        summary = route0.get("summary", {})
+        return summary.get("distance", 0)
+
+    def get_route(self):
+        return self.route
+
+    def get_route_geopandas(self):
+        """
+        Returns a GeoDataFrame with distance, duration, and speed.
+        """
+        route0 = self._first_route()
+        segments = route0.get("segments", [])
+        steps = []
+
+        # Decode geometry if encoded polyline, else try GeoJSON
+        geometry = None
+        geom_raw = route0.get("geometry")
+        if isinstance(geom_raw, str):
+            # ORS uses encoded polyline with precision 5
+            coords = polyline.decode(geom_raw, 5)
+            geometry = sg.LineString([(c[1], c[0]) for c in coords])
+        elif geom_raw:
+            geometry = sg.shape(geom_raw)
+
+        for seg in segments:
+            duration = seg.get("duration", 0)
+            distance = seg.get("distance", 0)
+            if geometry is None:
+                continue
+            steps.append(
+                {"duration (s)": duration, "distance (m)": distance, "geometry": geometry}
+            )
+
+        if not steps and route0.get("geometry"):
+            if geometry is None:
+                geom_raw = route0.get("geometry")
+                if isinstance(geom_raw, str):
+                    coords = polyline.decode(geom_raw, 5)
+                    geometry = sg.LineString([(c[1], c[0]) for c in coords])
+                else:
+                    geometry = sg.shape(geom_raw)
+            steps.append(
+                {
+                    "duration (s)": self.get_duration(),
+                    "distance (m)": self.get_distance(),
+                    "geometry": geometry,
+                }
+            )
+
+        if not steps:
+            return gpd.GeoDataFrame(
+                columns=["duration (s)", "distance (m)", "geometry", "speed (m/s)"],
+                geometry="geometry",
+                crs="EPSG:4326",
+            )
+
+        gdf = gpd.GeoDataFrame(steps, geometry="geometry", crs="EPSG:4326")
+        gdf["speed (m/s)"] = gdf.apply(
+            lambda row: row["distance (m)"] / row["duration (s)"]
+            if row["duration (s)"]
+            else 0,
+            axis=1,
+        )
+        return gdf
+
+
 class Route(object):
     """
     A wrapper class that wraps different routing engines' route objects.

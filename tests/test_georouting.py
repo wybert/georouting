@@ -21,6 +21,7 @@ baidu_key = os.environ.get("baidu_key")
 tomtom_key = os.environ.get("tomtom_key")
 mapbox_key = os.environ.get("mapbox_key")
 here_key = os.environ.get("here_key")
+ors_key = os.environ.get("ors_key")
 
 
 import pandas as pd
@@ -177,6 +178,22 @@ def test_here_router():
     from georouting.routers import HereRouter
 
     router = HereRouter(here_key, mode="driving")
+    route = router.get_route(origin, destination)
+    route.get_distance()
+    route.get_duration()
+    route.get_route_geopandas()
+    route.plot_route()
+
+    router.get_distance_matrix(origins, destinations)
+    router.get_distances_batch(origins, destinations)
+
+
+@pytest.mark.skipif(not ors_key, reason="OpenRouteService API key not set")
+def test_openrouteservice_router():
+    """Test OpenRouteService router"""
+    from georouting.routers import ORSRouter
+
+    router = ORSRouter(ors_key, mode="driving")
     route = router.get_route(origin, destination)
     route.get_distance()
     route.get_duration()
