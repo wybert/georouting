@@ -51,5 +51,9 @@ jobs:
                   google_key: ${{ secrets.GOOGLE_KEY }}
                   esri_key: ${{ secrets.ESRI_KEY }}
                   baidu_key: ${{ secrets.BAIDU_KEY }}
+                  tomtom_key: ${{ secrets.TOMTOM_KEY }}
+                  mapbox_key: ${{ secrets.MAPBOX_KEY }}
+                  here_key: ${{ secrets.HERE_KEY }}
+                  ors_key: ${{ secrets.ORS_KEY }}
               run: |
                   python -m pytest tests/

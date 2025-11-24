@@ -17,6 +17,22 @@
     * [get\_route](#georouting.routers.base.OSRMRoute.get_route)
     * [get\_route\_geopandas](#georouting.routers.base.OSRMRoute.get_route_geopandas)
   * [EsriRoute](#georouting.routers.base.EsriRoute)
+  * [BaiduRoute](#georouting.routers.base.BaiduRoute)
+    * [get\_duration](#georouting.routers.base.BaiduRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.BaiduRoute.get_distance)
+    * [get\_route](#georouting.routers.base.BaiduRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.BaiduRoute.get_route_geopandas)
+  * [TomTomRoute](#georouting.routers.base.TomTomRoute)
+    * [get\_duration](#georouting.routers.base.TomTomRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.TomTomRoute.get_distance)
+    * [get\_route](#georouting.routers.base.TomTomRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.TomTomRoute.get_route_geopandas)
+  * [MapboxRoute](#georouting.routers.base.MapboxRoute)
+    * [get\_route\_geopandas](#georouting.routers.base.MapboxRoute.get_route_geopandas)
+  * [HereRoute](#georouting.routers.base.HereRoute)
+    * [get\_route\_geopandas](#georouting.routers.base.HereRoute.get_route_geopandas)
+  * [ORSRoute](#georouting.routers.base.ORSRoute)
+    * [get\_route\_geopandas](#georouting.routers.base.ORSRoute.get_route_geopandas)
   * [Route](#georouting.routers.base.Route)
     * [\_\_init\_\_](#georouting.routers.base.Route.__init__)
     * [get\_duration](#georouting.routers.base.Route.get_duration)
@@ -231,6 +247,178 @@ The class has the following methods:
 - `get_route`: returns the entire route as a dictionary.
 
 - `get_route_geopandas`: raises a NotImplementedError. This method is not yet implemented and will be added in the future.
+
+<a id="georouting.routers.base.BaiduRoute"></a>
+
+## BaiduRoute Objects
+
+```python
+class BaiduRoute()
+```
+
+This class represents a route returned by the Baidu Maps Direction API.
+
+**Methods**:
+
+  - `get_duration()` -> float: Returns the duration of the route in seconds.
+  - `get_distance()` -> float: Returns the distance of the route in meters.
+  - `get_route()` -> dict: Returns the full route as a dictionary.
+  - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.base.BaiduRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Get the duration of the route in seconds.
+
+<a id="georouting.routers.base.BaiduRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Get the distance of the route in meters.
+
+<a id="georouting.routers.base.BaiduRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Get the full route information as a dictionary.
+
+<a id="georouting.routers.base.BaiduRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Get the route as a GeoDataFrame. The GeoDataFrame contains columns for
+'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+
+<a id="georouting.routers.base.TomTomRoute"></a>
+
+## TomTomRoute Objects
+
+```python
+class TomTomRoute()
+```
+
+This class represents a route returned by the TomTom Routing API.
+
+**Methods**:
+
+  - `get_duration()` -> float: Returns the duration of the route in seconds.
+  - `get_distance()` -> float: Returns the distance of the route in meters.
+  - `get_route()` -> dict: Returns the full route as a dictionary.
+  - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.base.TomTomRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Get the duration of the route in seconds.
+
+<a id="georouting.routers.base.TomTomRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Get the distance of the route in meters.
+
+<a id="georouting.routers.base.TomTomRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Get the full route information as a dictionary.
+
+<a id="georouting.routers.base.TomTomRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Get the route as a GeoDataFrame. The GeoDataFrame contains columns for
+'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+
+<a id="georouting.routers.base.MapboxRoute"></a>
+
+## MapboxRoute Objects
+
+```python
+class MapboxRoute()
+```
+
+<a id="georouting.routers.base.MapboxRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Returns a GeoDataFrame with distance, duration, and speed for the route legs.
+
+<a id="georouting.routers.base.HereRoute"></a>
+
+## HereRoute Objects
+
+```python
+class HereRoute()
+```
+
+<a id="georouting.routers.base.HereRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Build a GeoDataFrame from the first route leg's shape coordinates.
+
+<a id="georouting.routers.base.ORSRoute"></a>
+
+## ORSRoute Objects
+
+```python
+class ORSRoute()
+```
+
+OpenRouteService route wrapper.
+
+<a id="georouting.routers.base.ORSRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Returns a GeoDataFrame with distance, duration, and speed.
 
 <a id="georouting.routers.base.Route"></a>
 

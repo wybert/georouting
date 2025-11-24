@@ -2,6 +2,10 @@ from georouting.routers.google import GoogleRouter
 from georouting.routers.osmnx import OSMNXRouter
 from georouting.routers.bing import BingRouter
 from georouting.routers.baidu import BaiduRouter
+from georouting.routers.tomtom import TomTomRouter
+from georouting.routers.mapbox import MapboxRouter
+from georouting.routers.here import HereRouter
+from georouting.routers.openrouteservice import ORSRouter
 
 from georouting.routers.esri import EsriRouter
 from georouting.routers.osrm import OSRMRouter
@@ -17,6 +21,10 @@ SERVICE_TO_GEOROUTOR = {
     "osmnx": OSMNXRouter,
     "bing": BingRouter,
     "baidu": BaiduRouter,
+    "tomtom": TomTomRouter,
+    "mapbox": MapboxRouter,
+    "here": HereRouter,
+    "openrouteservice": ORSRouter,
     "esri": EsriRouter,
     "osrm": OSRMRouter,
 }
@@ -62,6 +70,14 @@ class Router:
             self.router = BingRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "baidu":
             self.router = BaiduRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
+        elif self.router == "tomtom":
+            self.router = TomTomRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
+        elif self.router == "mapbox":
+            self.router = MapboxRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
+        elif self.router == "here":
+            self.router = HereRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
+        elif self.router == "openrouteservice":
+            self.router = ORSRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "esri":
             self.router = EsriRouter(api_key = self.api_key,mode= self.mode, timeout = self.timeout, language = self.language)
         elif self.router == "osmnx":
