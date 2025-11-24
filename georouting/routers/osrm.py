@@ -42,12 +42,58 @@ class OSRMRouter(WebRouter):
         timeout=10,
         language="en",
         base_url="http://router.project-osrm.org",
+        auto_start_backend=False,
+        backend_region="north-america/us/massachusetts",
+        backend_port=5000,
+        backend_tag="osrm-backend",
+        backend_dockerfile=None,
+        backend_context=None,
+        backend_profile=None,
     ):
         super().__init__(
             api_key=None, mode=mode, timeout=timeout, language=language, base_url=None
         )
-        # nned let user reset the base_url
-        self.base_url = base_url
+
+        def _mode_to_profile(m):
+            m = m.lower()
+            if m in ["driving", "drive", "car", "auto"]:
+                return "car"
+            if m in ["walking", "walk", "foot"]:
+                return "foot"
+            if m in ["bicycling", "cycling", "bike", "bicycle"]:
+                return "bicycle"
+            return "car"
+
+        if auto_start_backend:
+            profile = backend_profile or _mode_to_profile(mode)
+            try:
+                print(
+                    f"[osrm] Auto-starting local OSRM backend for region '{backend_region}' on port {backend_port} (Docker tag: {backend_tag}, profile: {profile})"
+                )
+                print(
+                    "[osrm] Requires Docker and sufficient disk/RAM for the region extract."
+                )
+                gtl.build_and_run_osrm(
+                    region=backend_region,
+                    port=backend_port,
+                    tag=backend_tag,
+                    dockerfile_path=backend_dockerfile,
+                    context=backend_context,
+                    auto_fetch=True,
+                    prefer_html=True,
+                    profile=profile,
+                )
+                self.base_url = f"http://localhost:{backend_port}"
+                print(
+                    f"[osrm] Local backend started. Router will use {self.base_url}"
+                )
+            except Exception as exc:
+                print(
+                    f"[osrm] Failed to auto-start local backend: {exc}. Falling back to provided base_url."
+                )
+                self.base_url = base_url
+        else:
+            self.base_url = base_url
 
     def _get_directions_url(self, origin, destination):
         """
