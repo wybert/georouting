@@ -121,6 +121,9 @@ ENV/
 
 # project caches
 cache/
+# agent helper files
+AGENT.md
+CLAUDE.md
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
