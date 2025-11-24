@@ -53,5 +53,6 @@ jobs:
                   baidu_key: ${{ secrets.BAIDU_KEY }}
                   tomtom_key: ${{ secrets.TOMTOM_KEY }}
                   mapbox_key: ${{ secrets.MAPBOX_KEY }}
+                  here_key: ${{ secrets.HERE_KEY }}
               run: |
                   python -m pytest tests/

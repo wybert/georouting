@@ -590,16 +590,67 @@ class HereRoute:
         self.route = route
 
     def get_duration(self):
-        return self.route["response"]["route"][0]["summary"]["travelTime"]
+        # HERE Routing 7.2 style response
+        if "response" in self.route:
+            return self.route["response"]["route"][0]["summary"]["travelTime"]
+        # HERE Matrix style summary not supported here
+        return 0
 
     def get_distance(self):
-        return self.route["response"]["route"][0]["summary"]["distance"]
+        if "response" in self.route:
+            return self.route["response"]["route"][0]["summary"]["distance"]
+        return 0
 
     def get_route(self):
         return self.route
 
     def get_route_geopandas(self):
-        raise NotImplementedError
+        """
+        Build a GeoDataFrame from the first route leg's shape coordinates.
+        """
+        if "response" not in self.route:
+            return gpd.GeoDataFrame(
+                columns=["duration (s)", "distance (m)", "geometry", "speed (m/s)"],
+                geometry="geometry",
+                crs="EPSG:4326",
+            )
+
+        # HERE 7.2 response structure
+        leg = (
+            self.route["response"]
+            .get("route", [{}])[0]
+            .get("leg", [{}])[0]
+        )
+        shape = leg.get("shape", [])
+        coords = []
+        for pt in shape:
+            try:
+                lat, lon = pt.split(",")
+                coords.append((float(lon), float(lat)))
+            except Exception:
+                continue
+        if not coords:
+            return gpd.GeoDataFrame(
+                columns=["duration (s)", "distance (m)", "geometry", "speed (m/s)"],
+                geometry="geometry",
+                crs="EPSG:4326",
+            )
+
+        geometry = sg.LineString(coords)
+        duration = self.get_duration()
+        distance = self.get_distance()
+        gdf = gpd.GeoDataFrame(
+            [{"duration (s)": duration, "distance (m)": distance, "geometry": geometry}],
+            geometry="geometry",
+            crs="EPSG:4326",
+        )
+        gdf["speed (m/s)"] = gdf.apply(
+            lambda row: row["distance (m)"] / row["duration (s)"]
+            if row["duration (s)"]
+            else 0,
+            axis=1,
+        )
+        return gdf
 
 
 class MapQuestRoute:

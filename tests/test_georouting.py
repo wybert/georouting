@@ -20,6 +20,7 @@ esri_key = os.environ.get("esri_key")
 baidu_key = os.environ.get("baidu_key")
 tomtom_key = os.environ.get("tomtom_key")
 mapbox_key = os.environ.get("mapbox_key")
+here_key = os.environ.get("here_key")
 
 
 import pandas as pd
@@ -160,6 +161,22 @@ def test_mapbox_router():
     from georouting.routers import MapboxRouter
 
     router = MapboxRouter(mapbox_key, mode="driving")
+    route = router.get_route(origin, destination)
+    route.get_distance()
+    route.get_duration()
+    route.get_route_geopandas()
+    route.plot_route()
+
+    router.get_distance_matrix(origins, destinations)
+    router.get_distances_batch(origins, destinations)
+
+
+@pytest.mark.skipif(not here_key, reason="HERE API key not set")
+def test_here_router():
+    """Test HERE router"""
+    from georouting.routers import HereRouter
+
+    router = HereRouter(here_key, mode="driving")
     route = router.get_route(origin, destination)
     route.get_distance()
     route.get_duration()
