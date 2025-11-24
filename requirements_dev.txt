@@ -12,7 +12,6 @@ Click
 pytest
 pytest-runner
 python-dotenv
-psycopg2-binary
 beautifulsoup4
 pydoc-markdown
 jupyter
