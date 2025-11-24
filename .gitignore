@@ -118,6 +118,9 @@ ENV/
 .Trashes
 .fseventsd
 .TemporaryItems
+
+# project caches
+cache/
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
