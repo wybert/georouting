@@ -22,6 +22,7 @@ tomtom_key = os.environ.get("tomtom_key")
 mapbox_key = os.environ.get("mapbox_key")
 here_key = os.environ.get("here_key")
 ors_key = os.environ.get("ors_key")
+run_remote = os.environ.get("RUN_REMOTE_ROUTER_TESTS", "").lower() in ("1", "true", "yes")
 
 
 import pandas as pd
@@ -140,7 +141,7 @@ def test_baidu_router():
     router.get_distances_batch(baidu_origins, baidu_destinations)
 
 
-@pytest.mark.skipif(not tomtom_key, reason="TomTom API key not set")
+@pytest.mark.skipif(not tomtom_key or not run_remote, reason="TomTom API key not set or remote tests disabled")
 def test_tomtom_router():
     """Test tomtom router"""
     from georouting.routers import TomTomRouter
@@ -156,7 +157,7 @@ def test_tomtom_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not mapbox_key, reason="Mapbox API key not set")
+@pytest.mark.skipif(not mapbox_key or not run_remote, reason="Mapbox API key not set or remote tests disabled")
 def test_mapbox_router():
     """Test mapbox router"""
     from georouting.routers import MapboxRouter
@@ -172,7 +173,7 @@ def test_mapbox_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not here_key, reason="HERE API key not set")
+@pytest.mark.skipif(not here_key or not run_remote, reason="HERE API key not set or remote tests disabled")
 def test_here_router():
     """Test HERE router"""
     from georouting.routers import HereRouter
@@ -188,7 +189,7 @@ def test_here_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not ors_key, reason="OpenRouteService API key not set")
+@pytest.mark.skipif(not ors_key or not run_remote, reason="OpenRouteService API key not set or remote tests disabled")
 def test_openrouteservice_router():
     """Test OpenRouteService router"""
     from georouting.routers import ORSRouter
