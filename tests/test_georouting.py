@@ -18,6 +18,7 @@ google_key = os.environ.get("google_key")
 bing_key = os.environ.get("bing_key")
 esri_key = os.environ.get("esri_key")
 baidu_key = os.environ.get("baidu_key")
+tomtom_key = os.environ.get("tomtom_key")
 
 
 import pandas as pd
@@ -134,3 +135,19 @@ def test_baidu_router():
     # test get_distance_matrix
     router.get_distance_matrix(baidu_origins, baidu_destinations)
     router.get_distances_batch(baidu_origins, baidu_destinations)
+
+
+@pytest.mark.skipif(not tomtom_key, reason="TomTom API key not set")
+def test_tomtom_router():
+    """Test tomtom router"""
+    from georouting.routers import TomTomRouter
+
+    router = TomTomRouter(tomtom_key, mode="driving")
+    route = router.get_route(origin, destination)
+    route.get_distance()
+    route.get_duration()
+    route.get_route_geopandas()
+    route.plot_route()
+
+    router.get_distance_matrix(origins, destinations)
+    router.get_distances_batch(origins, destinations)

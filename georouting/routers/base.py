@@ -449,6 +449,78 @@ class BaiduRoute:
         return gdf
 
 
+class TomTomRoute:
+    """
+    This class represents a route returned by the TomTom Routing API.
+
+    Methods:
+    - `get_duration()` -> float: Returns the duration of the route in seconds.
+    - `get_distance()` -> float: Returns the distance of the route in meters.
+    - `get_route()` -> dict: Returns the full route as a dictionary.
+    - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame.
+    """
+
+    def __init__(self, route):
+        self.route = route
+
+    def _first_route(self):
+        return (self.route.get("routes") or [None])[0] or {}
+
+    def get_duration(self):
+        """Get the duration of the route in seconds."""
+        summary = self._first_route().get("summary", {})
+        return summary.get("travelTimeInSeconds", 0)
+
+    def get_distance(self):
+        """Get the distance of the route in meters."""
+        summary = self._first_route().get("summary", {})
+        return summary.get("lengthInMeters", 0)
+
+    def get_route(self):
+        """Get the full route information as a dictionary."""
+        return self.route
+
+    def get_route_geopandas(self):
+        """
+        Get the route as a GeoDataFrame. The GeoDataFrame contains columns for
+        'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+        """
+        route_data = self._first_route()
+        legs = route_data.get("legs", [])
+        steps = []
+
+        for leg in legs:
+            points = leg.get("points", [])
+            if not points:
+                continue
+            geometry = LineString(
+                [(p["longitude"], p["latitude"]) for p in points]
+            )
+            summary = leg.get("summary", {})
+            distance = summary.get("lengthInMeters", leg.get("lengthInMeters", 0))
+            duration = summary.get("travelTimeInSeconds", leg.get("travelTimeInSeconds", 0))
+            steps.append(
+                {"distance (m)": distance, "duration (s)": duration, "geometry": geometry}
+            )
+
+        if not steps:
+            # If no legs were parsed, return an empty GeoDataFrame with expected columns
+            return gpd.GeoDataFrame(
+                columns=["distance (m)", "duration (s)", "geometry", "speed (m/s)"],
+                geometry="geometry",
+                crs="EPSG:4326",
+            )
+
+        gdf = gpd.GeoDataFrame(steps, geometry="geometry", crs="EPSG:4326")
+        gdf["speed (m/s)"] = gdf.apply(
+            lambda row: row["distance (m)"] / row["duration (s)"]
+            if row["duration (s)"]
+            else 0,
+            axis=1,
+        )
+        return gdf
+
+
 class MapboxRoute:
     def __init__(self, route):
         self.route = route
