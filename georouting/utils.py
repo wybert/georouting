@@ -7,6 +7,7 @@ import html
 import re
 import subprocess
 import tempfile
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -529,3 +530,160 @@ def build_and_run_osrm(
     )
     build_osrm_image(tag=tag, dockerfile_path=dockerfile_path, context=context)
     run_osrm_container(tag=tag, port=port, detach=detach, extra_args=extra_run_args)
+
+
+# ----------- Singularity/Apptainer helpers -----------
+
+def render_osrm_singularity_recipe(
+    region="north-america/us/massachusetts",
+    port=DEFAULT_OSRM_PORT,
+    base_image=DEFAULT_OSRM_BASE_IMAGE,
+    auto_fetch=True,
+    profile="car",
+):
+    """
+    Render a Singularity/Apptainer definition file for an OSRM backend.
+
+    Notes
+    -----
+    - Requires Singularity/Apptainer (typically Linux/HPC environments).
+    - Ensure sufficient disk/RAM for the chosen region extract.
+    """
+    url, _, _ = resolve_geofabrik_pbf(region, refresh=auto_fetch, include_size=False)
+    filename = url.split("/")[-1]
+    name_no_ext = filename.replace(".osm.pbf", "").replace(".osm", "")
+    profile_path = profile if "/" in profile else f"/opt/{profile}.lua"
+    return f"""Bootstrap: docker
+From: {base_image}
+
+%post
+    set -e
+    if command -v apk >/dev/null 2>&1; then apk add --no-cache wget; elif command -v apt-get >/dev/null 2>&1; then apt-get update && apt-get install -y wget; fi
+    mkdir -p /data
+    cd /data
+    wget {url} -O {filename}
+    osrm-extract -p {profile_path} {filename} || echo "osrm-extract failed"
+    osrm-partition {name_no_ext}.osrm || echo "osrm-partition failed"
+    osrm-customize {name_no_ext}.osrm || echo "osrm-customize failed"
+    rm {filename}
+
+%environment
+    export OSRM_PORT={port}
+    export OSRM_DATA=/data/{name_no_ext}.osrm
+    export OSRM_PROFILE={profile_path}
+
+%runscript
+    exec osrm-routed --ip 0.0.0.0 --port ${OSRM_PORT:-"5000"} --max-table-size 1000000000 --max-viaroute-size 100000000 --max-trip-size 1000000000 --algorithm mld ${OSRM_DATA}
+"""
+
+
+def _singularity_cmd():
+    cmd = shutil.which("apptainer") or shutil.which("singularity")
+    if not cmd:
+        raise RuntimeError("apptainer/singularity not found in PATH")
+    return cmd
+
+
+def write_osrm_singularity_recipe(path="Singularity.def", **kwargs):
+    """Write Singularity/Apptainer definition file to disk and print a preview."""
+    content = render_osrm_singularity_recipe(**kwargs)
+    dest = Path(path).resolve()
+    dest.write_text(content)
+    print(f"[osrm] Singularity recipe written to: {dest}")
+    print("[osrm] --- Singularity recipe preview ---")
+    print(content)
+    print("[osrm] ---------------------------------")
+    return dest
+
+
+def build_osrm_singularity_image(sif_path="osrm.sif", recipe_path="Singularity.def"):
+    """
+    Build a Singularity/Apptainer image from a definition file.
+
+    Notes
+    -----
+    - Requires Singularity/Apptainer (typically Linux/HPC environments).
+    """
+    cmd = _singularity_cmd()
+    sif_path = Path(sif_path)
+    recipe_path = Path(recipe_path)
+    print(f"[osrm] Building Singularity image '{sif_path}' from {recipe_path}")
+    subprocess.run([cmd, "build", str(sif_path), str(recipe_path)], check=True)
+    print(f"[osrm] Build complete: {sif_path}")
+
+
+def run_osrm_singularity_instance(
+    sif_path="osrm.sif",
+    instance_name="osrm",
+    port=DEFAULT_OSRM_PORT,
+    extra_args=None,
+):
+    """
+    Start an OSRM instance via Singularity/Apptainer in the background.
+
+    Notes
+    -----
+    - Requires Singularity/Apptainer (typically Linux/HPC environments).
+    - Networking flags may differ by HPC environment; adjust as needed.
+    """
+    cmd = _singularity_cmd()
+    args = extra_args or []
+    run_cmd = [
+        cmd,
+        "instance",
+        "start",
+        "--net",
+        "--network-args",
+        f"portmap={port}:{port}/tcp",
+    ]
+    run_cmd += args
+    run_cmd += [str(sif_path), instance_name]
+    print(f"[osrm] Starting Singularity instance '{instance_name}' from {sif_path} on port {port}")
+    subprocess.run(run_cmd, check=True)
+    print(f"[osrm] Instance started. OSRM available at http://localhost:{port}")
+    print(f"[osrm] Stop with: {cmd} instance stop {instance_name}")
+    print("[osrm] More details: https://apptainer.org/docs/user/latest/networking.html")
+
+
+def stop_osrm_singularity_instance(instance_name="osrm"):
+    cmd = _singularity_cmd()
+    subprocess.run([cmd, "instance", "stop", instance_name], check=False)
+    print(f"[osrm] Stopped Singularity instance '{instance_name}'")
+
+
+def build_and_run_osrm_singularity(
+    region="north-america/us/massachusetts",
+    port=DEFAULT_OSRM_PORT,
+    sif_path=None,
+    recipe_path=None,
+    auto_fetch=True,
+    base_image=DEFAULT_OSRM_BASE_IMAGE,
+    profile="car",
+    instance_name="osrm",
+    extra_run_args=None,
+):
+    """
+    One-shot: write Singularity recipe, build image, start instance for the given region.
+    """
+    # Defaults to temp dir
+    tmpdir = Path(tempfile.gettempdir())
+    if sif_path is None:
+        sif_path = tmpdir / f"osrm_{slugify(region)}.sif"
+    if recipe_path is None:
+        recipe_path = tmpdir / f"osrm_{slugify(region)}.def"
+
+    write_osrm_singularity_recipe(
+        path=recipe_path,
+        region=region,
+        port=port,
+        base_image=base_image,
+        auto_fetch=auto_fetch,
+        profile=profile,
+    )
+    build_osrm_singularity_image(sif_path=sif_path, recipe_path=recipe_path)
+    run_osrm_singularity_instance(
+        sif_path=sif_path,
+        instance_name=instance_name,
+        port=port,
+        extra_args=extra_run_args,
+    )

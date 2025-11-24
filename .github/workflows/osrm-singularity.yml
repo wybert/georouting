@@ -1,0 +1,35 @@
+name: osrm-singularity
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  osrm-singularity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Apptainer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apptainer-suid squashfs-tools
+
+      - name: Build OSRM Singularity image (small region)
+        env:
+          NO_PROXY: download.geofabrik.de
+        run: |
+          python - <<'PY'
+          from georouting.utils import build_osrm_singularity_image, write_osrm_singularity_recipe
+          # Use a tiny extract to keep the build fast
+          recipe = "osrm_test.def"
+          sif = "osrm_test.sif"
+          write_osrm_singularity_recipe(
+              path=recipe,
+              region="africa/comores",
+              port=5000,
+              base_image="ghcr.io/project-osrm/osrm-backend",
+              profile="car",
+          )
+          build_osrm_singularity_image(sif_path=sif, recipe_path=recipe)
+          PY
