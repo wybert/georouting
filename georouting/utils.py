@@ -410,6 +410,26 @@ def render_osrm_dockerfile(
     size_timeout=10,
     profile="car",
 ):
+    """
+    Render a Dockerfile string for an OSRM backend for the given region/profile.
+
+    Parameters
+    ----------
+    region : str
+        Geofabrik region slug/path (e.g., "north-america/us/massachusetts").
+    port : int
+        Port to expose in the container.
+    base_image : str
+        OSRM base image to use.
+    auto_fetch : bool
+        If True, refresh Geofabrik index when resolving region.
+    prefer_html : bool
+        Unused here; kept for parity with resolver options.
+    size_timeout : int
+        Timeout (seconds) for size resolution (currently unused in rendering).
+    profile : str
+        OSRM profile name or path (e.g., "car", "foot", "bicycle" or a lua path).
+    """
     url, _, _ = resolve_geofabrik_pbf(region, refresh=auto_fetch, include_size=False)
     filename = url.split("/")[-1]
     name_no_ext = filename.replace(".osm.pbf", "").replace(".osm", "")
@@ -435,6 +455,7 @@ EXPOSE {port}
 
 
 def write_osrm_dockerfile(path="Dockerfile", **kwargs):
+    """Write the rendered OSRM Dockerfile to disk and print a preview."""
     content = render_osrm_dockerfile(**kwargs)
     dest = Path(path).resolve()
     dest.write_text(content)
@@ -446,6 +467,7 @@ def write_osrm_dockerfile(path="Dockerfile", **kwargs):
 
 
 def build_osrm_image(tag="osrm-backend", dockerfile_path="Dockerfile", context="."):
+    """Build the OSRM Docker image using the given Dockerfile and context."""
     dockerfile_path = Path(dockerfile_path)
     context = Path(context)
     print(f"[osrm] Building Docker image '{tag}' using {dockerfile_path} (context={context})")
@@ -455,6 +477,7 @@ def build_osrm_image(tag="osrm-backend", dockerfile_path="Dockerfile", context="
 
 
 def run_osrm_container(tag="osrm-backend", port=DEFAULT_OSRM_PORT, detach=True, extra_args=None):
+    """Run the OSRM container exposing the selected port."""
     print(f"[osrm] Running container from image '{tag}' on port {port}")
     cmd = ["docker", "run"]
     if detach:

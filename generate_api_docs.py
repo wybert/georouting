@@ -75,6 +75,11 @@ API_MODULES = [
     ("georouting.routers.esri", "docs/api/esri.md"),
     ("georouting.routers.osmnx", "docs/api/osmnx.md"),
     ("georouting.routers.base", "docs/api/base.md"),
+    ("georouting.routers.mapbox", "docs/api/mapbox.md"),
+    ("georouting.routers.tomtom", "docs/api/tomtom.md"),
+    ("georouting.routers.here", "docs/api/here.md"),
+    ("georouting.routers.baidu", "docs/api/baidu.md"),
+    ("georouting.routers.openrouteservice", "docs/api/openrouteservice.md"),
     ("georouting.utils", "docs/api/utils.md"),
 ]
 

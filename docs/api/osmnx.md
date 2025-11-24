@@ -18,6 +18,29 @@
 class OSMNXRouter(object)
 ```
 
+OSMnx router for local routing using OpenStreetMap data.
+
+This router downloads road network data from OpenStreetMap and performs
+routing calculations locally without requiring an API key.
+
+Parameters
+----------
+- `area` : str
+    The area to download road network for (e.g., "Piedmont, California, USA")
+- `mode` : str
+    The routing mode. Can be "driving", "drive", "walking", "walk", "biking", "bike"
+- `engine` : str
+    The graph engine to use. Currently supports "networkx". "igraph" support planned.
+- `use_cache` : bool
+    Whether to cache downloaded road network data
+- `log_console` : bool
+    Whether to log OSMnx messages to console
+
+Returns
+-------
+- `OSMNXRouter`:
+    A router object that can be used to get routes and distance matrices.
+
 <a id="georouting.routers.osmnx.OSMNXRouter.get_route"></a>
 
 #### get\_route
@@ -59,43 +82,34 @@ The returned Route object has the following functions:
 def get_distance_matrix(origins, destinations, append_od=False)
 ```
 
-This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
-all possible combinations between each origin and each destination. If you want just
-return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points.
+It returns the duration and distance for all possible combinations between each origin and each destination.
+If you want just return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
 
 The origins and destinations parameters are lists of origins and destinations.
 
 If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
 
-The Bing Maps API has the following limitations for distance matrix requests,
-for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):
-
-- For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,
-- while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.
-- For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.
-
-Pairs are calculated by multiplying the number of origins, by the number of destinations.
-For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,
-or 100 origins and 100 destinations defined in your request.
-
+Note: Since this router performs local calculations, there are no API rate limits.
+However, very large matrices may be slow to compute depending on the road network size.
 
 Parameters
 ----------
 - `origins` : iterable objects
-    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
-    It should be in the form of iterable objects with two elements, such as
-    (latitude, longitude) or [latitude, longitude].
+An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+It should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
 - `destinations` : iterable objects
-    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
-    It should be in the form of iterable objects with two elements, such as
-    (latitude, longitude) or [latitude, longitude].
+An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+It should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
 - `append_od` : bool
-    If True, the method also returns a matrix of origin-destination pairs.
+If True, the method also returns a matrix of origin-destination pairs.
 
 Returns
 -------
 - `distance_matrix` : pandas.DataFrame
-    A pandas DataFrame containing the distance matrix.
+A pandas DataFrame containing the distance matrix.
 
 <a id="georouting.routers.osmnx.OSMNXRouter.get_distances_batch"></a>
 
