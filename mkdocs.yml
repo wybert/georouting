@@ -73,6 +73,11 @@ nav:
           - OSRMRouter: api/osrm.md
           - BingRouter: api/bing.md
           - EsriRouter: api/esri.md
+          - MapboxRouter: api/mapbox.md
+          - TomTomRouter: api/tomtom.md
+          - HereRouter: api/here.md
+          - BaiduRouter: api/baidu.md
+          - OpenRouteServiceRouter: api/openrouteservice.md
           - OSMNXRouter: api/osmnx.md
           - Base Classes: api/base.md
           - Utils: api/utils.md
