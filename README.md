@@ -164,6 +164,11 @@ BibTeX:
 
 Once the JOSS paper for `georouting` is published and assigned a DOI, please cite the JOSS article instead.
 
+## Contributing
+
+Contributions are welcome! Please read the [contributing guidelines](docs/contributing.md) before submitting a pull request.
+
+Please note that this project is released with a [Code of Conduct](CODE_OF_CONDUCT.MD). By participating in this project you agree to abide by its terms.
 
 ## Documentation Generation
 
