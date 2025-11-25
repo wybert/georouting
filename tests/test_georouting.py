@@ -3,6 +3,7 @@
 """Tests for `georouting` package."""
 
 import os
+from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
@@ -27,10 +28,8 @@ run_remote = os.environ.get("RUN_REMOTE_ROUTER_TESTS", "").lower() in ("1", "tru
 
 import pandas as pd
 
-data = pd.read_csv(
-    "https://raw.githubusercontent.com/wybert/georouting/main/docs/data/sample_3.csv",
-    index_col=0,
-)
+data_path = Path(__file__).resolve().parents[1] / "docs" / "data" / "sample_3.csv"
+data = pd.read_csv(data_path, index_col=0)
 one_od_pair = data.iloc[2]
 
 origin = [one_od_pair["ZIP_lat"], one_od_pair["ZIP_lon"]]
@@ -57,7 +56,10 @@ def test_command_line_interface():
     assert "--help  Show this message and exit." in help_result.output
 
 
-@pytest.mark.skipif(not google_key, reason="Google API key not set")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not google_key or not run_remote, reason="Google API key not set or remote tests disabled"
+)
 def test_google_router():
     """Test google router"""
     from georouting.routers import GoogleRouter
@@ -90,9 +92,13 @@ def test_google_router():
 #     router.get_distances_batch(origins, destinations)
 
 
+@pytest.mark.integration
 def test_osrm_router():
     """Test osrm router"""
     from georouting.routers import OSRMRouter
+
+    if not run_remote:
+        pytest.skip("Remote tests disabled")
 
     router = OSRMRouter(mode="driving")
     # test get_route
@@ -106,7 +112,10 @@ def test_osrm_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not esri_key, reason="ESRI API key not set")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not esri_key or not run_remote, reason="ESRI API key not set or remote tests disabled"
+)
 def test_esri_router():
     """Test esri router"""
     from georouting.routers import EsriRouter
@@ -123,7 +132,10 @@ def test_esri_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not baidu_key, reason="Baidu API key not set")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not baidu_key or not run_remote, reason="Baidu API key not set or remote tests disabled"
+)
 def test_baidu_router():
     """Test baidu router"""
     from georouting.routers import BaiduRouter
@@ -141,7 +153,10 @@ def test_baidu_router():
     router.get_distances_batch(baidu_origins, baidu_destinations)
 
 
-@pytest.mark.skipif(not tomtom_key or not run_remote, reason="TomTom API key not set or remote tests disabled")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not tomtom_key or not run_remote, reason="TomTom API key not set or remote tests disabled"
+)
 def test_tomtom_router():
     """Test tomtom router"""
     from georouting.routers import TomTomRouter
@@ -157,7 +172,10 @@ def test_tomtom_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not mapbox_key or not run_remote, reason="Mapbox API key not set or remote tests disabled")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not mapbox_key or not run_remote, reason="Mapbox API key not set or remote tests disabled"
+)
 def test_mapbox_router():
     """Test mapbox router"""
     from georouting.routers import MapboxRouter
@@ -173,7 +191,10 @@ def test_mapbox_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not here_key or not run_remote, reason="HERE API key not set or remote tests disabled")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not here_key or not run_remote, reason="HERE API key not set or remote tests disabled"
+)
 def test_here_router():
     """Test HERE router"""
     from georouting.routers import HereRouter
@@ -189,7 +210,11 @@ def test_here_router():
     router.get_distances_batch(origins, destinations)
 
 
-@pytest.mark.skipif(not ors_key or not run_remote, reason="OpenRouteService API key not set or remote tests disabled")
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not ors_key or not run_remote,
+    reason="OpenRouteService API key not set or remote tests disabled",
+)
 def test_openrouteservice_router():
     """Test OpenRouteService router"""
     from georouting.routers import ORSRouter
