@@ -1,0 +1,2258 @@
+# Georouting - Complete Documentation
+> A Python routing library providing a unified API across multiple routing services.
+
+This file contains the complete documentation for georouting, compiled from all documentation sources.
+
+---
+
+## Source: docs/index.md
+
+
+![georouting](img/georouting.png)
+
+
+[![image](https://img.shields.io/pypi/v/georouting.svg)](https://pypi.python.org/pypi/georouting)
+[![image](https://img.shields.io/conda/vn/conda-forge/georouting.svg)](https://anaconda.org/conda-forge/georouting)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wybert/georouting/blob/main/docs/usage.ipynb)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![image](https://github.com/wybert/georouting/workflows/docs/badge.svg)](https://wybert.github.io/georouting/)
+[![image](https://github.com/wybert/georouting/workflows/build/badge.svg)](https://github.com/wybert/georouting/actions?query=workflow%3Abuild)
+[![image](https://img.shields.io/twitter/follow/fxk123?style=social)](https://twitter.com/fxk123)
+[![image](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+**AI-Friendly Geo routing for Python users**, supporting most of the routing tools, including OSRM, Google Maps, Bing Maps, etc. with a unified API.
+
+![Screenshot2](https://github.com/wybert/georouting/blob/main/docs/img/Screenshot1.png?raw=true)
+
+## Features
+
+- Support most of the routing services, including Google Maps, Bing Maps, OSRM, etc.
+- Provide a unified API for routing services
+- Support calculating the travel distance matrix between multiple origins and destinations
+- Support calculating the travel distance according to OD pairs.
+- Easy to visualize the routing results
+- Return the travel distance matrix in a Pandas `Dataframe` you like
+- Return the routing results in a Geopandas `GeoDataFrame`
+- Easy to extend to support more routing services
+
+## AI-Friendly Documentation
+
+Georouting provides [LLMs.txt](llms-txt.md) files for seamless integration with AI assistants like Claude, ChatGPT, Cursor, and Windsurf. Use these files to get better AI-powered help when working with georouting:
+
+- [llms.txt](llms.txt) - Concise overview for quick questions
+- [llms-full.txt](llms-full.txt) - Complete documentation for comprehensive reference
+
+## Credits
+
+This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [giswqs/pypackage](https://github.com/giswqs/pypackage) project template.
+
+## Licence
+
+MIT license
+
+
+---
+
+## Source: docs/installation.md
+
+# Installation
+
+
+## Stable release
+
+### Using pip
+
+
+To install georouting, run this command in your terminal:
+
+```bash
+pip install georouting
+```
+
+or install from GitHub source
+
+```
+pip install git+https://github.com/wybert/georouting.git
+```
+
+
+If you don't have [pip](https://pip.pypa.io) installed, this [Python installation guide](http://docs.python-guide.org/en/latest/starting/installation/) can guide you through the process.
+
+### Using conda
+
+
+```
+conda install -c conda-forge georouting
+```
+
+or use mamba
+
+```
+mamba install -c conda-forge georouting
+```
+
+
+## From sources
+
+The sources for georouting can be downloaded from the Github repo.
+
+You can clone the public repository:
+
+```
+git clone git://github.com/wybert/georouting
+```
+
+Then install it with:
+
+```
+python setup.py install
+```
+
+## Dependencies
+
+georouting requires:
+
+-   Python (>=3.9 and ≤3.13)
+-   [pandas](https://pandas.pydata.org/)
+-   [geopandas](https://geopandas.org/)
+-   [requests](https://requests.readthedocs.io/en/master/)
+-   [numpy](https://numpy.org/)
+-   [shapely](https://shapely.readthedocs.io/en/stable/)
+-   [pyproj](https://pyproj4.github.io/pyproj/stable/)
+
+
+---
+
+## Source: docs/usage_.md
+
+# Usage
+
+<!-- [![image](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://demo.leafmap.org/lab/index.html?path=notebooks/29_pydeck.ipynb) -->
+
+[![image](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wybert/georouting/blob/main/docs/usage.ipynb)
+
+
+
+```python
+pip install georouting
+```
+
+## Prepare some data
+
+
+```python
+import pandas as pd
+data = pd.read_csv(
+    "https://raw.githubusercontent.com/wybert/georouting/main/docs/data/sample_3.csv",
+    index_col=0)
+data = data[['ZIP_lat', 'ZIP_lon', 'AHA_ID_lat', 'AHA_ID_lon']]
+data.head()
+```
+
+
+
+
+|  | ZIP_lat | ZIP_lon | AHA_ID_lat | AHA_ID_lon |
+| --- | --- | --- | --- | --- |
+| 6010 | 42.376239 | -72.605400 | 42.819978 | -73.916518 |
+| 5333 | 42.293923 | -72.967189 | 41.753841 | -72.682788 |
+| 7678 | 42.158520 | -72.585325 | 40.709320 | -74.212500 |
+
+
+
+
+```python
+origin = [data.iloc[2]["ZIP_lat"],data.iloc[2]["ZIP_lon"]]
+destination = [data.iloc[2]["AHA_ID_lat"],data.iloc[2]["AHA_ID_lon"]]
+
+origins = data[['ZIP_lat', 'ZIP_lon']].values.tolist()
+destinations = data[['AHA_ID_lat', 'AHA_ID_lon']].values.tolist()
+```
+
+## Get a route use OSRM 
+
+Get a route between two points is easy, 
+
+
+```python
+from georouting.routers import OSRMRouter
+# create a router object 
+router = OSRMRouter(mode="driving")
+# get the route between the origin and destination, this will return a Route object
+# this will call the OSRM API
+route = router.get_route(origin, destination)
+# Now you can get the distance and duration of the route in meters and seconds
+print("Distance: {} meters".format(route.get_distance()))
+print("Duration: {} seconds".format(route.get_duration()))
+```
+
+    Distance: 268234.5 meters
+    Duration: 12313.4 seconds
+
+
+You can easily get the distance, duration.
+
+You can also return the routing results in a GeoDataFrame, It will return the distance, duration, speed and the route geometry,
+
+
+```python
+df= route.get_route_geopandas()
+df.head()
+```
+
+
+
+
+|  | geometry | duration (s) | distance (m) | speed (m/s) |
+| --- | --- | --- | --- | --- |
+| 0 | LINESTRING (-72.58532 42.15852, -72.58523 42.1... | 22.6 | 279.5 | 12.367257 |
+| 1 | LINESTRING (-72.58194 42.15850, -72.58194 42.1... | 12.3 | 163.2 | 13.268293 |
+| 2 | LINESTRING (-72.58090 42.15734, -72.58092 42.1... | 128.2 | 1929.9 | 15.053822 |
+| 3 | LINESTRING (-72.58196 42.14028, -72.58205 42.1... | 111.8 | 1703.5 | 15.237030 |
+| 4 | LINESTRING (-72.58437 42.12533, -72.58492 42.1... | 98.1 | 1783.3 | 18.178389 |
+
+
+
+You can visualize the route in a map,
+
+
+```python
+route.plot_route()
+```
+
+
+
+
+*[Interactive map - view in Jupyter notebook]*
+
+
+
+## Get a distance matrix
+
+
+```python
+distance_matrix = router.get_distance_matrix(origins, destinations, append_od=True)
+distance_matrix.head()
+```
+
+
+
+
+|  | orgin_lat | orgin_lon | destination_lat | destination_lon | distance (m) | duration (s) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 42.376239 | -72.605400 | 42.819978 | -73.916518 | 185141.8 | 8639.8 |
+| 1 | 42.376239 | -72.605400 | 41.753841 | -72.682788 | 82634.6 | 4058.1 |
+| 2 | 42.376239 | -72.605400 | 40.709320 | -74.212500 | 300008.0 | 13819.9 |
+| 3 | 42.293923 | -72.967189 | 42.819978 | -73.916518 | 126934.5 | 6829.4 |
+| 4 | 42.293923 | -72.967189 | 41.753841 | -72.682788 | 90821.8 | 5550.6 |
+
+
+
+## Get distances according OD pairs
+
+Sometimes you may want to get the durations and distances for some specific origin-destination pairs not for all possible combinations between them. you can use the `get_distances_batch` function. 
+
+
+```python
+distances = router.get_distances_batch(origins, destinations, append_od=True)
+distances
+```
+
+
+
+
+|  | origin_lat | origin_lon | destination_lat | destination_lon | distance (m) | duration (s) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 42.376239 | -72.605400 | 42.819978 | -73.916518 | 185141.8 | 8639.8 |
+| 0 | 42.293923 | -72.967189 | 41.753841 | -72.682788 | 90821.8 | 5550.6 |
+| 0 | 42.158520 | -72.585325 | 40.709320 | -74.212500 | 268234.5 | 12313.4 |
+
+
+
+It will automatically split the OD pairs into batches and get the distance matrix for each batch to avoid the API limit.
+
+## What's more
+
+`georouting` provides a unified API for routing services, you can use the similar code to get the routing results from different routing services like Google Maps, Bing Maps, OSRM, etc.
+
+
+---
+
+## Source: docs/api/index.md
+
+# API Reference
+
+Auto-generated API documentation from source code docstrings.
+
+## Routers
+
+- [GoogleRouter](google.md) - Google Maps routing
+- [OSRMRouter](osrm.md) - OSRM public routing service
+- [BingRouter](bing.md) - Bing Maps routing
+- [EsriRouter](esri.md) - ESRI/ArcGIS routing
+- [OSMNXRouter](osmnx.md) - Local OSMnx routing
+
+## Base Classes
+
+- [Base Classes](base.md) - BaseRouter, WebRouter, LocalRouter, Route classes
+
+## Utilities
+
+- [Utils](utils.md) - Helper functions
+
+
+---
+
+## Source: docs/api/google.md
+
+# Table of Contents
+
+* [georouting.routers.google](#georouting.routers.google)
+  * [GoogleRouter](#georouting.routers.google.GoogleRouter)
+    * [\_\_init\_\_](#georouting.routers.google.GoogleRouter.__init__)
+    * [get\_route](#georouting.routers.google.GoogleRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.google.GoogleRouter.get_distance_matrix)
+    * [get\_distances\_batch](#georouting.routers.google.GoogleRouter.get_distances_batch)
+
+<a id="georouting.routers.google"></a>
+
+# georouting.routers.google
+
+<a id="georouting.routers.google.GoogleRouter"></a>
+
+## GoogleRouter Objects
+
+```python
+class GoogleRouter(WebRouter)
+```
+
+Google Map router.
+The GoogleRouter class is a subclass of the WebRouter class and is used for routing using the Google Maps API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the Google Maps API.
+
+It will return a router object that can be used to get routes and distance matrices.
+
+Parameters
+----------
+
+- `api_key` : str
+    The API key for the Google Maps API.
+
+- `mode` : str
+    The routing mode. Can be either "driving" or "walking".
+
+- `timeout` : int
+    The timeout in seconds for API requests.
+
+- `language` : str
+    The language to be used in API requests.
+
+Returns
+-------
+- `GoogleRouter`:
+    A router object that can be used to get routes and distance matrices.
+
+<a id="georouting.routers.google.GoogleRouter.__init__"></a>
+
+#### \_\_init\_\_
+
+```python
+def __init__(api_key, mode="driving", timeout=10, language="en")
+```
+
+This is the constructor method for the GoogleRouter class.
+It initializes the class by calling the super() method and setting up
+the Client object of the Google Maps API using the provided api_key.
+The mode parameter sets the routing mode, which can be either "driving" or "walking".
+The timeout parameter sets the timeout in seconds for API requests, and the language
+parameter sets the language to be used in API requests.
+
+<a id="georouting.routers.google.GoogleRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origin` : iterable objects
+    The origin point. Iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude]
+
+- `destination` : iterable objects
+    The destination point. Iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude]
+
+Returns
+-------
+`route` : Route object
+    The route between the origin and destination.
+
+The returned Route object has the following functions:
+
+- `get_distance()` returns the distance of the route in meters.
+- `get_duration()` returns the duration of the route in seconds.
+- `get_route()` returns the raw route data returned as a dictionary.
+- `get_route_geodataframe()` returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.google.GoogleRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
+all possible combinations between each origin and each destination. If you want just
+return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+
+The origins and destinations parameters are lists of origins and destinations.
+
+If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
+Google Maps API has following limitations for distance matrix requests:
+the following usage limits are in place for the Distance Matrix API, for more information,
+see in [google maps api documentation](https://developers.google.com/maps/documentation/distance-matrix/usage-limits):
+
+- Maximum of 25 origins or 25 destinations per request.
+- Maximum 100 elements per server-side request.
+- Maximum 100 elements per client-side request.
+- 1000 elements per second (EPS), calculated as the sum of client-side and server-side queries.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `append_od` : bool
+    If True, the method also returns a matrix of origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+Here is an example of how to use this method:
+__TODO: add example__
+
+
+<a id="georouting.routers.google.GoogleRouter.get_distances_batch"></a>
+
+#### get\_distances\_batch
+
+```python
+def get_distances_batch(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
+The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `append_od` : bool
+    If True, the method also returns the input origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+
+
+---
+
+## Source: docs/api/osrm.md
+
+# Table of Contents
+
+* [georouting.routers.osrm](#georouting.routers.osrm)
+  * [OSRMRouter](#georouting.routers.osrm.OSRMRouter)
+    * [get\_route](#georouting.routers.osrm.OSRMRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.osrm.OSRMRouter.get_distance_matrix)
+    * [get\_distances\_batch](#georouting.routers.osrm.OSRMRouter.get_distances_batch)
+
+<a id="georouting.routers.osrm"></a>
+
+# georouting.routers.osrm
+
+<a id="georouting.routers.osrm.OSRMRouter"></a>
+
+## OSRMRouter Objects
+
+```python
+class OSRMRouter(WebRouter)
+```
+
+OSRM router.
+The OSRMRouter class is a subclass of the WebRouter class and is used for routing using the OSRM API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the OSRM API.
+
+It will return a router object that can be used to get routes and distance matrices.
+
+Parameters
+----------
+- `mode` : str
+    The routing mode. Can be either "driving" or "walking". Default is "driving".
+
+- `timeout` : int
+    The timeout in seconds for API requests. Default is 10.
+
+- `language` : str
+    The language to be used in API requests. Default is "en".
+
+- `base_url` : str
+    The base URL for the OSRM API. Default is "http://router.project-osrm.org".
+
+Returns
+-------
+- `OSRMRouter`:
+    A router object that can be used to get routes and distance matrices.
+
+<a id="georouting.routers.osrm.OSRMRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+This method returns a Route object contains duration and disatnce for the route between the given origin and destination coordinates.
+The origin and destination parameters are lists of latitude and longitude coordinates.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origin` : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `destination` : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+Returns
+-------
+- `route` : Route object
+    The route between the origin and destination.
+
+The returned Route object has the following functions:
+
+- `get_distance()` returns the distance of the route in meters.
+- `get_duration()` returns the duration of the route in seconds.
+- `get_route()` returns the raw route data returned as a dictionary.
+- `get_route_geodataframe()` returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.osrm.OSRMRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
+all possible combinations between each origin and each destination. If you want just
+return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+
+The origins and destinations parameters are lists of origins and destinations.
+
+If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `append_od` : bool
+    If True, the method also returns a matrix of origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+Here is an example of how to use this method:
+__TODO: add example__
+
+
+<a id="georouting.routers.osrm.OSRMRouter.get_distances_batch"></a>
+
+#### get\_distances\_batch
+
+```python
+def get_distances_batch(origins,
+                        destinations,
+                        append_od=False,
+                        use_local_server=False)
+```
+
+This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
+The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `append_od` : bool
+    If True, the method also returns the input origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+
+
+---
+
+## Source: docs/api/bing.md
+
+# Table of Contents
+
+* [georouting.routers.bing](#georouting.routers.bing)
+  * [BingRouter](#georouting.routers.bing.BingRouter)
+    * [get\_route](#georouting.routers.bing.BingRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.bing.BingRouter.get_distance_matrix)
+    * [get\_distances\_batch](#georouting.routers.bing.BingRouter.get_distances_batch)
+
+<a id="georouting.routers.bing"></a>
+
+# georouting.routers.bing
+
+<a id="georouting.routers.bing.BingRouter"></a>
+
+## BingRouter Objects
+
+```python
+class BingRouter(WebRouter)
+```
+
+Bing Maps router.
+The BingRouter class is a subclass of the WebRouter class and is used for routing using the Bing Maps API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the Bing Maps API.
+
+It will return a router object that can be used to get routes and distance matrices.
+
+Parameters
+----------
+
+- `api_key` : str
+    The API key for the Bing Maps API.
+
+- `mode` : str
+    The routing mode. Can be either "driving" or "walking".
+
+- `timeout` : int
+    The timeout in seconds for API requests.
+
+- `language` : str
+    The language to be used in API requests.
+
+
+Returns
+-------
+- `BingRouter` :
+    A router object that can be used to get routes and distance matrices.
+
+<a id="georouting.routers.bing.BingRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origin` : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `destination` : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+Returns
+-------
+- `route` : Route object
+    The route between the origin and destination.
+
+The returned Route object has the following functions:
+
+- `get_distance()` returns the distance of the route in meters.
+- `get_duration()` returns the duration of the route in seconds.
+- `get_route()` returns the raw route data returned as a dictionary.
+- `get_route_geodataframe()` returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.bing.BingRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for
+all possible combinations between each origin and each destination. If you want just
+return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+
+The origins and destinations parameters are lists of origins and destinations.
+
+If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
+The Bing Maps API has the following limitations for distance matrix requests,
+for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):
+
+- For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,
+- while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.
+- For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.
+
+Pairs are calculated by multiplying the number of origins, by the number of destinations.
+For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,
+or 100 origins and 100 destinations defined in your request.
+
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+- `append_od` : bool
+    If True, the method also returns a matrix of origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+<a id="georouting.routers.bing.BingRouter.get_distances_batch"></a>
+
+#### get\_distances\_batch
+
+```python
+def get_distances_batch(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
+The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `append_od` : bool
+    If True, the method also returns the input origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+
+
+---
+
+## Source: docs/api/esri.md
+
+# Table of Contents
+
+* [georouting.routers.esri](#georouting.routers.esri)
+  * [EsriRouter](#georouting.routers.esri.EsriRouter)
+    * [\_\_init\_\_](#georouting.routers.esri.EsriRouter.__init__)
+    * [get\_route](#georouting.routers.esri.EsriRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.esri.EsriRouter.get_distance_matrix)
+
+<a id="georouting.routers.esri"></a>
+
+# georouting.routers.esri
+
+<a id="georouting.routers.esri.EsriRouter"></a>
+
+## EsriRouter Objects
+
+```python
+class EsriRouter(WebRouter)
+```
+
+Esri router.
+The EsriRouter class is a subclass of the WebRouter class and is used for routing using the Esri ArcGIS API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the Esri ArcGIS API.
+It will return a router object that can be used to get routes and distance matrices.
+
+Parameters
+----------
+
+- `api_key` : str
+    The API key for the Esri ArcGIS API.
+
+- `mode` : str
+    The routing mode. Can be either "driving" or "walking".
+
+- `timeout` : int
+    The timeout in seconds for API requests.
+
+- `language` : str
+    The language to be used in API requests.
+
+Returns
+-------
+- `EsriRouter`:
+    A router object that can be used to get routes and distance matrices.
+
+<a id="georouting.routers.esri.EsriRouter.__init__"></a>
+
+#### \_\_init\_\_
+
+```python
+def __init__(api_key, mode="driving", timeout=10, language="en")
+```
+
+This is the constructor method for the EsriRouter class.
+It initializes the class by calling the super() method and setting up
+the Client object of the Esri ArcGIS API using the provided api_key.
+The mode parameter sets the routing mode, which can be either "driving" or "walking".
+The timeout parameter sets the timeout in seconds for API requests, and the language
+parameter sets the language to be used in API requests.
+
+<a id="georouting.routers.esri.EsriRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origin` : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `destination` : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+Returns
+-------
+- `route` : Route object
+    The route between the origin and destination.
+
+The returned Route object has the following functions:
+
+- `get_distance()` returns the distance of the route in meters.
+- `get_duration()` returns the duration of the route in seconds.
+- `get_route()` returns the raw route data returned as a dictionary.
+- `get_route_geodataframe()` returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.esri.EsriRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+This method returns a distance matrix between the origins and destinations.
+The origins and destinations parameters are lists of tuples/lists/arrays representing the starting and ending points for the route.
+The orgins and destinations parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origins` : list of iterable objects
+    The origin points. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `destinations` : list of iterable objects
+    The destination points. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `append_od` : bool
+    If True, the origins and destinations will be appended to the distance matrix as the first two columns.
+
+Returns
+-------
+- `distance_matrix` : list of lists
+    The distance matrix between the origins and destinations.
+
+
+
+---
+
+## Source: docs/api/osmnx.md
+
+# Table of Contents
+
+* [georouting.routers.osmnx](#georouting.routers.osmnx)
+  * [OSMNXRouter](#georouting.routers.osmnx.OSMNXRouter)
+    * [get\_route](#georouting.routers.osmnx.OSMNXRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.osmnx.OSMNXRouter.get_distance_matrix)
+    * [get\_distances\_batch](#georouting.routers.osmnx.OSMNXRouter.get_distances_batch)
+
+<a id="georouting.routers.osmnx"></a>
+
+# georouting.routers.osmnx
+
+<a id="georouting.routers.osmnx.OSMNXRouter"></a>
+
+## OSMNXRouter Objects
+
+```python
+class OSMNXRouter(object)
+```
+
+OSMnx router for local routing using OpenStreetMap data.
+
+This router downloads road network data from OpenStreetMap and performs
+routing calculations locally without requiring an API key.
+
+Parameters
+----------
+- `area` : str
+    The area to download road network for (e.g., "Piedmont, California, USA")
+- `mode` : str
+    The routing mode. Can be "driving", "drive", "walking", "walk", "biking", "bike"
+- `engine` : str
+    The graph engine to use. Currently supports "networkx". "igraph" support planned.
+- `use_cache` : bool
+    Whether to cache downloaded road network data
+- `log_console` : bool
+    Whether to log OSMnx messages to console
+
+Returns
+-------
+- `OSMNXRouter`:
+    A router object that can be used to get routes and distance matrices.
+
+<a id="georouting.routers.osmnx.OSMNXRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origin` : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `destination` : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+Returns
+-------
+- `route` : Route object
+    The route between the origin and destination.
+
+The returned Route object has the following functions:
+
+- `get_distance()` returns the distance of the route in meters.
+- `get_duration()` returns the duration of the route in seconds.
+- `get_route()` returns the raw route data returned as a dictionary.
+- `get_route_geodataframe()` returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.osmnx.OSMNXRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points.
+It returns the duration and distance for all possible combinations between each origin and each destination.
+If you want just return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.
+
+The origins and destinations parameters are lists of origins and destinations.
+
+If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.
+
+Note: Since this router performs local calculations, there are no API rate limits.
+However, very large matrices may be slow to compute depending on the road network size.
+
+Parameters
+----------
+- `origins` : iterable objects
+An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+It should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+- `destinations` : iterable objects
+An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+It should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+- `append_od` : bool
+If True, the method also returns a matrix of origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+A pandas DataFrame containing the distance matrix.
+
+<a id="georouting.routers.osmnx.OSMNXRouter.get_distances_batch"></a>
+
+#### get\_distances\_batch
+
+```python
+def get_distances_batch(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
+The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].
+
+- `append_od` : bool
+    If True, the method also returns the input origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+
+
+---
+
+## Source: docs/api/mapbox.md
+
+# Table of Contents
+
+* [georouting.routers.mapbox](#georouting.routers.mapbox)
+  * [MapboxRouter](#georouting.routers.mapbox.MapboxRouter)
+
+<a id="georouting.routers.mapbox"></a>
+
+# georouting.routers.mapbox
+
+<a id="georouting.routers.mapbox.MapboxRouter"></a>
+
+## MapboxRouter Objects
+
+```python
+class MapboxRouter(WebRouter)
+```
+
+Mapbox router.
+
+Uses Mapbox Directions and Matrix APIs to fetch routes and distance matrices.
+
+
+
+---
+
+## Source: docs/api/tomtom.md
+
+# Table of Contents
+
+* [georouting.routers.tomtom](#georouting.routers.tomtom)
+  * [TomTomRouter](#georouting.routers.tomtom.TomTomRouter)
+    * [get\_route](#georouting.routers.tomtom.TomTomRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.tomtom.TomTomRouter.get_distance_matrix)
+
+<a id="georouting.routers.tomtom"></a>
+
+# georouting.routers.tomtom
+
+<a id="georouting.routers.tomtom.TomTomRouter"></a>
+
+## TomTomRouter Objects
+
+```python
+class TomTomRouter(WebRouter)
+```
+
+TomTom router.
+
+Provides access to TomTom Routing and Matrix APIs to retrieve routes and distance
+matrices with a unified interface.
+
+<a id="georouting.routers.tomtom.TomTomRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+Return a Route object representing the path between origin and destination.
+
+<a id="georouting.routers.tomtom.TomTomRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+Return a Pandas dataframe of durations and distances for all origin/destination pairs.
+
+
+
+---
+
+## Source: docs/api/here.md
+
+# Table of Contents
+
+* [georouting.routers.here](#georouting.routers.here)
+  * [HereRouter](#georouting.routers.here.HereRouter)
+    * [get\_route](#georouting.routers.here.HereRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.here.HereRouter.get_distance_matrix)
+
+<a id="georouting.routers.here"></a>
+
+# georouting.routers.here
+
+<a id="georouting.routers.here.HereRouter"></a>
+
+## HereRouter Objects
+
+```python
+class HereRouter(WebRouter)
+```
+
+HERE router (Routing API 7.2).
+Provides route and matrix queries.
+
+<a id="georouting.routers.here.HereRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+Return a Route object representing the route between origin and destination.
+
+<a id="georouting.routers.here.HereRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+Return duration/distance for all origin-destination pairs.
+
+
+
+---
+
+## Source: docs/api/baidu.md
+
+# Table of Contents
+
+* [georouting.routers.baidu](#georouting.routers.baidu)
+  * [BaiduRouter](#georouting.routers.baidu.BaiduRouter)
+    * [get\_route](#georouting.routers.baidu.BaiduRouter.get_route)
+    * [get\_distance\_matrix](#georouting.routers.baidu.BaiduRouter.get_distance_matrix)
+    * [get\_distances\_batch](#georouting.routers.baidu.BaiduRouter.get_distances_batch)
+
+<a id="georouting.routers.baidu"></a>
+
+# georouting.routers.baidu
+
+<a id="georouting.routers.baidu.BaiduRouter"></a>
+
+## BaiduRouter Objects
+
+```python
+class BaiduRouter(WebRouter)
+```
+
+Baidu Maps router.
+The BaiduRouter class is a subclass of the WebRouter class and is used for routing using the Baidu Maps API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the Baidu Maps API.
+
+It will return a router object that can be used to get routes and distance matrices.
+
+Parameters
+----------
+
+- `api_key` : str
+    The API key for the Baidu Maps API.
+
+- `mode` : str
+    The routing mode. Can be either "driving" or "walking".
+
+- `timeout` : int
+    The timeout in seconds for API requests.
+
+- `language` : str
+    The language to be used in API requests.
+
+
+Returns
+-------
+- `BaiduRouter` :
+    A router object that can be used to get routes and distance matrices.
+
+<a id="georouting.routers.baidu.BaiduRouter.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route(origin, destination)
+```
+
+This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].
+
+Parameters
+----------
+- `origin` : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+- `destination` : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]
+
+Returns
+-------
+- `route` : Route object
+    The route between the origin and destination.
+
+The returned Route object has the following functions:
+
+- `get_distance()` returns the distance of the route in meters.
+- `get_duration()` returns the duration of the route in seconds.
+- `get_route()` returns the raw route data returned as a dictionary.
+- `get_route_geodataframe()` returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.baidu.BaiduRouter.get_distance_matrix"></a>
+
+#### get\_distance\_matrix
+
+```python
+def get_distance_matrix(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe representing a distance matrix between the origins and destinations.
+It returns the duration and distance for all possible combinations between each origin and each destination.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points (latitude, longitude).
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points (latitude, longitude).
+
+- `append_od` : bool
+    If True, the method also returns a matrix of origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.
+
+<a id="georouting.routers.baidu.BaiduRouter.get_distances_batch"></a>
+
+#### get\_distances\_batch
+
+```python
+def get_distances_batch(origins, destinations, append_od=False)
+```
+
+This method returns a Pandas dataframe contains duration and distance for all the origins and destinations pairs.
+Use this function if you don't want to get duration and distance for all possible combinations.
+
+Parameters
+----------
+- `origins` : iterable objects
+    An iterable object containing the origin points (latitude, longitude).
+
+- `destinations` : iterable objects
+    An iterable object containing the destination points (latitude, longitude).
+
+- `append_od` : bool
+    If True, the method also returns the input origin-destination pairs.
+
+Returns
+-------
+- `distance_matrix` : pandas.DataFrame
+    A pandas DataFrame containing the distances for each OD pair.
+
+
+
+---
+
+## Source: docs/api/openrouteservice.md
+
+# Table of Contents
+
+* [georouting.routers.openrouteservice](#georouting.routers.openrouteservice)
+  * [ORSRouter](#georouting.routers.openrouteservice.ORSRouter)
+
+<a id="georouting.routers.openrouteservice"></a>
+
+# georouting.routers.openrouteservice
+
+<a id="georouting.routers.openrouteservice.ORSRouter"></a>
+
+## ORSRouter Objects
+
+```python
+class ORSRouter(WebRouter)
+```
+
+OpenRouteService router for directions and matrix endpoints.
+
+
+
+---
+
+## Source: docs/api/base.md
+
+# Table of Contents
+
+* [georouting.routers.base](#georouting.routers.base)
+  * [GoogleRoute](#georouting.routers.base.GoogleRoute)
+    * [get\_duration](#georouting.routers.base.GoogleRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.GoogleRoute.get_distance)
+    * [get\_route](#georouting.routers.base.GoogleRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.GoogleRoute.get_route_geopandas)
+  * [BingRoute](#georouting.routers.base.BingRoute)
+    * [get\_duration](#georouting.routers.base.BingRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.BingRoute.get_distance)
+    * [get\_route](#georouting.routers.base.BingRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.BingRoute.get_route_geopandas)
+  * [OSRMRoute](#georouting.routers.base.OSRMRoute)
+    * [get\_duration](#georouting.routers.base.OSRMRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.OSRMRoute.get_distance)
+    * [get\_route](#georouting.routers.base.OSRMRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.OSRMRoute.get_route_geopandas)
+  * [EsriRoute](#georouting.routers.base.EsriRoute)
+  * [BaiduRoute](#georouting.routers.base.BaiduRoute)
+    * [get\_duration](#georouting.routers.base.BaiduRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.BaiduRoute.get_distance)
+    * [get\_route](#georouting.routers.base.BaiduRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.BaiduRoute.get_route_geopandas)
+  * [TomTomRoute](#georouting.routers.base.TomTomRoute)
+    * [get\_duration](#georouting.routers.base.TomTomRoute.get_duration)
+    * [get\_distance](#georouting.routers.base.TomTomRoute.get_distance)
+    * [get\_route](#georouting.routers.base.TomTomRoute.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.TomTomRoute.get_route_geopandas)
+  * [MapboxRoute](#georouting.routers.base.MapboxRoute)
+    * [get\_route\_geopandas](#georouting.routers.base.MapboxRoute.get_route_geopandas)
+  * [HereRoute](#georouting.routers.base.HereRoute)
+    * [get\_route\_geopandas](#georouting.routers.base.HereRoute.get_route_geopandas)
+  * [ORSRoute](#georouting.routers.base.ORSRoute)
+    * [get\_route\_geopandas](#georouting.routers.base.ORSRoute.get_route_geopandas)
+  * [Route](#georouting.routers.base.Route)
+    * [\_\_init\_\_](#georouting.routers.base.Route.__init__)
+    * [get\_duration](#georouting.routers.base.Route.get_duration)
+    * [get\_distance](#georouting.routers.base.Route.get_distance)
+    * [get\_route](#georouting.routers.base.Route.get_route)
+    * [get\_route\_geopandas](#georouting.routers.base.Route.get_route_geopandas)
+    * [plot\_route](#georouting.routers.base.Route.plot_route)
+  * [BaseRouter](#georouting.routers.base.BaseRouter)
+    * [get\_distances\_batch](#georouting.routers.base.BaseRouter.get_distances_batch)
+  * [WebRouter](#georouting.routers.base.WebRouter)
+
+<a id="georouting.routers.base"></a>
+
+# georouting.routers.base
+
+<a id="georouting.routers.base.GoogleRoute"></a>
+
+## GoogleRoute Objects
+
+```python
+class GoogleRoute()
+```
+
+The class "GoogleRoute" which allows to retrieve information from a route provided as an argument.
+
+The class has the following methods:
+
+- `get_duration()`: Returns the duration of the route in seconds.
+
+- `get_distance()`: Returns the distance of the route in meters.
+
+- `get_route()`: Returns the complete route information.
+
+- `get_route_geopandas()`: Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route.
+
+It is assumed that the polyline module is used for decoding the polyline into a LineString geometry. The GeoDataFrame is created with a specified coordinate reference system (CRS) of "4326".
+
+<a id="georouting.routers.base.GoogleRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Returns the duration of the route in seconds.
+
+<a id="georouting.routers.base.GoogleRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Returns the distance of the route in meters.
+
+<a id="georouting.routers.base.GoogleRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Returns the complete route information.
+
+<a id="georouting.routers.base.GoogleRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route. It is assumed that the polyline module is used for decoding the polyline into a LineString geometry. The GeoDataFrame is created with a specified coordinate reference system (CRS) of "4326".
+
+<a id="georouting.routers.base.BingRoute"></a>
+
+## BingRoute Objects
+
+```python
+class BingRoute()
+```
+
+BingRoute class that allows you to extract various information from a route stored in a dictionary. It has the following functions:
+
+- `get_duration()`: Returns the travel duration in seconds.
+- `get_distance()`: Returns the travel distance in meters.
+- `get_route()`: Returns the entire route in a dictionary.
+- `get_route_geopandas()`: Returns the route information in a GeoPandas dataframe.
+
+This function extracts the duration and distance information for each leg of the route, creates a list of shapely LineStrings representing the route, and then creates a GeoDataFrame with columns for the duration, distance, and geometry. Additionally, it calculates the speed in meters per second for each leg.
+
+The class is designed to work with data returned by the Bing Maps REST Services API, as the data is stored in a dictionary with a specific structure.
+
+<a id="georouting.routers.base.BingRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+get the travel duration in seconds
+
+<a id="georouting.routers.base.BingRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+get the travel distance in meters
+
+<a id="georouting.routers.base.BingRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+get the entire route in a dictionary
+
+<a id="georouting.routers.base.BingRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+This function extracts the duration and distance information for each leg of the route, creates a list of shapely LineStrings representing the route, and then creates a GeoDataFrame with columns for the duration, distance, and geometry. Additionally, it calculates the speed in meters per second for each leg.
+
+Returns the route information in a GeoPandas dataframe.
+
+<a id="georouting.routers.base.OSRMRoute"></a>
+
+## OSRMRoute Objects
+
+```python
+class OSRMRoute()
+```
+
+This class represents a route returned by the OpenStreetMap Routing Machine API.
+
+**Methods**:
+
+  - `get_duration()` -> float: Returns the duration of the route in seconds.
+  - `get_distance()` -> float: Returns the distance of the route in meters.
+  - `get_route()` -> dict: Returns the full route as a dictionary.
+  - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame. The GeoDataFrame contains columns for 'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+
+<a id="georouting.routers.base.OSRMRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Get the duration of the route in seconds.
+
+<a id="georouting.routers.base.OSRMRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Get the distance of the route in meters.
+
+<a id="georouting.routers.base.OSRMRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Get the full route information as a dictionary.
+
+<a id="georouting.routers.base.OSRMRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Get the route as a GeoDataFrame. The GeoDataFrame contains columns for 'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+
+<a id="georouting.routers.base.EsriRoute"></a>
+
+## EsriRoute Objects
+
+```python
+class EsriRoute()
+```
+
+The EsriRoute class is a class for handling a route obtained from the Esri ArcGIS routing service.
+
+The class has the following methods:
+
+- `get_duration`: returns the total travel time of the route.
+
+- `get_distance`: returns the total distance of the route in meters.
+
+- `get_route`: returns the entire route as a dictionary.
+
+- `get_route_geopandas`: raises a NotImplementedError. This method is not yet implemented and will be added in the future.
+
+<a id="georouting.routers.base.BaiduRoute"></a>
+
+## BaiduRoute Objects
+
+```python
+class BaiduRoute()
+```
+
+This class represents a route returned by the Baidu Maps Direction API.
+
+**Methods**:
+
+  - `get_duration()` -> float: Returns the duration of the route in seconds.
+  - `get_distance()` -> float: Returns the distance of the route in meters.
+  - `get_route()` -> dict: Returns the full route as a dictionary.
+  - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.base.BaiduRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Get the duration of the route in seconds.
+
+<a id="georouting.routers.base.BaiduRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Get the distance of the route in meters.
+
+<a id="georouting.routers.base.BaiduRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Get the full route information as a dictionary.
+
+<a id="georouting.routers.base.BaiduRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Get the route as a GeoDataFrame. The GeoDataFrame contains columns for
+'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+
+<a id="georouting.routers.base.TomTomRoute"></a>
+
+## TomTomRoute Objects
+
+```python
+class TomTomRoute()
+```
+
+This class represents a route returned by the TomTom Routing API.
+
+**Methods**:
+
+  - `get_duration()` -> float: Returns the duration of the route in seconds.
+  - `get_distance()` -> float: Returns the distance of the route in meters.
+  - `get_route()` -> dict: Returns the full route as a dictionary.
+  - `get_route_geopandas()` -> geopandas.GeoDataFrame: Returns the route as a GeoDataFrame.
+
+<a id="georouting.routers.base.TomTomRoute.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Get the duration of the route in seconds.
+
+<a id="georouting.routers.base.TomTomRoute.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Get the distance of the route in meters.
+
+<a id="georouting.routers.base.TomTomRoute.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Get the full route information as a dictionary.
+
+<a id="georouting.routers.base.TomTomRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Get the route as a GeoDataFrame. The GeoDataFrame contains columns for
+'duration (s)', 'distance (m)', 'geometry', and 'speed (m/s)'.
+
+<a id="georouting.routers.base.MapboxRoute"></a>
+
+## MapboxRoute Objects
+
+```python
+class MapboxRoute()
+```
+
+<a id="georouting.routers.base.MapboxRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Returns a GeoDataFrame with distance, duration, and speed for the route legs.
+
+<a id="georouting.routers.base.HereRoute"></a>
+
+## HereRoute Objects
+
+```python
+class HereRoute()
+```
+
+<a id="georouting.routers.base.HereRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Build a GeoDataFrame from the first route leg's shape coordinates.
+
+<a id="georouting.routers.base.ORSRoute"></a>
+
+## ORSRoute Objects
+
+```python
+class ORSRoute()
+```
+
+OpenRouteService route wrapper.
+
+<a id="georouting.routers.base.ORSRoute.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Returns a GeoDataFrame with distance, duration, and speed.
+
+<a id="georouting.routers.base.Route"></a>
+
+## Route Objects
+
+```python
+class Route(object)
+```
+
+A wrapper class that wraps different routing engines' route objects.
+
+It will return a Route object that can be used to get the duration, distance, and route information.
+
+The class has the following methods:
+
+- `get_duration()`: Returns the duration of the route in seconds.
+
+- `get_distance()`: Returns the distance of the route in meters.
+
+- `get_route()`: Returns the complete route information.
+
+- `get_route_geopandas()`: Returns a GeoDataFrame with information such as distance, duration, and speed of each step in the route.
+
+<a id="georouting.routers.base.Route.__init__"></a>
+
+#### \_\_init\_\_
+
+```python
+def __init__(route, origin, destination)
+```
+
+Initialize a Route object by passing the routing engine's route object.
+
+**Arguments**:
+
+- `route`: An instance of a routing engine's route object
+
+<a id="georouting.routers.base.Route.get_duration"></a>
+
+#### get\_duration
+
+```python
+def get_duration()
+```
+
+Get the duration of the route.
+
+<a id="georouting.routers.base.Route.get_distance"></a>
+
+#### get\_distance
+
+```python
+def get_distance()
+```
+
+Get the distance of the route.
+
+<a id="georouting.routers.base.Route.get_route"></a>
+
+#### get\_route
+
+```python
+def get_route()
+```
+
+Get the raw route information.
+
+<a id="georouting.routers.base.Route.get_route_geopandas"></a>
+
+#### get\_route\_geopandas
+
+```python
+def get_route_geopandas()
+```
+
+Get the route information as a GeoDataFrame.
+
+<a id="georouting.routers.base.Route.plot_route"></a>
+
+#### plot\_route
+
+```python
+def plot_route()
+```
+
+Plot the route on a map.
+
+<a id="georouting.routers.base.BaseRouter"></a>
+
+## BaseRouter Objects
+
+```python
+class BaseRouter(object)
+```
+
+The class BaseRouter serves as a base class for routers, which are used to compute the optimal route between two points. The class has an instance variable mode, which is a string that defines the mode of transportation (e.g. "driving").
+
+The BaseRouter class has a single method _get_OD_matrix, which takes two arguments origins and destinations and returns an origin-destination matrix. The method creates an empty list items and loops through each origin and destination pair, appending the concatenated origin and destination to the list. The origin-destination matrix is then created from the list items and returned.
+
+<a id="georouting.routers.base.BaseRouter.get_distances_batch"></a>
+
+#### get\_distances\_batch
+
+```python
+def get_distances_batch(origins,
+                        destinations,
+                        max_batch_size=25,
+                        append_od=False)
+```
+
+This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.
+
+The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.
+
+If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.
+
+<a id="georouting.routers.base.WebRouter"></a>
+
+## WebRouter Objects
+
+```python
+class WebRouter(BaseRouter)
+```
+
+The WebRouter class is a class for handling a route obtained from a web-based routing service.
+
+
+
+---
+
+## Source: docs/api/utils.md
+
+# Table of Contents
+
+* [georouting.utils](#georouting.utils)
+  * [convert\_to\_list](#georouting.utils.convert_to_list)
+  * [get\_batch\_od\_pairs](#georouting.utils.get_batch_od_pairs)
+  * [build\_geofabrik\_region\_index](#georouting.utils.build_geofabrik_region_index)
+  * [build\_geofabrik\_catalog](#georouting.utils.build_geofabrik_catalog)
+  * [resolve\_geofabrik\_pbf](#georouting.utils.resolve_geofabrik_pbf)
+  * [render\_osrm\_dockerfile](#georouting.utils.render_osrm_dockerfile)
+  * [write\_osrm\_dockerfile](#georouting.utils.write_osrm_dockerfile)
+  * [build\_osrm\_image](#georouting.utils.build_osrm_image)
+  * [run\_osrm\_container](#georouting.utils.run_osrm_container)
+  * [build\_and\_run\_osrm](#georouting.utils.build_and_run_osrm)
+
+<a id="georouting.utils"></a>
+
+# georouting.utils
+
+<a id="georouting.utils.convert_to_list"></a>
+
+#### convert\_to\_list
+
+```python
+def convert_to_list(data)
+```
+
+This function converts the data to a list.
+
+<a id="georouting.utils.get_batch_od_pairs"></a>
+
+#### get\_batch\_od\_pairs
+
+```python
+def get_batch_od_pairs(orgins, destinations, max_batch_size=25)
+```
+
+This function returns a list of dataframes containing the origin-destination pairs to
+avoid the repeated requests to the travel distance API.
+
+<a id="georouting.utils.build_geofabrik_region_index"></a>
+
+#### build\_geofabrik\_region\_index
+
+```python
+def build_geofabrik_region_index(cache_path=DEFAULT_GEOFABRIK_CACHE,
+                                 refresh=False,
+                                 include_sizes=False,
+                                 regions=None,
+                                 verbose=False,
+                                 size_timeout=10,
+                                 prefer_html=False)
+```
+
+Build a mapping of region slug -> {url, size_bytes?, size_gb?} using Geofabrik index-v1.json.
+Saves to cache_path (JSON) for reuse unless refresh=True.
+
+<a id="georouting.utils.build_geofabrik_catalog"></a>
+
+#### build\_geofabrik\_catalog
+
+```python
+def build_geofabrik_catalog(cache_path=DEFAULT_GEOFABRIK_CATALOG,
+                            refresh=False,
+                            include_sizes=True,
+                            regions=None,
+                            size_timeout=10,
+                            verbose=False,
+                            prefer_html=True)
+```
+
+Return a list of all Geofabrik PBF datasets with URLs (and sizes if requested).
+Caches the result to JSON for reuse.
+
+<a id="georouting.utils.resolve_geofabrik_pbf"></a>
+
+#### resolve\_geofabrik\_pbf
+
+```python
+def resolve_geofabrik_pbf(region, refresh=True, include_size=False)
+```
+
+Resolve a region string to a Geofabrik PBF URL using the catalog; fallback to slug/path.
+
+<a id="georouting.utils.render_osrm_dockerfile"></a>
+
+#### render\_osrm\_dockerfile
+
+```python
+def render_osrm_dockerfile(region="north-america/us/massachusetts",
+                           port=DEFAULT_OSRM_PORT,
+                           base_image=DEFAULT_OSRM_BASE_IMAGE,
+                           auto_fetch=True,
+                           prefer_html=True,
+                           size_timeout=10,
+                           profile="car")
+```
+
+Render a Dockerfile string for an OSRM backend for the given region/profile.
+
+Parameters
+----------
+region : str
+    Geofabrik region slug/path (e.g., "north-america/us/massachusetts").
+port : int
+    Port to expose in the container.
+base_image : str
+    OSRM base image to use.
+auto_fetch : bool
+    If True, refresh Geofabrik index when resolving region.
+prefer_html : bool
+    Unused here; kept for parity with resolver options.
+size_timeout : int
+    Timeout (seconds) for size resolution (currently unused in rendering).
+profile : str
+    OSRM profile name or path (e.g., "car", "foot", "bicycle" or a lua path).
+
+<a id="georouting.utils.write_osrm_dockerfile"></a>
+
+#### write\_osrm\_dockerfile
+
+```python
+def write_osrm_dockerfile(path="Dockerfile", **kwargs)
+```
+
+Write the rendered OSRM Dockerfile to disk and print a preview.
+
+<a id="georouting.utils.build_osrm_image"></a>
+
+#### build\_osrm\_image
+
+```python
+def build_osrm_image(tag="osrm-backend",
+                     dockerfile_path="Dockerfile",
+                     context=".")
+```
+
+Build the OSRM Docker image using the given Dockerfile and context.
+
+<a id="georouting.utils.run_osrm_container"></a>
+
+#### run\_osrm\_container
+
+```python
+def run_osrm_container(tag="osrm-backend",
+                       port=DEFAULT_OSRM_PORT,
+                       detach=True,
+                       extra_args=None)
+```
+
+Run the OSRM container exposing the selected port.
+
+<a id="georouting.utils.build_and_run_osrm"></a>
+
+#### build\_and\_run\_osrm
+
+```python
+def build_and_run_osrm(region="north-america/us/massachusetts",
+                       port=DEFAULT_OSRM_PORT,
+                       tag="osrm-backend",
+                       dockerfile_path=None,
+                       context=None,
+                       auto_fetch=True,
+                       prefer_html=True,
+                       size_timeout=10,
+                       detach=True,
+                       extra_run_args=None,
+                       base_image=DEFAULT_OSRM_BASE_IMAGE,
+                       profile="car")
+```
+
+One-shot: write Dockerfile, build image, run container for the given region.
+
+
+
+---
+
+## Source: docs/contributing.md
+
+# Contributing
+
+Contributions are welcome, and they are greatly appreciated! Every
+little bit helps, and credit will always be given.
+
+You can contribute in many ways:
+
+## Types of Contributions
+
+### Report Bugs
+
+Report bugs at <https://github.com/wybert/georouting/issues>.
+
+If you are reporting a bug, please include:
+
+-   Your operating system name and version.
+-   Any details about your local setup that might be helpful in troubleshooting.
+-   Detailed steps to reproduce the bug.
+
+### Fix Bugs
+
+Look through the GitHub issues for bugs. Anything tagged with `bug` and
+`help wanted` is open to whoever wants to implement it.
+
+### Implement Features
+
+Look through the GitHub issues for features. Anything tagged with
+`enhancement` and `help wanted` is open to whoever wants to implement it.
+
+### Write Documentation
+
+georouting could always use more documentation,
+whether as part of the official georouting docs,
+in docstrings, or even on the web in blog posts, articles, and such.
+
+### Submit Feedback
+
+The best way to send feedback is to file an issue at
+<https://github.com/wybert/georouting/issues>.
+
+If you are proposing a feature:
+
+-   Explain in detail how it would work.
+-   Keep the scope as narrow as possible, to make it easier to implement.
+-   Remember that this is a volunteer-driven project, and that contributions are welcome :)
+
+## Get Started!
+
+Ready to contribute? Here's how to set up georouting for local development.
+
+1.  Fork the georouting repo on GitHub.
+
+2.  Clone your fork locally:
+
+    ```shell
+    $ git clone git@github.com:your_name_here/georouting.git
+    ```
+
+3.  Install your local copy into a virtualenv. Assuming you have
+    virtualenvwrapper installed, this is how you set up your fork for
+    local development:
+
+    ```shell
+    $ mkvirtualenv georouting
+    $ cd georouting/
+    $ python setup.py develop
+    ```
+
+4.  Create a branch for local development:
+
+    ```shell
+    $ git checkout -b name-of-your-bugfix-or-feature
+    ```
+
+    Now you can make your changes locally.
+
+5.  When you're done making changes, check that your changes pass flake8
+    and the tests, including testing other Python versions with tox:
+
+    ```shell
+    $ flake8 georouting tests
+    $ python setup.py test or pytest
+    $ tox
+    ```
+
+    To get flake8 and tox, just pip install them into your virtualenv.
+
+6.  Commit your changes and push your branch to GitHub:
+
+    ```shell
+    $ git add .
+    $ git commit -m "Your detailed description of your changes."
+    $ git push origin name-of-your-bugfix-or-feature
+    ```
+
+7.  Submit a pull request through the GitHub website.
+
+## Pull Request Guidelines
+
+Before you submit a pull request, check that it meets these guidelines:
+
+1.  The pull request should include tests.
+2.  If the pull request adds functionality, the docs should be updated.
+    Put your new functionality into a function with a docstring, and add
+    the feature to the list in README.rst.
+3.  The pull request should work for Python 3.5, 3.6, 3.7 and 3.8, and
+    for PyPy. Check <https://github.com/wybert/georouting/pull_requests> and make sure that the tests pass for all
+    supported Python versions.
+
+
+---
+
+## Source: docs/changelog.md
+
+# Changelog
+
+## v0.0.8 - 2023-02-11
+
+**Improvement**:
+
+-   improved the documentation
+
+**New Features**:
+
+-   added unified API for all routers
+
+
+---
+
+## Source: docs/faq.md
+
+# FAQ
+
+
+---
+

@@ -1,0 +1,3295 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://wybert.github.io/georouting/georouting/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Georouting - Georouting</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#georouting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Georouting" class="md-header__button md-logo" aria-label="Georouting" data-md-component="logo">
+      
+  <img src="../img/georouting_icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Georouting
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Georouting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wybert/georouting" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Georouting" class="md-nav__button md-logo" aria-label="Georouting" data-md-component="logo">
+      
+  <img src="../img/georouting_icon.png" alt="logo">
+
+    </a>
+    Georouting
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wybert/georouting" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../llms-txt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLMs.txt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/google/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GoogleRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/osrm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OSRMRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/bing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BingRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/esri/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EsriRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/mapbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MapboxRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/tomtom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TomTomRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/here/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HereRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/baidu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BaiduRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/openrouteservice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenRouteServiceRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/osmnx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OSMNXRouter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Base Classes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#routers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Routers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Routers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#googlerouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GoogleRouter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GoogleRouter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        georouting.routers.google.GoogleRouter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="georouting.routers.google.GoogleRouter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distance_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distance_matrix()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_distance_matrix()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distance_matrix--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distance_matrix--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distance_matrix--todo-add-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TODO: add example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distances_batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distances_batch()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_distances_batch()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distances_batch--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_distances_batch--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_route()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_route()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_route--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.google.GoogleRouter.get_route--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osrmrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OSRMRouter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OSRMRouter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        georouting.routers.osrm.OSRMRouter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="georouting.routers.osrm.OSRMRouter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distance_matrix()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_distance_matrix()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix--todo-add-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TODO: add example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distances_batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distances_batch()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_distances_batch()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distances_batch--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_distances_batch--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_route()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_route()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_route--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.osrm.OSRMRouter.get_route--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bingrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BingRouter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BingRouter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        georouting.routers.bing.BingRouter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="georouting.routers.bing.BingRouter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_distance_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distance_matrix()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_distance_matrix()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_distance_matrix--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_distance_matrix--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_distances_batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_distances_batch()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_distances_batch()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_distances_batch--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_distances_batch--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_route()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_route()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_route--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#georouting.routers.bing.BingRouter.get_route--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+
+
+
+                  
+
+
+  
+  
+
+
+<h1 id="georouting">Georouting<a class="headerlink" href="#georouting" title="Permanent link">&para;</a></h1>
+<!-- ::: georouting.georouting -->
+<h2 id="routers">Routers<a class="headerlink" href="#routers" title="Permanent link">&para;</a></h2>
+<h3 id="googlerouter">GoogleRouter<a class="headerlink" href="#googlerouter" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-object doc-class">
+
+<a id="georouting.routers.google.GoogleRouter"></a>
+    <div class="doc doc-contents first">
+
+      <p>Google Map router.
+The GoogleRouter class is a subclass of the WebRouter class and is used for routing using the Google Maps API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the Google Maps API.</p>
+<p>It will return a router object that can be used to get routes and distance matrices.</p>
+<h5 id="georouting.routers.google.GoogleRouter--parameters">Parameters<a class="headerlink" href="#georouting.routers.google.GoogleRouter--parameters" title="Permanent link">&para;</a></h5>
+<ul>
+<li>
+<p><code>api_key</code> : str
+    The API key for the Google Maps API.</p>
+</li>
+<li>
+<p><code>mode</code> : str
+    The routing mode. Can be either "driving" or "walking".</p>
+</li>
+<li>
+<p><code>timeout</code> : int
+    The timeout in seconds for API requests.</p>
+</li>
+<li>
+<p><code>language</code> : str
+    The language to be used in API requests.</p>
+</li>
+</ul>
+<h5 id="georouting.routers.google.GoogleRouter--returns">Returns<a class="headerlink" href="#georouting.routers.google.GoogleRouter--returns" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>GoogleRouter</code>:
+    A router object that can be used to get routes and distance matrices.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/google.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">GoogleRouter</span><span class="p">(</span><span class="n">WebRouter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Google Map router.</span>
+<span class="sd">    The GoogleRouter class is a subclass of the WebRouter class and is used for routing using the Google Maps API.</span>
+<span class="sd">    This class is designed to provide a convenient and easy-to-use interface for interacting with the Google Maps API.</span>
+
+<span class="sd">    It will return a router object that can be used to get routes and distance matrices.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    - `api_key` : str</span>
+<span class="sd">        The API key for the Google Maps API.</span>
+
+<span class="sd">    - `mode` : str</span>
+<span class="sd">        The routing mode. Can be either &quot;driving&quot; or &quot;walking&quot;.</span>
+
+<span class="sd">    - `timeout` : int</span>
+<span class="sd">        The timeout in seconds for API requests.</span>
+
+<span class="sd">    - `language` : str</span>
+<span class="sd">        The language to be used in API requests.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `GoogleRouter`:</span>
+<span class="sd">        A router object that can be used to get routes and distance matrices.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;driving&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is the constructor method for the GoogleRouter class.</span>
+<span class="sd">        It initializes the class by calling the super() method and setting up</span>
+<span class="sd">        the Client object of the Google Maps API using the provided api_key.</span>
+<span class="sd">        The mode parameter sets the routing mode, which can be either &quot;driving&quot; or &quot;walking&quot;.</span>
+<span class="sd">        The timeout parameter sets the timeout in seconds for API requests, and the language</span>
+<span class="sd">        parameter sets the language to be used in API requests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">googlemaps</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_directions_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is a helper method for sending a directions request to the Google Maps API.</span>
+<span class="sd">        It takes two parameters, origin and destination, which represent the starting and ending</span>
+<span class="sd">        points for the route.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">directions</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_distance_matrix_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is a helper method for sending a distance matrix request to the Google Maps API.</span>
+<span class="sd">        It takes two parameters, origins and destinations, which represent the starting and ending</span>
+<span class="sd">        points for each pair of routes in the matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">distance_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is a helper method for parsing the JSON data returned from the Google Maps API</span>
+<span class="sd">        in response to a distance matrix request. It takes one parameter, json_data, which is the</span>
+<span class="sd">        raw JSON data. The method returns a Pandas dataframe containing the distances and durations</span>
+<span class="sd">        for each pair of routes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]:</span>
+            <span class="c1"># print(element)</span>
+            <span class="c1"># print(element[&#39;elements&#39;])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;elements&quot;</span><span class="p">]:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;distance (m)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;duration (s)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Route object representing the route between the origin and destination points.</span>
+<span class="sd">        The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.</span>
+<span class="sd">        The orgin and destination parameters should be in the form of iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origin` : iterable objects</span>
+<span class="sd">            The origin point. Iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">        - `destination` : iterable objects</span>
+<span class="sd">            The destination point. Iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `route` : Route object</span>
+<span class="sd">            The route between the origin and destination.</span>
+
+<span class="sd">        The returned Route object has the following functions:</span>
+
+<span class="sd">        - `get_distance()` returns the distance of the route in meters.</span>
+<span class="sd">        - `get_duration()` returns the duration of the route in seconds.</span>
+<span class="sd">        - `get_route()` returns the raw route data returned as a dictionary.</span>
+<span class="sd">        - `get_route_geodataframe()` returns the route as a GeoDataFrame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_directions_request</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">GoogleRoute</span><span class="p">(</span><span class="n">route</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">route</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for</span>
+<span class="sd">        all possible combinations between each origin and each destination. If you want just</span>
+<span class="sd">        return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.</span>
+
+<span class="sd">        The origins and destinations parameters are lists of origins and destinations.</span>
+
+<span class="sd">        If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">        Google Maps API has following limitations for distance matrix requests:</span>
+<span class="sd">        the following usage limits are in place for the Distance Matrix API, for more information,</span>
+<span class="sd">        see in [google maps api documentation](https://developers.google.com/maps/documentation/distance-matrix/usage-limits):</span>
+
+<span class="sd">        - Maximum of 25 origins or 25 destinations per request.</span>
+<span class="sd">        - Maximum 100 elements per server-side request.</span>
+<span class="sd">        - Maximum 100 elements per client-side request.</span>
+<span class="sd">        - 1000 elements per second (EPS), calculated as the sum of client-side and server-side queries.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origins` : iterable objects</span>
+<span class="sd">            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `destinations` : iterable objects</span>
+<span class="sd">            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `append_od` : bool</span>
+<span class="sd">            If True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">            A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">        Here is an example of how to use this method:</span>
+<span class="sd">        # TODO: add example</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if the origins and destinations parameters are lists</span>
+        <span class="c1"># if ther are numpy arrays, convert them to lists</span>
+        <span class="n">origins</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_distance_matrix_request</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_distance_matrix</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">append_od</span><span class="p">:</span>
+            <span class="n">od_matrix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_OD_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">od_matrix</span><span class="p">,</span> <span class="n">df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don&#39;t want to get duration and distance for all possible combinations between each origin and each destination.</span>
+
+<span class="sd">        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</span>
+
+<span class="sd">        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origins` : iterable objects</span>
+<span class="sd">            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `destinations` : iterable objects</span>
+<span class="sd">            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `append_od` : bool</span>
+<span class="sd">            If True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">            A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+            <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+        <span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.google.GoogleRouter.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;driving&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#georouting.routers.google.GoogleRouter.__init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This is the constructor method for the GoogleRouter class.
+It initializes the class by calling the super() method and setting up
+the Client object of the Google Maps API using the provided api_key.
+The mode parameter sets the routing mode, which can be either "driving" or "walking".
+The timeout parameter sets the timeout in seconds for API requests, and the language
+parameter sets the language to be used in API requests.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/google.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;driving&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the constructor method for the GoogleRouter class.</span>
+<span class="sd">    It initializes the class by calling the super() method and setting up</span>
+<span class="sd">    the Client object of the Google Maps API using the provided api_key.</span>
+<span class="sd">    The mode parameter sets the routing mode, which can be either &quot;driving&quot; or &quot;walking&quot;.</span>
+<span class="sd">    The timeout parameter sets the timeout in seconds for API requests, and the language</span>
+<span class="sd">    parameter sets the language to be used in API requests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">googlemaps</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.google.GoogleRouter.get_distance_matrix" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.google.GoogleRouter.get_distance_matrix" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Pandas dataframe representing a distance matrix between the <code>origins</code> and <code>destinations</code> points. It returns the duration and distance for
+all possible combinations between each origin and each destination. If you want just
+return the duration and distance for specific origin-destination pairs, use the <code>get_distances_batch</code> method.</p>
+<p>The origins and destinations parameters are lists of origins and destinations.</p>
+<p>If the <code>append_od</code> parameter is set to True, the method also returns a matrix of origin-destination pairs.</p>
+<p>Google Maps API has following limitations for distance matrix requests:
+the following usage limits are in place for the Distance Matrix API, for more information,
+see in <a href="https://developers.google.com/maps/documentation/distance-matrix/usage-limits">google maps api documentation</a>:</p>
+<ul>
+<li>Maximum of 25 origins or 25 destinations per request.</li>
+<li>Maximum 100 elements per server-side request.</li>
+<li>Maximum 100 elements per client-side request.</li>
+<li>1000 elements per second (EPS), calculated as the sum of client-side and server-side queries.</li>
+</ul>
+<h6 id="georouting.routers.google.GoogleRouter.get_distance_matrix--parameters">Parameters<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_distance_matrix--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origins</code> : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>destinations</code> : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>append_od</code> : bool
+    If True, the method also returns a matrix of origin-destination pairs.</p>
+</li>
+</ul>
+<h6 id="georouting.routers.google.GoogleRouter.get_distance_matrix--returns">Returns<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_distance_matrix--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>distance_matrix</code> : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.</li>
+</ul>
+<p>Here is an example of how to use this method:</p>
+<h5 id="georouting.routers.google.GoogleRouter.get_distance_matrix--todo-add-example">TODO: add example<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_distance_matrix--todo-add-example" title="Permanent link">&para;</a></h5>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/google.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for</span>
+<span class="sd">    all possible combinations between each origin and each destination. If you want just</span>
+<span class="sd">    return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.</span>
+
+<span class="sd">    The origins and destinations parameters are lists of origins and destinations.</span>
+
+<span class="sd">    If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">    Google Maps API has following limitations for distance matrix requests:</span>
+<span class="sd">    the following usage limits are in place for the Distance Matrix API, for more information,</span>
+<span class="sd">    see in [google maps api documentation](https://developers.google.com/maps/documentation/distance-matrix/usage-limits):</span>
+
+<span class="sd">    - Maximum of 25 origins or 25 destinations per request.</span>
+<span class="sd">    - Maximum 100 elements per server-side request.</span>
+<span class="sd">    - Maximum 100 elements per client-side request.</span>
+<span class="sd">    - 1000 elements per second (EPS), calculated as the sum of client-side and server-side queries.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origins` : iterable objects</span>
+<span class="sd">        An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `destinations` : iterable objects</span>
+<span class="sd">        An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `append_od` : bool</span>
+<span class="sd">        If True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">        A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">    Here is an example of how to use this method:</span>
+<span class="sd">    # TODO: add example</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Check if the origins and destinations parameters are lists</span>
+    <span class="c1"># if ther are numpy arrays, convert them to lists</span>
+    <span class="n">origins</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+    <span class="n">destinations</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_distance_matrix_request</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_distance_matrix</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">append_od</span><span class="p">:</span>
+        <span class="n">od_matrix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_OD_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">od_matrix</span><span class="p">,</span> <span class="n">df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.google.GoogleRouter.get_distances_batch" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.google.GoogleRouter.get_distances_batch" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Pandas dataframe contains duration and disatnce for all the <code>origins</code> and <code>destinations</code> pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.</p>
+<p>The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</p>
+<p>If the <code>append_od</code> parameter is set to True, the method also returns the input origin-destination pairs.</p>
+<h6 id="georouting.routers.google.GoogleRouter.get_distances_batch--parameters">Parameters<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_distances_batch--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origins</code> : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>destinations</code> : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>append_od</code> : bool
+    If True, the method also returns the input origin-destination pairs.</p>
+</li>
+</ul>
+<h6 id="georouting.routers.google.GoogleRouter.get_distances_batch--returns">Returns<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_distances_batch--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>distance_matrix</code> : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/google.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don&#39;t want to get duration and distance for all possible combinations between each origin and each destination.</span>
+
+<span class="sd">    The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</span>
+
+<span class="sd">    If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origins` : iterable objects</span>
+<span class="sd">        An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `destinations` : iterable objects</span>
+<span class="sd">        An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `append_od` : bool</span>
+<span class="sd">        If True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">        A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+        <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.google.GoogleRouter.get_route" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.google.GoogleRouter.get_route" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude].</p>
+<h6 id="georouting.routers.google.GoogleRouter.get_route--parameters">Parameters<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_route--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origin</code> : iterable objects
+    The origin point. Iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude]</p>
+</li>
+<li>
+<p><code>destination</code> : iterable objects
+    The destination point. Iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude]</p>
+</li>
+</ul>
+<h6 id="georouting.routers.google.GoogleRouter.get_route--returns">Returns<a class="headerlink" href="#georouting.routers.google.GoogleRouter.get_route--returns" title="Permanent link">&para;</a></h6>
+<p><code>route</code> : Route object
+    The route between the origin and destination.</p>
+<p>The returned Route object has the following functions:</p>
+<ul>
+<li><code>get_distance()</code> returns the distance of the route in meters.</li>
+<li><code>get_duration()</code> returns the duration of the route in seconds.</li>
+<li><code>get_route()</code> returns the raw route data returned as a dictionary.</li>
+<li><code>get_route_geodataframe()</code> returns the route as a GeoDataFrame.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/google.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Route object representing the route between the origin and destination points.</span>
+<span class="sd">    The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.</span>
+<span class="sd">    The orgin and destination parameters should be in the form of iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origin` : iterable objects</span>
+<span class="sd">        The origin point. Iterable objects with two elements, such as</span>
+<span class="sd">    (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">    - `destination` : iterable objects</span>
+<span class="sd">        The destination point. Iterable objects with two elements, such as</span>
+<span class="sd">    (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `route` : Route object</span>
+<span class="sd">        The route between the origin and destination.</span>
+
+<span class="sd">    The returned Route object has the following functions:</span>
+
+<span class="sd">    - `get_distance()` returns the distance of the route in meters.</span>
+<span class="sd">    - `get_duration()` returns the duration of the route in seconds.</span>
+<span class="sd">    - `get_route()` returns the raw route data returned as a dictionary.</span>
+<span class="sd">    - `get_route_geodataframe()` returns the route as a GeoDataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_directions_request</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">GoogleRoute</span><span class="p">(</span><span class="n">route</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">route</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h3 id="osrmrouter">OSRMRouter<a class="headerlink" href="#osrmrouter" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-object doc-class">
+
+<a id="georouting.routers.osrm.OSRMRouter"></a>
+    <div class="doc doc-contents first">
+
+      <p>OSRM router.
+The OSRMRouter class is a subclass of the WebRouter class and is used for routing using the OSRM API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the OSRM API.</p>
+<p>It will return a router object that can be used to get routes and distance matrices.</p>
+<h5 id="georouting.routers.osrm.OSRMRouter--parameters">Parameters<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter--parameters" title="Permanent link">&para;</a></h5>
+<ul>
+<li>
+<p><code>mode</code> : str
+    The routing mode. Can be either "driving" or "walking". Default is "driving".</p>
+</li>
+<li>
+<p><code>timeout</code> : int
+    The timeout in seconds for API requests. Default is 10.</p>
+</li>
+<li>
+<p><code>language</code> : str
+    The language to be used in API requests. Default is "en".</p>
+</li>
+<li>
+<p><code>base_url</code> : str
+    The base URL for the OSRM API. Default is "http://router.project-osrm.org".</p>
+</li>
+</ul>
+<h5 id="georouting.routers.osrm.OSRMRouter--returns">Returns<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter--returns" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>OSRMRouter</code>:
+    A router object that can be used to get routes and distance matrices.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/osrm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">OSRMRouter</span><span class="p">(</span><span class="n">WebRouter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OSRM router.</span>
+<span class="sd">    The OSRMRouter class is a subclass of the WebRouter class and is used for routing using the OSRM API.</span>
+<span class="sd">    This class is designed to provide a convenient and easy-to-use interface for interacting with the OSRM API.</span>
+
+<span class="sd">    It will return a router object that can be used to get routes and distance matrices.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `mode` : str</span>
+<span class="sd">        The routing mode. Can be either &quot;driving&quot; or &quot;walking&quot;. Default is &quot;driving&quot;.</span>
+
+<span class="sd">    - `timeout` : int</span>
+<span class="sd">        The timeout in seconds for API requests. Default is 10.</span>
+
+<span class="sd">    - `language` : str</span>
+<span class="sd">        The language to be used in API requests. Default is &quot;en&quot;.</span>
+
+<span class="sd">    - `base_url` : str</span>
+<span class="sd">        The base URL for the OSRM API. Default is &quot;http://router.project-osrm.org&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `OSRMRouter`:</span>
+<span class="sd">        A router object that can be used to get routes and distance matrices.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;driving&quot;</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://router.project-osrm.org&quot;</span><span class="p">,</span>
+        <span class="n">auto_start_backend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">backend_runtime</span><span class="o">=</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;singularity&quot;</span>
+        <span class="n">backend_region</span><span class="o">=</span><span class="s2">&quot;north-america/us/massachusetts&quot;</span><span class="p">,</span>
+        <span class="n">backend_port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+        <span class="n">backend_tag</span><span class="o">=</span><span class="s2">&quot;osrm-backend&quot;</span><span class="p">,</span>
+        <span class="n">backend_dockerfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend_context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend_profile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend_base_image</span><span class="o">=</span><span class="n">gtl</span><span class="o">.</span><span class="n">DEFAULT_OSRM_BASE_IMAGE</span><span class="p">,</span>
+        <span class="n">backend_sif_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend_recipe_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend_instance_name</span><span class="o">=</span><span class="s2">&quot;osrm&quot;</span><span class="p">,</span>
+        <span class="n">backend_extra_run_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">api_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="kc">None</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_mode_to_profile</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;driving&quot;</span><span class="p">,</span> <span class="s2">&quot;drive&quot;</span><span class="p">,</span> <span class="s2">&quot;car&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;car&quot;</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;walking&quot;</span><span class="p">,</span> <span class="s2">&quot;walk&quot;</span><span class="p">,</span> <span class="s2">&quot;foot&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;foot&quot;</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bicycling&quot;</span><span class="p">,</span> <span class="s2">&quot;cycling&quot;</span><span class="p">,</span> <span class="s2">&quot;bike&quot;</span><span class="p">,</span> <span class="s2">&quot;bicycle&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;bicycle&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;car&quot;</span>
+
+        <span class="k">if</span> <span class="n">auto_start_backend</span><span class="p">:</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">backend_profile</span> <span class="ow">or</span> <span class="n">_mode_to_profile</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;[osrm] Auto-starting local OSRM backend (</span><span class="si">{</span><span class="n">backend_runtime</span><span class="si">}</span><span class="s2">) for region &#39;</span><span class="si">{</span><span class="n">backend_region</span><span class="si">}</span><span class="s2">&#39; on port </span><span class="si">{</span><span class="n">backend_port</span><span class="si">}</span><span class="s2"> (profile: </span><span class="si">{</span><span class="n">profile</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;[osrm] Requires Docker/Singularity and sufficient disk/RAM for the region extract.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">backend_runtime</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+                    <span class="n">gtl</span><span class="o">.</span><span class="n">build_and_run_osrm</span><span class="p">(</span>
+                        <span class="n">region</span><span class="o">=</span><span class="n">backend_region</span><span class="p">,</span>
+                        <span class="n">port</span><span class="o">=</span><span class="n">backend_port</span><span class="p">,</span>
+                        <span class="n">tag</span><span class="o">=</span><span class="n">backend_tag</span><span class="p">,</span>
+                        <span class="n">dockerfile_path</span><span class="o">=</span><span class="n">backend_dockerfile</span><span class="p">,</span>
+                        <span class="n">context</span><span class="o">=</span><span class="n">backend_context</span><span class="p">,</span>
+                        <span class="n">auto_fetch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">prefer_html</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span>
+                        <span class="n">base_image</span><span class="o">=</span><span class="n">backend_base_image</span><span class="p">,</span>
+                        <span class="n">extra_run_args</span><span class="o">=</span><span class="n">backend_extra_run_args</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://localhost:</span><span class="si">{</span><span class="n">backend_port</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[osrm] Local Docker backend started at </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">backend_runtime</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;singularity&quot;</span><span class="p">,</span> <span class="s2">&quot;apptainer&quot;</span><span class="p">]:</span>
+                    <span class="n">gtl</span><span class="o">.</span><span class="n">build_and_run_osrm_singularity</span><span class="p">(</span>
+                        <span class="n">region</span><span class="o">=</span><span class="n">backend_region</span><span class="p">,</span>
+                        <span class="n">port</span><span class="o">=</span><span class="n">backend_port</span><span class="p">,</span>
+                        <span class="n">sif_path</span><span class="o">=</span><span class="n">backend_sif_path</span><span class="p">,</span>
+                        <span class="n">recipe_path</span><span class="o">=</span><span class="n">backend_recipe_path</span><span class="p">,</span>
+                        <span class="n">auto_fetch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">base_image</span><span class="o">=</span><span class="n">backend_base_image</span><span class="p">,</span>
+                        <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span>
+                        <span class="n">instance_name</span><span class="o">=</span><span class="n">backend_instance_name</span><span class="p">,</span>
+                        <span class="n">extra_run_args</span><span class="o">=</span><span class="n">backend_extra_run_args</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://localhost:</span><span class="si">{</span><span class="n">backend_port</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[osrm] Local Singularity backend started at </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[osrm] Unsupported backend_runtime: </span><span class="si">{</span><span class="n">backend_runtime</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;[osrm] Failed to auto-start local backend: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">. Falling back to provided base_url.&quot;</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_directions_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for getting the URL for a directions request (To request a route</span>
+<span class="sd">        between the given origin and destination coordinates).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/route/v1/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%f</span><span class="s2">,</span><span class="si">%f</span><span class="s2">;</span><span class="si">%f</span><span class="s2">,</span><span class="si">%f</span><span class="s2">?steps=true&amp;annotations=true&amp;geometries=geojson&quot;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+                <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">destination</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">destination</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_matrix_distance_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for getting the URL for a distance matrix request.</span>
+<span class="sd">        Generates the URL to request a distance matrix between the given lists of</span>
+<span class="sd">        origins and destinations coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get the need cal location</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">origins</span><span class="p">))))</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">origins</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">destinations</span><span class="p">))))</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">origins</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">origins</span><span class="p">]</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">destinations</span><span class="p">]</span>
+        <span class="n">origins</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/table/v1/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">?sources=</span><span class="si">%s</span><span class="s2">&amp;destinations=</span><span class="si">%s</span><span class="s2">&amp;annotations=duration,distance&quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">url</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for parsing the distance matrix response.</span>
+<span class="sd">        Parses the response from the distance matrix API and returns a dataframe of</span>
+<span class="sd">        durations and distances.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">durations</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;durations&quot;</span><span class="p">]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;distances&quot;</span><span class="p">]</span>
+
+        <span class="c1"># flatten the list</span>
+        <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">durations</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">distances</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+
+        <span class="c1"># combine the dutation and destinations list to a dataframe</span>
+        <span class="c1"># print(len(durations), len(distances))</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;distance (m)&quot;</span><span class="p">:</span> <span class="n">distances</span><span class="p">,</span> <span class="s2">&quot;duration (s)&quot;</span><span class="p">:</span> <span class="n">durations</span><span class="p">})</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Route object contains duration and disatnce for the route between the given origin and destination coordinates.</span>
+<span class="sd">        The origin and destination parameters are lists of latitude and longitude coordinates.</span>
+<span class="sd">        The orgin and destination parameters should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origin` : iterable objects</span>
+<span class="sd">            The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">        - `destination` : iterable objects</span>
+<span class="sd">            The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `route` : Route object</span>
+<span class="sd">            The route between the origin and destination.</span>
+
+<span class="sd">        The returned Route object has the following functions:</span>
+
+<span class="sd">        - `get_distance()` returns the distance of the route in meters.</span>
+<span class="sd">        - `get_duration()` returns the duration of the route in seconds.</span>
+<span class="sd">        - `get_route()` returns the raw route data returned as a dictionary.</span>
+<span class="sd">        - `get_route_geodataframe()` returns the route as a GeoDataFrame.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_directions_url</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">OSRMRoute</span><span class="p">(</span><span class="n">route</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">route</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for</span>
+<span class="sd">        all possible combinations between each origin and each destination. If you want just</span>
+<span class="sd">        return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.</span>
+
+<span class="sd">        The origins and destinations parameters are lists of origins and destinations.</span>
+
+<span class="sd">        If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origins` : iterable objects</span>
+<span class="sd">            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `destinations` : iterable objects</span>
+<span class="sd">            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `append_od` : bool</span>
+<span class="sd">            If True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">            A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">        Here is an example of how to use this method:</span>
+<span class="sd">        # TODO: add example</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check if the origins and destinations are numpy arrays</span>
+        <span class="c1"># if so, convert them to lists</span>
+
+        <span class="n">origins</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_matrix_distance_url</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">distance_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_distance_matrix</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">append_od</span><span class="p">:</span>
+            <span class="n">od_matrix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_OD_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+            <span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">od_matrix</span><span class="p">,</span> <span class="n">distance_matrix</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">distance_matrix</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distances_batch</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_local_server</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don&#39;t want to get duration and distance for all possible combinations between each origin and each destination.</span>
+
+<span class="sd">        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</span>
+
+<span class="sd">        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origins` : iterable objects</span>
+<span class="sd">            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `destinations` : iterable objects</span>
+<span class="sd">            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `append_od` : bool</span>
+<span class="sd">            If True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">            A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">use_local_server</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+                <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">infty</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+                <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.osrm.OSRMRouter.get_distance_matrix" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Pandas dataframe representing a distance matrix between the <code>origins</code> and <code>destinations</code> points. It returns the duration and distance for
+all possible combinations between each origin and each destination. If you want just
+return the duration and distance for specific origin-destination pairs, use the <code>get_distances_batch</code> method.</p>
+<p>The origins and destinations parameters are lists of origins and destinations.</p>
+<p>If the <code>append_od</code> parameter is set to True, the method also returns a matrix of origin-destination pairs.</p>
+<h6 id="georouting.routers.osrm.OSRMRouter.get_distance_matrix--parameters">Parameters<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origins</code> : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>destinations</code> : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>append_od</code> : bool
+    If True, the method also returns a matrix of origin-destination pairs.</p>
+</li>
+</ul>
+<h6 id="georouting.routers.osrm.OSRMRouter.get_distance_matrix--returns">Returns<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>distance_matrix</code> : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.</li>
+</ul>
+<p>Here is an example of how to use this method:</p>
+<h5 id="georouting.routers.osrm.OSRMRouter.get_distance_matrix--todo-add-example">TODO: add example<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_distance_matrix--todo-add-example" title="Permanent link">&para;</a></h5>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/osrm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for</span>
+<span class="sd">    all possible combinations between each origin and each destination. If you want just</span>
+<span class="sd">    return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.</span>
+
+<span class="sd">    The origins and destinations parameters are lists of origins and destinations.</span>
+
+<span class="sd">    If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origins` : iterable objects</span>
+<span class="sd">        An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `destinations` : iterable objects</span>
+<span class="sd">        An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `append_od` : bool</span>
+<span class="sd">        If True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">        A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">    Here is an example of how to use this method:</span>
+<span class="sd">    # TODO: add example</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check if the origins and destinations are numpy arrays</span>
+    <span class="c1"># if so, convert them to lists</span>
+
+    <span class="n">origins</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+    <span class="n">destinations</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_matrix_distance_url</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">distance_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_distance_matrix</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">append_od</span><span class="p">:</span>
+        <span class="n">od_matrix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_OD_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+        <span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">od_matrix</span><span class="p">,</span> <span class="n">distance_matrix</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">distance_matrix</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.osrm.OSRMRouter.get_distances_batch" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_local_server</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.osrm.OSRMRouter.get_distances_batch" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Pandas dataframe contains duration and disatnce for all the <code>origins</code> and <code>destinations</code> pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.</p>
+<p>The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</p>
+<p>If the <code>append_od</code> parameter is set to True, the method also returns the input origin-destination pairs.</p>
+<h6 id="georouting.routers.osrm.OSRMRouter.get_distances_batch--parameters">Parameters<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_distances_batch--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origins</code> : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>destinations</code> : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>append_od</code> : bool
+    If True, the method also returns the input origin-destination pairs.</p>
+</li>
+</ul>
+<h6 id="georouting.routers.osrm.OSRMRouter.get_distances_batch--returns">Returns<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_distances_batch--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>distance_matrix</code> : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/osrm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distances_batch</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_local_server</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don&#39;t want to get duration and distance for all possible combinations between each origin and each destination.</span>
+
+<span class="sd">    The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</span>
+
+<span class="sd">    If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origins` : iterable objects</span>
+<span class="sd">        An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `destinations` : iterable objects</span>
+<span class="sd">        An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `append_od` : bool</span>
+<span class="sd">        If True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">        A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">use_local_server</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+            <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">infty</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+            <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.osrm.OSRMRouter.get_route" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.osrm.OSRMRouter.get_route" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Route object contains duration and disatnce for the route between the given origin and destination coordinates.
+The origin and destination parameters are lists of latitude and longitude coordinates.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].</p>
+<h6 id="georouting.routers.osrm.OSRMRouter.get_route--parameters">Parameters<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_route--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origin</code> : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</p>
+</li>
+<li>
+<p><code>destination</code> : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</p>
+</li>
+</ul>
+<h6 id="georouting.routers.osrm.OSRMRouter.get_route--returns">Returns<a class="headerlink" href="#georouting.routers.osrm.OSRMRouter.get_route--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>route</code> : Route object
+    The route between the origin and destination.</li>
+</ul>
+<p>The returned Route object has the following functions:</p>
+<ul>
+<li><code>get_distance()</code> returns the distance of the route in meters.</li>
+<li><code>get_duration()</code> returns the duration of the route in seconds.</li>
+<li><code>get_route()</code> returns the raw route data returned as a dictionary.</li>
+<li><code>get_route_geodataframe()</code> returns the route as a GeoDataFrame.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/osrm.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Route object contains duration and disatnce for the route between the given origin and destination coordinates.</span>
+<span class="sd">    The origin and destination parameters are lists of latitude and longitude coordinates.</span>
+<span class="sd">    The orgin and destination parameters should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">    (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origin` : iterable objects</span>
+<span class="sd">        The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">    - `destination` : iterable objects</span>
+<span class="sd">        The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `route` : Route object</span>
+<span class="sd">        The route between the origin and destination.</span>
+
+<span class="sd">    The returned Route object has the following functions:</span>
+
+<span class="sd">    - `get_distance()` returns the distance of the route in meters.</span>
+<span class="sd">    - `get_duration()` returns the duration of the route in seconds.</span>
+<span class="sd">    - `get_route()` returns the raw route data returned as a dictionary.</span>
+<span class="sd">    - `get_route_geodataframe()` returns the route as a GeoDataFrame.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_directions_url</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">OSRMRoute</span><span class="p">(</span><span class="n">route</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">route</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h3 id="bingrouter">BingRouter<a class="headerlink" href="#bingrouter" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-object doc-class">
+
+<a id="georouting.routers.bing.BingRouter"></a>
+    <div class="doc doc-contents first">
+
+      <p>Bing Maps router.
+The BingRouter class is a subclass of the WebRouter class and is used for routing using the Bing Maps API.
+This class is designed to provide a convenient and easy-to-use interface for interacting with the Bing Maps API.</p>
+<p>It will return a router object that can be used to get routes and distance matrices.</p>
+<h5 id="georouting.routers.bing.BingRouter--parameters">Parameters<a class="headerlink" href="#georouting.routers.bing.BingRouter--parameters" title="Permanent link">&para;</a></h5>
+<ul>
+<li>
+<p><code>api_key</code> : str
+    The API key for the Bing Maps API.</p>
+</li>
+<li>
+<p><code>mode</code> : str
+    The routing mode. Can be either "driving" or "walking".</p>
+</li>
+<li>
+<p><code>timeout</code> : int
+    The timeout in seconds for API requests.</p>
+</li>
+<li>
+<p><code>language</code> : str
+    The language to be used in API requests.</p>
+</li>
+</ul>
+<h5 id="georouting.routers.bing.BingRouter--returns">Returns<a class="headerlink" href="#georouting.routers.bing.BingRouter--returns" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>BingRouter</code> :
+    A router object that can be used to get routes and distance matrices.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/bing.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BingRouter</span><span class="p">(</span><span class="n">WebRouter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bing Maps router.</span>
+<span class="sd">    The BingRouter class is a subclass of the WebRouter class and is used for routing using the Bing Maps API.</span>
+<span class="sd">    This class is designed to provide a convenient and easy-to-use interface for interacting with the Bing Maps API.</span>
+
+<span class="sd">    It will return a router object that can be used to get routes and distance matrices.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    - `api_key` : str</span>
+<span class="sd">        The API key for the Bing Maps API.</span>
+
+<span class="sd">    - `mode` : str</span>
+<span class="sd">        The routing mode. Can be either &quot;driving&quot; or &quot;walking&quot;.</span>
+
+<span class="sd">    - `timeout` : int</span>
+<span class="sd">        The timeout in seconds for API requests.</span>
+
+<span class="sd">    - `language` : str</span>
+<span class="sd">        The language to be used in API requests.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `BingRouter` :</span>
+<span class="sd">        A router object that can be used to get routes and distance matrices.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;driving&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://dev.virtualearth.net/REST/v1/Routes/&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_directions_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for getting the URL for a directions request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s</span><span class="s2">?wp.0=</span><span class="si">%f</span><span class="s2">,</span><span class="si">%f</span><span class="s2">&amp;wp.1=</span><span class="si">%f</span><span class="s2">,</span><span class="si">%f</span><span class="s2">&amp;routeAttributes=routePath&amp;key=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">destination</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">destination</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_matrix_distance_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for getting the URL for a distance matrix request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">origins</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">origins</span><span class="p">]</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">destinations</span><span class="p">]</span>
+        <span class="n">origins</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">DistanceMatrix?origins=</span><span class="si">%s</span><span class="s2">&amp;destinations=</span><span class="si">%s</span><span class="s2">&amp;travelMode=</span><span class="si">%s</span><span class="s2">&amp;timeUnit=second&amp;distanceUnit=kilometer&amp;key=</span><span class="si">%s</span><span class="s2">&quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for parsing the response from a distance matrix request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;resourceSets&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;resources&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;travelDistance&quot;</span><span class="p">,</span> <span class="s2">&quot;travelDuration&quot;</span><span class="p">]]</span>
+        <span class="c1"># convert from kilometers to meters</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;travelDistance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;travelDistance&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;distance (m)&quot;</span><span class="p">,</span> <span class="s2">&quot;duration (s)&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Route object representing the route between the origin and destination points.</span>
+<span class="sd">        The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.</span>
+<span class="sd">        The orgin and destination parameters should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origin` : iterable objects</span>
+<span class="sd">            The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">        - `destination` : iterable objects</span>
+<span class="sd">            The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `route` : Route object</span>
+<span class="sd">            The route between the origin and destination.</span>
+
+<span class="sd">        The returned Route object has the following functions:</span>
+
+<span class="sd">        - `get_distance()` returns the distance of the route in meters.</span>
+<span class="sd">        - `get_duration()` returns the duration of the route in seconds.</span>
+<span class="sd">        - `get_route()` returns the raw route data returned as a dictionary.</span>
+<span class="sd">        - `get_route_geodataframe()` returns the route as a GeoDataFrame.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_directions_url</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">BingRoute</span><span class="p">(</span><span class="n">route</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">route</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for</span>
+<span class="sd">        all possible combinations between each origin and each destination. If you want just</span>
+<span class="sd">        return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.</span>
+
+<span class="sd">        The origins and destinations parameters are lists of origins and destinations.</span>
+
+<span class="sd">        If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">        The Bing Maps API has the following limitations for distance matrix requests,</span>
+<span class="sd">        for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):</span>
+
+<span class="sd">        - For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,</span>
+<span class="sd">        - while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.</span>
+<span class="sd">        - For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.</span>
+
+<span class="sd">        Pairs are calculated by multiplying the number of origins, by the number of destinations.</span>
+<span class="sd">        For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,</span>
+<span class="sd">        or 100 origins and 100 destinations defined in your request.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origins` : iterable objects</span>
+<span class="sd">            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+<span class="sd">        - `destinations` : iterable objects</span>
+<span class="sd">            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+<span class="sd">        - `append_od` : bool</span>
+<span class="sd">            If True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">            A pandas DataFrame containing the distance matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># check if the origins and destinations is numpy array</span>
+        <span class="c1"># if so, convert it to list</span>
+        <span class="n">origins</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+        <span class="n">destinations</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_matrix_distance_url</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">distance_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_distance_matrix</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">append_od</span><span class="p">:</span>
+            <span class="n">od_matrix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_OD_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+            <span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">od_matrix</span><span class="p">,</span> <span class="n">distance_matrix</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">distance_matrix</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don&#39;t want to get duration and distance for all possible combinations between each origin and each destination.</span>
+
+<span class="sd">        The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</span>
+
+<span class="sd">        If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - `origins` : iterable objects</span>
+<span class="sd">            An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `destinations` : iterable objects</span>
+<span class="sd">            An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">            It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">            (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">        - `append_od` : bool</span>
+<span class="sd">            If True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">            A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+            <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">650</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+        <span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.bing.BingRouter.get_distance_matrix" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.bing.BingRouter.get_distance_matrix" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Pandas dataframe representing a distance matrix between the <code>origins</code> and <code>destinations</code> points. It returns the duration and distance for
+all possible combinations between each origin and each destination. If you want just
+return the duration and distance for specific origin-destination pairs, use the <code>get_distances_batch</code> method.</p>
+<p>The origins and destinations parameters are lists of origins and destinations.</p>
+<p>If the <code>append_od</code> parameter is set to True, the method also returns a matrix of origin-destination pairs.</p>
+<p>The Bing Maps API has the following limitations for distance matrix requests,
+for more information see <a href="https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits">here</a>:</p>
+<ul>
+<li>For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,</li>
+<li>while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.</li>
+<li>For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.</li>
+</ul>
+<p>Pairs are calculated by multiplying the number of origins, by the number of destinations.
+For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,
+or 100 origins and 100 destinations defined in your request.</p>
+<h6 id="georouting.routers.bing.BingRouter.get_distance_matrix--parameters">Parameters<a class="headerlink" href="#georouting.routers.bing.BingRouter.get_distance_matrix--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>origins</code> : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</li>
+<li><code>destinations</code> : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</li>
+<li><code>append_od</code> : bool
+    If True, the method also returns a matrix of origin-destination pairs.</li>
+</ul>
+<h6 id="georouting.routers.bing.BingRouter.get_distance_matrix--returns">Returns<a class="headerlink" href="#georouting.routers.bing.BingRouter.get_distance_matrix--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>distance_matrix</code> : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/bing.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Pandas dataframe representing a distance matrix between the `origins` and `destinations` points. It returns the duration and distance for</span>
+<span class="sd">    all possible combinations between each origin and each destination. If you want just</span>
+<span class="sd">    return the duration and distance for specific origin-destination pairs, use the `get_distances_batch` method.</span>
+
+<span class="sd">    The origins and destinations parameters are lists of origins and destinations.</span>
+
+<span class="sd">    If the `append_od` parameter is set to True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">    The Bing Maps API has the following limitations for distance matrix requests,</span>
+<span class="sd">    for more information see [here](https://learn.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-distance-matrix#api-limits):</span>
+
+<span class="sd">    - For travel mode driving a distance matrix that has up to 2,500 origins-destinations pairs can be requested for Basic Bing Maps accounts,</span>
+<span class="sd">    - while for Enterprise Bing Maps accounts the origin-destination pairs limit is 10,000.</span>
+<span class="sd">    - For travel mode transit and walking, a distance matrix that has up to 650 origins-destinations pairs can be request for all Bing Maps account types.</span>
+
+<span class="sd">    Pairs are calculated by multiplying the number of origins, by the number of destinations.</span>
+<span class="sd">    For example 10,000 origin-destination pairs can be reached if you have: 1 origin, and 10,000 destinations,</span>
+<span class="sd">    or 100 origins and 100 destinations defined in your request.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origins` : iterable objects</span>
+<span class="sd">        An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+<span class="sd">    - `destinations` : iterable objects</span>
+<span class="sd">        An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+<span class="sd">    - `append_od` : bool</span>
+<span class="sd">        If True, the method also returns a matrix of origin-destination pairs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">        A pandas DataFrame containing the distance matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if the origins and destinations is numpy array</span>
+    <span class="c1"># if so, convert it to list</span>
+    <span class="n">origins</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">origins</span><span class="p">)</span>
+    <span class="n">destinations</span> <span class="o">=</span> <span class="n">gtl</span><span class="o">.</span><span class="n">convert_to_list</span><span class="p">(</span><span class="n">destinations</span><span class="p">)</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_matrix_distance_url</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">distance_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_distance_matrix</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">append_od</span><span class="p">:</span>
+        <span class="n">od_matrix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_OD_matrix</span><span class="p">(</span><span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">)</span>
+        <span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">od_matrix</span><span class="p">,</span> <span class="n">distance_matrix</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">distance_matrix</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.bing.BingRouter.get_distances_batch" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.bing.BingRouter.get_distances_batch" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Pandas dataframe contains duration and disatnce for all the <code>origins</code> and <code>destinations</code> pairs. Use this function if you don't want to get duration and distance for all possible combinations between each origin and each destination.</p>
+<p>The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</p>
+<p>If the <code>append_od</code> parameter is set to True, the method also returns the input origin-destination pairs.</p>
+<h6 id="georouting.routers.bing.BingRouter.get_distances_batch--parameters">Parameters<a class="headerlink" href="#georouting.routers.bing.BingRouter.get_distances_batch--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origins</code> : iterable objects
+    An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>destinations</code> : iterable objects
+    An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.
+    It should be in the form of iterable objects with two elements, such as
+    (latitude, longitude) or [latitude, longitude].</p>
+</li>
+<li>
+<p><code>append_od</code> : bool
+    If True, the method also returns the input origin-destination pairs.</p>
+</li>
+</ul>
+<h6 id="georouting.routers.bing.BingRouter.get_distances_batch--returns">Returns<a class="headerlink" href="#georouting.routers.bing.BingRouter.get_distances_batch--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>distance_matrix</code> : pandas.DataFrame
+    A pandas DataFrame containing the distance matrix.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/bing.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_distances_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Pandas dataframe contains duration and disatnce for all the `origins` and `destinations` pairs. Use this function if you don&#39;t want to get duration and distance for all possible combinations between each origin and each destination.</span>
+
+<span class="sd">    The origins and destinations parameters are lists of origin-destination pairs. They should be the same length.</span>
+
+<span class="sd">    If the `append_od` parameter is set to True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origins` : iterable objects</span>
+<span class="sd">        An iterable object containing the origin points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `destinations` : iterable objects</span>
+<span class="sd">        An iterable object containing the destination points. It can be a list of tuples, a list of lists, a list of arrays, etc.</span>
+<span class="sd">        It should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">        (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    - `append_od` : bool</span>
+<span class="sd">        If True, the method also returns the input origin-destination pairs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `distance_matrix` : pandas.DataFrame</span>
+<span class="sd">        A pandas DataFrame containing the distance matrix.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_distances_batch</span><span class="p">(</span>
+        <span class="n">origins</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">650</span><span class="p">,</span> <span class="n">append_od</span><span class="o">=</span><span class="n">append_od</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="georouting.routers.bing.BingRouter.get_route" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></code>
+
+
+<a href="#georouting.routers.bing.BingRouter.get_route" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This method returns a Route object representing the route between the origin and destination points.
+The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.
+The orgin and destination parameters should be in the form of iterable objects with two elements, such as
+(latitude, longitude) or [latitude, longitude].</p>
+<h6 id="georouting.routers.bing.BingRouter.get_route--parameters">Parameters<a class="headerlink" href="#georouting.routers.bing.BingRouter.get_route--parameters" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p><code>origin</code> : iterable objects
+    The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</p>
+</li>
+<li>
+<p><code>destination</code> : iterable objects
+    The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</p>
+</li>
+</ul>
+<h6 id="georouting.routers.bing.BingRouter.get_route--returns">Returns<a class="headerlink" href="#georouting.routers.bing.BingRouter.get_route--returns" title="Permanent link">&para;</a></h6>
+<ul>
+<li><code>route</code> : Route object
+    The route between the origin and destination.</li>
+</ul>
+<p>The returned Route object has the following functions:</p>
+<ul>
+<li><code>get_distance()</code> returns the distance of the route in meters.</li>
+<li><code>get_duration()</code> returns the duration of the route in seconds.</li>
+<li><code>get_route()</code> returns the raw route data returned as a dictionary.</li>
+<li><code>get_route_geodataframe()</code> returns the route as a GeoDataFrame.</li>
+</ul>
+
+        <details class="quote">
+          <summary>Source code in <code>georouting/routers/bing.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method returns a Route object representing the route between the origin and destination points.</span>
+<span class="sd">    The origin and destination parameters are tuples/list/arrays representing the starting and ending points for the route.</span>
+<span class="sd">    The orgin and destination parameters should be in the form of iterable objects with two elements, such as</span>
+<span class="sd">    (latitude, longitude) or [latitude, longitude].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - `origin` : iterable objects</span>
+<span class="sd">        The origin point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">    - `destination` : iterable objects</span>
+<span class="sd">        The destination point. Iterable objects with two elements, such as (latitude, longitude) or [latitude, longitude]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    - `route` : Route object</span>
+<span class="sd">        The route between the origin and destination.</span>
+
+<span class="sd">    The returned Route object has the following functions:</span>
+
+<span class="sd">    - `get_distance()` returns the distance of the route in meters.</span>
+<span class="sd">    - `get_duration()` returns the duration of the route in seconds.</span>
+<span class="sd">    - `get_route()` returns the raw route data returned as a dictionary.</span>
+<span class="sd">    - `get_route_geodataframe()` returns the route as a GeoDataFrame.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_directions_url</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="n">BingRoute</span><span class="p">(</span><span class="n">route</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">route</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<!-- FIXME: add more class here -->
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    2025-11-25
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "search.highlight", "navigation.expand"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
