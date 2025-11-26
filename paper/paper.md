@@ -11,8 +11,8 @@ authors:
   - name: Xiaokang Fu
     orcid: 0000-0002-3396-6720
     affiliation: "1"
-  - name: Devika, Kakkar
-    orcid:
+  - name: Devika Kakkar
+    orcid: 0000-0001-7800-929X
     affiliation: "2"
 affiliations:
   - name: "State Key Laboratory of Information Engineering in Surveying, Mapping and Remote Sensing, Wuhan University, 129 Luoyu Road, Wuhan, China"
