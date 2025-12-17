@@ -2,9 +2,9 @@ name: build-and-unit
 
 on:
   push:
-    branches: [main]
+    branches: [main, paper-draft]
   pull_request:
-    branches: [main]
+    branches: [main, paper-draft]
 
 jobs:
   build-and-test:
