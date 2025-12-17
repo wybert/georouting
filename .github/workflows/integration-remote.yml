@@ -1,0 +1,38 @@
+name: integration-remote
+
+on:
+  workflow_dispatch:
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    environment: integration-remote
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
+          pip install -e .
+
+      - name: Run integration tests (remote APIs)
+        env:
+          RUN_REMOTE_ROUTER_TESTS: "true"
+          google_key: ${{ secrets.GOOGLE_KEY }}
+          bing_key: ${{ secrets.BING_KEY }}
+          esri_key: ${{ secrets.ESRI_KEY }}
+          baidu_key: ${{ secrets.BAIDU_KEY }}
+          tomtom_key: ${{ secrets.TOMTOM_KEY }}
+          mapbox_key: ${{ secrets.MAPBOX_KEY }}
+          here_key: ${{ secrets.HERE_KEY }}
+          ors_key: ${{ secrets.ORS_KEY }}
+        run: |
+          python -m pytest -m "integration"
